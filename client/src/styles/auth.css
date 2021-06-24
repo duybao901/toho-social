@@ -1,0 +1,86 @@
+.form__wrap {
+    margin-top: 20px;
+}
+
+.form__input {
+    width: 100%;
+    position: relative;
+    height: 62px;
+    border: 1px solid rgb(207, 217, 222);
+    border-radius: 5px;
+    padding: 12px;
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.login__form .MuiFilledInput-input {
+    font-size: 26px;
+}
+
+.form__wrap-input {
+    height: 22px;
+}
+
+.form__input input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    outline: none;
+    font-size: 1.8rem;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+}
+
+.login__container {
+    max-width: 400px;
+    width: 400px;
+    margin-top: 30px;
+}
+
+.login__container img {
+    width: 50px;
+    height: 50px;
+    margin: 20px 0px;
+}
+
+.login__container h1 {
+    font-family: 'Archivo', sans-serif;
+    font-size: 3.4rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--color-dark);
+    margin-bottom: 20px;
+}
+
+.register .register__container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.register__left {
+    width: 55%;
+    height: 94%;
+}
+
+.register__left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.register__right {
+    width: 45%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}

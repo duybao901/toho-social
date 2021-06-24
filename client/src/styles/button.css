@@ -1,0 +1,24 @@
+.button__primary-ds {
+    font-size: 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    width: 100%;
+    background-color: var(--color-light-blue);
+    color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    letter-spacing: 1px;
+    cursor: default;
+}
+
+.button__primary-ds:focus {
+    outline: none;
+}
+
+.button__primary-ds.active {
+    background-color: var(--color-blue);
+}

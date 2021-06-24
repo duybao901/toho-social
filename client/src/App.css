@@ -1,0 +1,41 @@
+:root {
+    --color-blue: #1DA1F2;
+    --color-light-blue: #8ec9ee;
+    --color-black: #14171A;
+    --color-dark-grey: #657786;
+    --color-light-grey: #AAB8C2;
+    --color-extra-light-grey: #E1E8ED;
+    --color-extra-extra-light-grey: #F5F8FA;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+}
+
+html {
+    font-size: 62.5%;
+    /* font-family: 'Ubuntu', sans-serif; */
+    /* font-family: 'Archivo', sans-serif; */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul li {
+    list-style: none;
+}
+
+/* Auth Css */
+
+@import url('./styles/auth.css');
+/* Button */
+
+@import url('./styles/button.css');
