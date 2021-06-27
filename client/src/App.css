@@ -1,6 +1,7 @@
 :root {
     --color-blue: #1DA1F2;
-    --color-light-blue: #8ec9ee;
+    --color-light-blue: #59b6f0;
+    --color-extra-light-blue: #8ec9ee;
     --color-black: #14171A;
     --color-dark-grey: #657786;
     --color-light-grey: #AAB8C2;
@@ -36,6 +37,9 @@ ul li {
 /* Auth Css */
 
 @import url('./styles/auth.css');
-/* Button */
 
+/* Button */
 @import url('./styles/button.css');
+
+/* Notify */
+@import url('./styles/notify.css');

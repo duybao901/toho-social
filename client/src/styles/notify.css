@@ -1,0 +1,80 @@
+.globle__loading {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, .7);
+}
+
+.globle__loading .globle__loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.globle__loading p {
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--color-blue);
+    animation: fadeIn infinite linear 3s;
+    margin-top: 10px;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: .5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .5;
+    }
+}
+
+.alert {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.alert__box {
+    padding: 10px;
+    width: 250px;
+    height: auto;
+    background-color: #fafafa;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.alert__box.success {
+    background-color: var(--color-blue);
+}
+
+.alert__box.error {
+    background-color: #dc3545;
+}
+
+.alert__box h2 {
+    font-size: 1.8rem;
+    color: #fff;
+    margin: 0;
+}
+
+.alert__box p {
+    margin: 0;
+    color: #fff;
+    font-size: 1.4rem;
+}
+
+.alert__box span {
+    cursor: pointer;
+    color: #fff;
+    font-size: 2.2rem;
+}

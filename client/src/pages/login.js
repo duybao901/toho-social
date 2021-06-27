@@ -35,15 +35,12 @@ const CssTextField = withStyles({
 function Login() {
     const dispatch = useDispatch();
 
-    const [state, setState] = useState({ email: 'duy@gmail.com', password: '', success: '', err: '', loading: false });
-    const { email, password, success, err, loading } = state;
+    const [state, setState] = useState({ email: 'duy@gmail.com', password: '' });
+    const { email, password } = state;
     function onHandleChange(e) {
         setState({
             ...state,
             [e.target.name]: e.target.value,
-            success: '',
-            err: '',
-            loading: false
         })
     }
 
@@ -77,7 +74,7 @@ function Login() {
                         autoComplete={password}
                         required
                     />
-                    <button className='button__primary-ds'>Login</button>
+                    <button disabled={email && password ? false : true} className={email && password ? 'button__primary-ds active' : 'button__primary-ds'}>Login</button>
                     <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
                         <p style={{ cursor: 'pointer', color: "#1DA1F2", fontSize: '15px' }}>Forgot password?</p>
                         <p style={{ cursor: 'pointer', color: "#1DA1F2", fontSize: '15px' }}>Register here.</p>

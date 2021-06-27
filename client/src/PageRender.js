@@ -21,9 +21,7 @@ function PageRender() {
     } else {
         pageName = `${page}`
     }
-    console.log(pageName)
-
-
+    
     return generatorPage(pageName);
 }
 

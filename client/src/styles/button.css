@@ -6,7 +6,7 @@
     justify-content: center;
     height: 48px;
     width: 100%;
-    background-color: var(--color-light-blue);
+    background-color: var(--color-extra-light-blue);
     color: #fff;
     border: none;
     outline: none;
@@ -21,4 +21,9 @@
 
 .button__primary-ds.active {
     background-color: var(--color-blue);
+    /* transition: all .1s; */
+}
+
+.button__primary-ds.active:hover {
+    background-color: var(--color-light-blue);
 }
