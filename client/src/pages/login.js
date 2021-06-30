@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom';
 
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
@@ -34,7 +35,8 @@ const CssTextField = withStyles({
 
 function Login() {
     const dispatch = useDispatch();
-
+    const { auth } = useSelector(state => state);
+    const history = useHistory();
     const [state, setState] = useState({ email: 'duy@gmail.com', password: '' });
     const { email, password } = state;
     function onHandleChange(e) {
@@ -48,6 +50,12 @@ function Login() {
         e.preventDefault();
         dispatch(authActions.login({ email, password }))
     }
+
+    useEffect(() => {
+        if (auth.token) {
+            history.push('/');
+        }
+    }, [auth.token, history])
 
     return (
         <div className="login">
@@ -77,7 +85,7 @@ function Login() {
                     <button disabled={email && password ? false : true} className={email && password ? 'button__primary-ds active' : 'button__primary-ds'}>Login</button>
                     <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
                         <p style={{ cursor: 'pointer', color: "#1DA1F2", fontSize: '15px' }}>Forgot password?</p>
-                        <p style={{ cursor: 'pointer', color: "#1DA1F2", fontSize: '15px' }}>Register here.</p>
+                        <p style={{ cursor: 'pointer', color: "#1DA1F2", fontSize: '15px' }}><Link to='/register'>Register now</Link></p>
                     </div>
                 </form>
             </div>

@@ -29,6 +29,9 @@ a {
     text-decoration: none;
     color: inherit;
 }
+a:hover{
+    text-decoration: none;
+}
 
 ul li {
     list-style: none;
@@ -37,9 +40,15 @@ ul li {
 /* Auth Css */
 
 @import url('./styles/auth.css');
-
 /* Button */
-@import url('./styles/button.css');
 
+@import url('./styles/button.css');
 /* Notify */
+
 @import url('./styles/notify.css');
+/* Main */
+
+@import url('./styles/main.css');
+
+/* Header */
+@import url('./styles/header.css');

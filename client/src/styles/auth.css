@@ -60,16 +60,21 @@
     margin-bottom: 20px;
 }
 
+.register {
+    width: 100%;
+    height: 95vh;
+}
+
 .register .register__container {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
 }
 
 .register__left {
     width: 55%;
-    height: 94%;
+    height: 100%;
 }
 
 .register__left img {
@@ -80,7 +85,77 @@
 
 .register__right {
     width: 45%;
-    padding: 20px;
+    padding: 20px 20px 20px 40px;
     display: flex;
-    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+}
+
+.register__form {
+    width: 70%;
+    margin-top: 20px;
+}
+
+.register__right-heading {
+    font-size: 5rem;
+    font-weight: 800;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    color: #14171A;
+}
+
+.register__right-banner {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #14171A;
+}
+
+.register__form-gr {
+    display: flex;
+    justify-content: space-between;
+    /* width: 150%; */
+}
+
+.register__form-gr .MuiTypography-body1 {
+    font-size: 1.6rem;
+}
+
+.register__form-gr .MuiSvgIcon-root {
+    width: 22px;
+    height: 22px;
+}
+
+.register__form .MuiFormHelperText-contained {
+    font-size: 14px;
+    /* margin: 2px 0; */
+    position: relative;
+    color: var(--danger);
+}
+
+.register__bottom ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 5px;
+    margin: 0;
+    padding: 0;
+}
+
+.register__bottom ul li {
+    padding: 0 20px;
+    font-size: 1.2rem;
+}
+
+.register__bottom ul li:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.register__bottom p {
+    width: 100%;
+    text-align: center;
+    margin: 2px 0;
+    font-size: 1.3rem;
 }

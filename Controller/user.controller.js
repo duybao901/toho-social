@@ -82,6 +82,7 @@ class UserController {
     async logout(req, res) {
         try {
             res.clearCookie('refreshtoken', { path: '/api/refresh_token' })
+            console.log('Logged out')
             return res.json({ msg: "Logged out!" })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
