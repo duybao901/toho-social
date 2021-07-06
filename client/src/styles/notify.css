@@ -1,13 +1,15 @@
+
+
 .globle__loading {
     width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    z-index: 1400;
     background-color: rgba(255, 255, 255, .7);
 }
 
@@ -42,6 +44,7 @@
     position: absolute;
     right: 10px;
     top: 10px;
+    z-index: 1500;
 }
 
 .alert__box {

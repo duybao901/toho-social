@@ -1,7 +1,8 @@
 require('dotenv').config();
 const cors = require('cors');
 const cookiePasrer = require('cookie-parser');
-const expressFileupload = require('express-fileupload');
+
+const fileUpload = require('express-fileupload')
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
@@ -10,12 +11,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cookiePasrer());
-app.use(expressFileupload({
+app.use(fileUpload({
     useTempFiles: true
 }))
 
 // Router
 app.use('/api', require('./Router/user.route'));
+app.use('/api', require('./Router/upload.router'));
 
 // Connect mongoodb
 const MONGODB_URL = process.env.MONGODB_URL

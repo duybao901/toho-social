@@ -11,6 +11,10 @@
     padding: 12px;
 }
 
+.login {
+    margin: 0 auto;
+}
+
 .login__form {
     display: flex;
     flex-direction: column;

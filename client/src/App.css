@@ -2,6 +2,7 @@
     --color-blue: #1DA1F2;
     --color-light-blue: #59b6f0;
     --color-extra-light-blue: #8ec9ee;
+    --color-light-blue-hover: rgba(99, 185, 238, 0.2);
     --color-black: #14171A;
     --color-dark-grey: #657786;
     --color-light-grey: #AAB8C2;
@@ -16,7 +17,7 @@
 }
 
 body {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 html {
@@ -29,7 +30,8 @@ a {
     text-decoration: none;
     color: inherit;
 }
-a:hover{
+
+a:hover {
     text-decoration: none;
 }
 
@@ -49,6 +51,27 @@ ul li {
 /* Main */
 
 @import url('./styles/main.css');
-
 /* Header */
+
 @import url('./styles/header.css');
+/* Search */
+
+@import url('./styles/search.css');
+/* Infor */
+
+@import url('./styles/infor.css');
+/* Watch Img */
+
+@import url('./styles/watchimg.css');
+/* Edit Profile */
+
+@import url('./styles/editprofile.css');
+/* Modal  */
+
+@import url('./styles/modal.css');
+
+/* Edit Media */
+@import url('./styles/editmedia.css');
+/*! Reponsive */
+
+@import url('./styles/reponsive.css');

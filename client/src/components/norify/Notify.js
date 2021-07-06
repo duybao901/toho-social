@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 function Notify() {
     const { success, err, loading } = useSelector(state => state.notify);
     return (
-        <div>
+        <div className="alert">
             {loading && <Loading />}
 
             {success ?

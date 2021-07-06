@@ -6,16 +6,14 @@ function Header() {
     return (
         <div className="header">
             <div className="header__container">
-                <div>
-                    <div className='header__logo'>
-                        <Link to='/'>
-                            <img style={{ width: '40px', }} src={HeaderLogo} alt='logo'>
-                            </img>
-                        </Link>
-                    </div>
-
-                    <Menu />
+                <div className='header__logo'>
+                    <Link to='/'>
+                        <img style={{ width: '40px', }} src={HeaderLogo} alt='logo'>
+                        </img>
+                    </Link>
                 </div>
+
+                <Menu />
             </div>
         </div>
     )

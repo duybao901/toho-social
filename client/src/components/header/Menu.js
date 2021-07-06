@@ -6,23 +6,28 @@ const menuList = [
     {
         path: "/",
         text: "home",
-        icon: "bx bx-home-circle"
+        icon: "bx bx-home-circle",
+        iconActive: "bx bxs-home-circle",
     },
     {
         path: "/explore",
         text: "explore",
-        icon: "bx bx-hash"
+        icon: "bx bx-hash",
+        iconActive: "bx bx-hash",
     },
     {
         path: "/notifications",
         text: "notifications",
-        icon: "bx bx-bell"
+        icon: "bx bx-bell",
+        iconActive: "bx bxs-bell",
     },
     {
         path: "/message",
         text: "message",
-        icon: "bx bx-comment-detail"
+        icon: "bx bx-comment-detail",
+        iconActive: "bx bxs-comment-detail",
     },
+
 ]
 
 function Menu() {
@@ -46,13 +51,21 @@ function Menu() {
                 {menuList.map((menu, index) => {
                     return <li className={`menu__list-item ${isActive(menu.path)}`} key={index}>
                         <Link to={menu.path}>
-                            <i className={menu.icon}></i>
+                            <i className={isActive(menu.path) ? menu.iconActive : menu.icon}></i>
                             <span>
                                 {menu.text}
                             </span>
                         </Link>
                     </li>
                 })}
+                <li className={`menu__list-item ${isActive(`/profile/${auth.user._id}`)}`}>
+                    <Link to={`/profile/${auth.user._id}`}>
+                        <i className={!isActive(`/profile/${auth.user._id}`) ? "bx bx-user" : "bx bxs-user"}></i>
+                        <span>
+                            profile
+                        </span>
+                    </Link>
+                </li>
             </ul>
 
             <div className='menu__dropdown' role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

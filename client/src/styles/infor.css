@@ -1,0 +1,208 @@
+.infor__container {
+    display: flex;
+}
+
+.infor__content {
+    max-width: 600px;
+    width: 600px;
+    border-right: 1px solid #f1f1f1;
+    /* min-height: 200vh; */
+    position: relative;
+    z-index: 1;
+}
+
+.infor__heading {
+    display: flex;
+    width: 600px;
+    height: 54px;
+    position: fixed;
+    border-bottom: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
+    align-items: center;
+    padding: 0px 10px;
+    background: #fff;
+}
+
+.infor__heading-back {
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.infor__heading-back i {
+    font-size: 2.2rem;
+    color: var(--color-blue);
+}
+
+.infor__heading-back:hover {
+    background-color: var(--color-light-blue-hover);
+}
+
+.infor__heading-name {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+
+.infor__search {
+    width: 350px;
+    padding: 2px 0px 2px 20px;
+}
+
+.infor__search-container {
+    position: fixed;
+    width: 350px;
+}
+
+.infor__box {
+    padding: 0 10px;
+    margin-top: 54px;
+}
+
+.infor__user {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.infor__user .infor__user-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.infor__user .infor__user-left .infor__user-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-top: -100px;
+}
+
+.infor__user .infor__user-left .infor__user-avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    transition: all .15s linear;
+    border: 5px solid #fff;
+}
+
+.infor__user .infor__user-left .infor__user-avatar img:hover {
+    cursor: pointer;
+    filter: brightness(90%);
+}
+
+.infor__user .infor__user-left h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.infor__user .infor__user-left span.infor__user-left-username {
+    font-size: 1.5rem;
+    display: block;
+    color: #536471;
+    margin: 0;
+}
+
+.infor__user-left-bio {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    max-width: 400px;
+    color: #0f1419;
+}
+
+.infor__user .infor__user-left p i {
+    font-size: 1.7rem;
+    margin-right: 2px;
+}
+
+.infor__user .infor__user-left .infor__user-social {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    color: #536471;
+    flex-wrap: wrap;
+}
+
+.infor__user .infor__user-left .infor__user-social i {
+    color: #536471;
+}
+
+.infor__user .infor__user-left .infor__user-social div {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    color: #536471;
+}
+
+.infor__user .infor__user-left .infor__user-social div i {
+    margin-right: 2px;
+    font-size: 2rem;
+}
+
+.infor__user-btn-edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-blue);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 8px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 1px solid var(--color-blue);
+    transition: all .15s ease-in-out;
+    width: 170px;
+    max-width: 170px;
+}
+
+.infor__user-btn-edit:hover {
+    background-color: var(--color-light-blue-hover);
+}
+
+.infor__user-social-link {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    transition: all .1s linear;
+}
+
+.infor__user-social-link i {
+    font-size: 2rem;
+    margin-right: 5px;
+    color: #536471;
+}
+
+.infor__user-social-link a {
+    color: var(--color-blue);
+}
+
+.infor__user-social-link a:hover {
+    cursor: pointer;
+    color: var(--color-blue);
+    text-decoration: underline;
+}
+
+.infor__user-background {
+    width: 600px;
+    height: 200px;
+    margin-left: -10px;
+    cursor: pointer;
+}
+
+.infor__user-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

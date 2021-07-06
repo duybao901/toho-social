@@ -1,0 +1,155 @@
+/* Reponsive */
+
+@media (max-width:1365px) {}
+
+@media (max-width: 1023px) {
+    /* Main */
+    .main__content.have__login {
+        width: 100%;
+    }
+    /* Header */
+    .header {
+        width: 10%;
+        max-width: 10%;
+        overflow: hidden;
+    }
+    .menu {
+        padding-bottom: 20px;
+    }
+    .header__container {
+        height: 100%;
+        width: 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .menu__list {
+        text-align: center;
+        margin-top: 0px;
+    }
+    .menu__list-item a {
+        padding: 12px;
+    }
+    .menu__list-item a span {
+        display: none;
+    }
+    .menu__list-item a i {
+        margin-right: 0px;
+    }
+    .header__logo {
+        margin-left: 17px;
+    }
+    .menu__dropdown .menu__dropdown-infor {
+        display: none;
+    }
+    .menu__dropdown i {
+        display: none;
+    }
+    .menu__dropdown img {
+        width: 60px;
+        height: 60px;
+        margin: 0;
+    }
+    .menu__dropdown {
+        padding: 0px;
+        margin-left: 0px;
+        align-items: center;
+        justify-content: center;
+    }
+    .menu__dropdown:hover {
+        background-color: transparent;
+    }
+    /* Auth */
+    .login__container {
+        text-align: center;
+    }
+    .register__left img {
+        width: 0%;
+        display: none;
+    }
+    .register__left {
+        width: 0%;
+    }
+    .register__right {
+        text-align: center;
+        width: 100%;
+        padding: 20px 20px 20px 40px;
+    }
+    .register__form {
+        margin: 20px auto;
+    }
+}
+
+@media (max-width:767px) {
+    .register__form {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .register__bottom {
+        display: none;
+    }
+    .register__right-heading {
+        display: none;
+    }
+}
+
+@media all and (max-width: 480px) {
+    .alert {
+        display: none;
+        visibility: hidden;
+    }
+    .main .main__container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .main__content.have__login {
+        width: 100%;
+    }
+    .header__container {
+        flex-direction: row;
+        width: 100%;
+        height: 10vh;
+    }
+    .header__logo {
+        display: none;
+    }
+    .menu__dropdown img {
+        width: 40px;
+        height: 40px;
+    }
+    .header {
+        width: 100%;
+        max-width: 100%;
+        height: 10vh;
+    }
+    .menu {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        border-bottom: 1px solid #f1f1f1;
+        padding: 0px 5px;
+    }
+    .menu__list {
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        margin: 0;
+    }
+    .menu__list-item a i {
+        font-size: 2.5rem;
+    }
+    .menu__list-item a {
+        padding: 15px;
+    }
+    .register__right {
+        padding: 20px;
+    }
+    .login {
+        padding: 20px;
+    }
+    .menu__dropdown{
+        margin-bottom: 0px;
+    }
+}

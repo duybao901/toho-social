@@ -52,7 +52,7 @@ class UserController {
 
             const user = await Users.findOne({ email })
                 .populate("followers following", "avatar username fullname followers following")
-            
+
             if (!user) return res.status(400).json({ msg: "This email does not exist." })
 
             const isMatch = await bcrypt.compare(password, user.password)
@@ -82,7 +82,6 @@ class UserController {
     async logout(req, res) {
         try {
             res.clearCookie('refreshtoken', { path: '/api/refresh_token' })
-            console.log('Logged out')
             return res.json({ msg: "Logged out!" })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
@@ -110,6 +109,48 @@ class UserController {
             })
         } catch (err) {
             return res.status(500).json({ msg: err.message });
+        }
+    }
+    async searchUsers(req, res) {
+        try {
+            const users = await Users.find({ username: { $regex: req.query.username } })
+                .limit(10).select("fullname username avatar");
+            res.json({ users })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+    async getUser(req, res) {
+        try {
+            const user = await Users.findById(req.params.id).select('-password')
+                .populate("followers following", "-password")
+            if (!user) return res.status(400).json({ msg: "User does not exist." })
+
+            res.json({ user })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+    async changeAvatar(req, res) {
+        try {
+            const { avatar } = req.body;
+            await Users.findByIdAndUpdate(req.user._id, {
+                avatar
+            })
+            res.json({ user })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+    async changeBackground(req, res) {
+        try {
+            const { changeBackground } = req.body;
+            await Users.findByIdAndUpdate(req.user._id, {
+                changeBackground
+            })
+            res.json({ user })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
         }
     }
 }

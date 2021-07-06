@@ -2,36 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom';
 
-import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
+
 
 import * as authActions from '../redux/actions/authAction'
 
-const CssTextField = withStyles({
-    root: {
-        marginBottom: "20px",
-
-        '& label': {
-            fontSize: '16px',
-            background: "#fff",
-            padding: "0px 5px",
-            "&.Mui-focused": {
-                color: '#1DA1F2',
-                background: "#fff",
-                padding: "0px 5px",
-            }
-        },
-        '& input': {
-            fontSize: '16px',
-        },
-        '& .MuiOutlinedInput-root': {
-            '&.Mui-focused fieldset': {
-                borderColor: '#1DA1F2',
-                borderWidth: "3px",
-            },
-        },
-    },
-})(TextField);
+import CssTextField from '../utils/cssTextField';
 
 function Login() {
     const dispatch = useDispatch();

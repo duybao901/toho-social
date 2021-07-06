@@ -1,0 +1,105 @@
+.editprofile__background {
+    width: 100%;
+    height: 200px;
+    position: relative;
+}
+
+.editprofile__background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.editprofile__wrapper {
+    padding: 0 10px;
+    position: relative;
+}
+
+.editprofile__avatar {
+    width: 140px;
+    height: 140px;
+    margin-top: -80px;
+    overflow: hidden;
+    position: relative;
+}
+
+.editprofile__avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+}
+
+.editprofile__upload-avatar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.editprofile__upload-avatar .editprofile__upload {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.editprofile__upload-avatar .editprofile__upload::before {
+    content: '';
+    display: inline-block;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    padding: 10px 40px;
+}
+
+.editprofile__upload-avatar i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(199, 198, 198);
+    font-size: 2.5rem;
+    z-index: 1;
+}
+
+.editprofile__upload-control {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all .15s linear;
+}
+
+.editprofile__upload-control:hover {
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.editprofile__form-group .MuiOutlinedInput-inputMultiline {
+    font-size: 1.6rem !important;
+}
+
+.editprofile__form {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.modal__body {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.editprofile__form-group {
+    position: relative;
+}
+
+.editprofile__form-group span.form__checklength {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 1.2rem;
+    color: rgb(159, 159, 159);
+}

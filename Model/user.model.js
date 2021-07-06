@@ -24,6 +24,10 @@ const userScheme = new mongoose.Schema({
         type: String,
         required: true
     },
+    background: {
+        type: String,
+        default: 'https://res.cloudinary.com/dxnfxl89q/image/upload/v1625327484/Toho/close-up-opened-umbrella-mockup_53876-98796_nj3un5.jpg'
+    },
     avatar: {
         type: String,
         default: 'https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png'

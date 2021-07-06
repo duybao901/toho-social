@@ -15,8 +15,8 @@ export const login = (data) => async (dispatch) => {
                 user: res.data.user
             }
         });
-        dispatch({ type: AUTHTYPES.NOTIFY, payload: { success: res.data.msg } });
         localStorage.setItem('firstLogin', true);
+        dispatch({ type: AUTHTYPES.NOTIFY, payload: { success: res.data.msg } });
 
     } catch (err) {
         dispatch({ type: AUTHTYPES.NOTIFY, payload: { err: err.response.data.msg } });
@@ -80,3 +80,4 @@ export const logout = () => async (dispatch) => {
         })
     }
 }
+

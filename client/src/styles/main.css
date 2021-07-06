@@ -11,3 +11,9 @@
 .main__content.have__login {
     width: 70%;
 }
+
+.loading__wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

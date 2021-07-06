@@ -1,0 +1,78 @@
+.edit-media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100vw;
+    max-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1410;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, .8);
+}
+
+.edit-media__container {
+    width: 600px;
+    height: 700px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.crop-container {
+    position: absolute;
+    top: 57px;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    height: 600px;
+}
+
+.edit-media .controls {
+    position: relative;
+    width: 60%;
+    margin: 10px auto;
+    top: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.edit-media .controls i {
+    font-size: 2rem;
+    margin: 0 15px;
+    color: rgb(101, 101, 101);
+}
+
+.edit-media .reactEasyCrop_CropArea {
+    border: 4px solid crimson;
+}
+
+.edit-media .reactEasyCrop_CropArea::after {
+    display: none;
+}
+
+.edit-media .MuiSlider-rail {
+    margin-top: -4px;
+    height: 5px;
+    border-radius: 2px;
+}
+
+.edit-media .MuiSlider-track {
+    height: 5px;
+    margin-top: -4px;
+    border-radius: 2px;
+}
+
+.edit-media .reactEasyCrop_CropArea::before {
+    display: none;
+}
+
+.edit-media .MuiSlider-thumb {
+    width: 15px;
+    height: 15px;
+    margin-top: -10px;
+}
