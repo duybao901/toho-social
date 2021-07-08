@@ -78,8 +78,13 @@
     background-color: rgba(0, 0, 0, .2);
 }
 
+.editprofile__form-group .MuiOutlinedInput-multiline {
+    padding: 26px 14px;
+}
+
 .editprofile__form-group .MuiOutlinedInput-inputMultiline {
     font-size: 1.6rem !important;
+    line-height: 1.6rem;
 }
 
 .editprofile__form {

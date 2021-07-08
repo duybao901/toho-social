@@ -1,4 +1,4 @@
-import * as GLOBLE_TYPES from '../constants/profile'
+import * as PROFILE_TYPES from '../constants/profile'
 
 const initialState = {
     loading: false,
@@ -8,16 +8,20 @@ const initialState = {
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GLOBLE_TYPES.LOADING:
+        case PROFILE_TYPES.LOADING:
             return {
                 ...state,
                 loading: action.payload
             };
-        case GLOBLE_TYPES.GET_USER:
+
+        case PROFILE_TYPES.GET_USER:
             return {
                 ...state,
                 users: [...state.users, action.payload.user]
             };
+
+        
+            
         default: {
             return state;
         }

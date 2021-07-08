@@ -6,26 +6,25 @@ import Slider from '@material-ui/core/Slider'
 import Cropper from 'react-easy-crop'
 
 import * as GLOBLE_TYPES from '../../redux/constants/index'
+import * as USER_TYPES from '../../redux/constants/user';
 
 function EditMedia() {
     const dispatch = useDispatch();
-    const { show, imageURL, imageId, aspectX, aspectY } = useSelector(state => state.editMedia)
-
-    const [croppedArea, setCropperArae] = useState({});
+    const { show, imageURL, imageId, aspectX, aspectY, edit_url, body } = useSelector(state => state.editMedia)
+    const { auth } = useSelector(state => state);
+    // const [croppedArea, setCropperArae] = useState({});
     const [croppedAreaPixels, setCropperAreaPixels] = useState({});
-
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-        console.log(croppedAreaPixels);
-        setCropperArae(croppedArea);
+        // setCropperArae(croppedArea);
         setCropperAreaPixels(croppedAreaPixels)
     }, [])
 
     const handleRemoveAvatar = async (e) => {
         try {
             dispatch({ type: "SHOW_MEDIA", payload: {} })
-            const res = await axios.post('/api/delete_image', { public_id: imageId })
+            await axios.post('/api/delete_image', { public_id: imageId })
         } catch (error) {
             dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } })
         }
@@ -33,12 +32,32 @@ function EditMedia() {
 
     const hanldeChangeImage = async () => {
         try {
-            // dispatch({ type: "SHOW_MEDIA", payload: {} })
-            console.log(imageURL)
             const newImageURL = imageURL.replace('upload/', `upload/c_crop,h_${croppedAreaPixels.height},w_${croppedAreaPixels.width},x_${croppedAreaPixels.x},y_${croppedAreaPixels.y}/`);
+            try {
+                dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { loading: true } })
+                const res = await axios.patch(`/api/${edit_url}`,
+                    body === 'avatar' ? {
+                        avatar: newImageURL
+                    } : {
+                        background: newImageURL
+                    }, {
+                    headers: {
+                        Authorization: auth.token
+                    }
+                })
+                dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: {} })
+                dispatch({ type: "SHOW_MEDIA", payload: {} })
+                dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { sussess: res.data.msg } })
+                dispatch({
+                    type: body === 'avatar' ? USER_TYPES.CHANGE_AVATAR : USER_TYPES.CHANGE_BACKGROUND,
+                    payload: {
+                        imageURL: newImageURL
+                    }
+                })
 
-            console.log(newImageURL);
-            // const res = await axios.post('/api/delete_image', { public_id: imageId })
+            } catch (error) {
+                dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } })
+            }
         } catch (error) {
             dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } })
         }

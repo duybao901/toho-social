@@ -137,18 +137,30 @@ class UserController {
             await Users.findByIdAndUpdate(req.user._id, {
                 avatar
             })
-            res.json({ user })
+            res.json({ msg: "Change avatar success!" })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
     }
     async changeBackground(req, res) {
         try {
-            const { changeBackground } = req.body;
+            const { background } = req.body;
             await Users.findByIdAndUpdate(req.user._id, {
-                changeBackground
+                background
             })
-            res.json({ user })
+            res.json({ msg: "Change background success!" })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+    async editProfile(req, res) {
+        try {
+            const { userData } = req.body;
+            const user = await Users.findByIdAndUpdate(userData._id, {
+                ...userData
+            })
+
+            return res.json({ msg: "Edit profile success.", user});
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }

@@ -51,7 +51,7 @@ function Infor({ id }) {
                         </div>
                         <div className='infor__box'>
                             <div className="infor__user-background">
-                                <img onClick={() => displayImage(user.background)} src="https://res.cloudinary.com/dxnfxl89q/image/upload/v1625327484/Toho/close-up-opened-umbrella-mockup_53876-98796_nj3un5.jpg" alt='backgrounduser'>
+                                <img onClick={() => displayImage(user.background.replace('c_crop','c_fit'))} src={user.background} alt='backgrounduser'>
                                 </img>
                             </div>
                             <div className="infor__user">
@@ -63,24 +63,22 @@ function Infor({ id }) {
                                     <div>
                                         <h3 className="infor__user-left-fullname">{user.fullname}</h3>
                                         <span className="infor__user-left-username">@{user.username}</span>
-                                        <p className="infor__user-left-bio">
-                                            Soon I’ll be sixty years old.
-                                            Will I think the world is cold
-                                            or will I have a lot of children
-                                            who can warm me?
-                                        </p>
-
+                                        {user.story && <p className="infor__user-left-bio">
+                                            {user.story}
+                                        </p>}
                                         <div className='infor__user-social-link'>
-                                            <i className='bx bx-link' ></i>
-                                            <a href="https://github.com/duycarry123">
-                                                https://github.com/duycarry123
-                                            </a>
+                                            {user.website && <React.Fragment>
+                                                <i className='bx bx-link'></i>
+                                                <a href="https://github.com/duycarry123">
+                                                    {user.website}
+                                                </a>
+                                            </React.Fragment>}
                                         </div>
                                         <div className='infor__user-social'>
-                                            <div className='infor__user-social-map'>
+                                            {user.address && <div className='infor__user-social-map'>
                                                 <i className='bx bx-map' ></i>
-                                                Ninh Kieu, Can Tho, Viet Nam
-                                            </div>
+                                                {user.address}
+                                            </div>}
                                             <div>
                                                 <i className='bx bx-calendar' ></i>
                                                 Joined {dayjs(user.createdAt).format('MMMM YYYY')}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -16,7 +16,7 @@ import CssTextField from '../../utils/cssTextField';
 import { checkImage } from '../../utils/imageUpload'
 
 import * as GLOBLE_TYPES from "../../redux/constants/index"
-
+import { updateUserProfile } from '../../redux/actions/profileAction';
 
 const useStyles = makeStyles(styles);
 
@@ -33,9 +33,9 @@ const GreenRadio = withStyles({
 
 export default function EditProfile({ open, handleClose, users }) {
     const dispatch = useDispatch();
+    const { auth } = useSelector(state => state);
     const classes = useStyles();
     const [userEdit, setUserEdit] = useState({ fullname: '', story: '', address: '', website: '', gender: '' })
-
 
     const { fullname, story, address, website, gender } = userEdit;
 
@@ -46,7 +46,7 @@ export default function EditProfile({ open, handleClose, users }) {
         })
     }
     function onHandleSubmit(e) {
-        console.log(userEdit)
+        dispatch(updateUserProfile({ userData: userEdit, auth }));
     }
 
     const handleUploadAvatar = async (e) => {
@@ -64,7 +64,18 @@ export default function EditProfile({ open, handleClose, users }) {
                         'content-type': 'multipart/form-data',
                     }
                 })
-                dispatch({ type: "SHOW_MEDIA", payload: { show: true, imageURL: res.data.avatar.url, imageId: res.data.avatar.public_id, aspectX: 1, edit_url: "change_avatar", user: users[0] } })
+                dispatch({
+                    type: "SHOW_MEDIA",
+                    payload: {
+                        show: true,
+                        imageURL: res.data.avatar.url,
+                        imageId: res.data.avatar.public_id,
+                        aspectX: 1,
+                        edit_url: "change_avatar",
+                        user: users[0],
+                        body: "avatar",
+                    }
+                })
                 dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: {} })
             } catch (error) {
                 if (error) {
@@ -74,8 +85,38 @@ export default function EditProfile({ open, handleClose, users }) {
         }
     }
 
-    function handleUploadBackground(e) {
-        console.log(e.target)
+    const handleUploadBackground = async (e) => {
+        const file = e.target.files[0];
+        const err = checkImage(file);
+        if (err) {
+            dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: err } })
+        } else {
+            let formData = new FormData();
+            formData.append('file', file);
+            dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { loading: true } })
+            try {
+                const res = await axios.post("/api/upload_image", formData, {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                    }
+                })
+                dispatch({
+                    type: "SHOW_MEDIA",
+                    payload: {
+                        show: true, imageURL: res.data.avatar.url,
+                        imageId: res.data.avatar.public_id,
+                        aspectX: 3,
+                        edit_url: "change_background",
+                        body: "background",
+                    }
+                })
+                dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: {} })
+            } catch (error) {
+                if (error) {
+                    dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
+                }
+            }
+        }
     }
 
     useEffect(() => {
@@ -120,7 +161,7 @@ export default function EditProfile({ open, handleClose, users }) {
                                 <div className='editprofile__background'>
                                     <div className="editprofile__upload-avatar">
                                         <div className="editprofile__upload-control">
-                                            <input type='file' id='upload-background' className="editprofile__upload"></input>
+                                            <input onChange={handleUploadBackground} type='file' id='upload-background' className="editprofile__upload"></input>
                                             <i className='bx bx-camera'></i>
                                         </div>
                                     </div>
@@ -191,7 +232,7 @@ export default function EditProfile({ open, handleClose, users }) {
                                                 />
                                             </div>
                                             <span className='form__checklength'>
-                                                {address.length}/30
+                                                {address.length}/100
                                             </span>
                                         </div>
                                         <div className="editprofile__form-group">
@@ -208,7 +249,7 @@ export default function EditProfile({ open, handleClose, users }) {
                                                 />
                                             </div>
                                             <span className='form__checklength'>
-                                                {website.length}/100
+                                                {website.length}/80
                                             </span>
                                         </div>
                                         <FormControl style={{ marginBottom: '30px' }} component="fieldset">
