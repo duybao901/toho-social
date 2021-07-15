@@ -1,5 +1,5 @@
 const cloudinary = require('cloudinary');
-const js = require('fs');
+const fs = require('fs');
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -49,7 +49,7 @@ class UploadController {
 }
 
 const removeTempFile = (filePath) => {
-    js.unlink(filePath, (err) => {
+    fs.unlink(filePath, (err) => {
         if (err) throw err;
     });
 };

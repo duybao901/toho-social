@@ -2,7 +2,7 @@ import React from 'react'
 
 function Message() {
     return (
-        <div>
+        <div className="main__container-right">
             Message
         </div>
     )

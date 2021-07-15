@@ -12,8 +12,37 @@
     width: 70%;
 }
 
-.loading__wrapper{
+.loading__wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.main__container-right {
+    width: 925px;
+}
+
+.main__content {
+    position: relative;
+    min-height: 100vh;
+    border-right: 1px solid #f1f1f1;
+}
+
+.main__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    height: 50px;
+    position: fixed;
+    width: 526px;
+    border-bottom: 1px solid #f1f1f1;
+    background-color: #fff;
+    z-index: 10;
+}
+
+.main__header-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f1419;
 }

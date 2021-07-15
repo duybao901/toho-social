@@ -11,7 +11,7 @@ const Profile = () => {
     const { id } = useParams();
     const { profile } = useSelector(state => state);
     return (
-        <div className="profile">
+        <div className="main__container-right profile">
             {profile.loading ? <div style={{ width: "600px" }} className="loading__wrapper">
                 <img style={{width:"100px"}} src={Loading} alt='imgloading' />
             </div> : <Infor id={id} />}

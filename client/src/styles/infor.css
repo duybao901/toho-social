@@ -6,7 +6,7 @@
     max-width: 600px;
     width: 600px;
     border-right: 1px solid #f1f1f1;
-    /* min-height: 200vh; */
+    min-height: 100vh;
     position: relative;
     z-index: 1;
 }
@@ -165,10 +165,32 @@
     transition: all .15s ease-in-out;
     width: 170px;
     max-width: 170px;
+    user-select: none;
 }
 
 .infor__user-btn-edit:hover {
     background-color: var(--color-light-blue-hover);
+}
+
+.infor__user-btn-edit.btn__followed span:last-child {
+    display: none;
+}
+
+.infor__user-btn-edit.btn__followed:hover span:last-child {
+    display: block;
+}
+
+.infor__user-btn-edit.btn__followed:hover span:first-child {
+    display: none;
+}
+
+.infor__user-btn-edit.btn__followed {
+    background-color: var(--color-blue);
+    color: #fff;
+}
+
+.infor__user-btn-edit.btn__follow {
+    width: 130px;
 }
 
 .infor__user-social-link {
@@ -205,4 +227,28 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.infor__user-follow {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.infor__user-follow p {
+    margin: 0;
+    font-size: 1.5rem;
+    margin-right: 10px;
+    color: #536471;
+}
+
+.infor__user-follow p:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.infor__user-follow p span {
+    font-weight: 700;
+    /* margin-right: 4px */
+    color: #0f1419;
 }

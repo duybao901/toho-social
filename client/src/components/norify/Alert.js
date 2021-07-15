@@ -10,7 +10,7 @@ function Alert({ msg }) {
 
     return (
 
-        <div className='alert'>
+        <div className='alert__message'>
             <div className={`alert__box ${msg.type}`}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <h2 className="alert__box-title">

@@ -1,0 +1,16 @@
+.home__search {
+    margin-top: 5px;
+}
+
+.home__search .home__search-container {
+    /* width: 100%; */
+    position: fixed;
+    width: 330px;
+}
+
+.home__status {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #f1f1f1;
+    top: 50px;
+}

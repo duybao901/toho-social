@@ -50,6 +50,7 @@ export default function EditProfile({ open, handleClose, users }) {
     }
 
     const handleUploadAvatar = async (e) => {
+        e.preventDefault();
         const file = e.target.files[0];
         const err = checkImage(file);
         if (err) {

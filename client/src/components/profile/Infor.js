@@ -6,18 +6,32 @@ import dayjs from 'dayjs'
 import Search from "../search/Search"
 import * as profileAction from '../../redux/actions/profileAction'
 import EditProfile from '../editprofile/EditProfile'
+import Followings from '../follow/Followings'
+import Followers from '../follow/Followers'
+
+import FollowButton from '../FollowButton'
 
 function Infor({ id }) {
     const dispatch = useDispatch();
     const { auth, profile } = useSelector(state => state)
     const [userData, setUserData] = useState([]);
     const [openEdit, setOpenEdit] = useState(false);
+    const [followers, setFollowers] = useState(false);
+    const [followings, setFollowings] = useState(false);
 
     function openModalEditProfile() {
         setOpenEdit(true)
     }
     function closeModalEditProfile() {
         setOpenEdit(false)
+    }
+
+    function handleOpenFollowers() {
+        setFollowers(true);
+    }
+
+    function handleOpenFollowings() {
+        setFollowings(true);
     }
 
 
@@ -51,7 +65,7 @@ function Infor({ id }) {
                         </div>
                         <div className='infor__box'>
                             <div className="infor__user-background">
-                                <img onClick={() => displayImage(user.background.replace('c_crop','c_fit'))} src={user.background} alt='backgrounduser'>
+                                <img onClick={() => displayImage(user.background.replace('c_crop', 'c_fit'))} src={user.background} alt='backgrounduser'>
                                 </img>
                             </div>
                             <div className="infor__user">
@@ -84,14 +98,21 @@ function Infor({ id }) {
                                                 Joined {dayjs(user.createdAt).format('MMMM YYYY')}
                                             </div>
                                         </div>
-
+                                    </div>
+                                    <div className="infor__user-follow">
+                                        <p onClick={handleOpenFollowers}>
+                                            <span>{user.followers.length}</span> Followers
+                                        </p>
+                                        {followers && <Followers setFollowers={setFollowers} followers={followers} users={user.followers} />}
+                                        <p onClick={handleOpenFollowings}>
+                                            <span>{user.followings.length}</span> Following
+                                        </p>
+                                        {followings && <Followings setFollowings={setFollowings} followings={followings} users={user.followings} />}
                                     </div>
                                 </div>
                                 {id === auth.user._id ? <div onClick={openModalEditProfile} className='infor__user-btn-edit'>
                                     Edit Profile
-                                </div> : <div className='infor__user-btn-edit'>
-                                    Follow
-                                </div>}
+                                </div> : <FollowButton user={user} />}
 
                             </div>
                         </div>
@@ -106,7 +127,7 @@ function Infor({ id }) {
                 </div>
             })}
             <EditProfile open={openEdit} handleClose={closeModalEditProfile} users={userData && userData} />
-        </div>
+        </div >
     )
 }
 

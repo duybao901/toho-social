@@ -5,13 +5,15 @@ import notify from "./notifyReducer";
 import profile from "./profileReducer";
 import display from './displayReducer'
 import editMedia from './editmediaReducer'
+import homePost from './postReducer';
 
 const myReducer = combineReducers({
     auth,
     notify,
     profile,
     display,
-    editMedia
+    editMedia,
+    homePost
 });
 
 export default myReducer;

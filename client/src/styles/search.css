@@ -24,21 +24,22 @@
 
 .search__form-icon {
     font-size: 2.4rem;
-    color: #585858;
+    color: #536471;
 }
 
 .search__form form input {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 20px;
+    left: 15px;
     width: 80%;
     height: 80%;
     background-color: transparent;
     border: none;
     outline: none;
     padding-left: 40px;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    color: #0f1419;
 }
 
 .search__form-clear {

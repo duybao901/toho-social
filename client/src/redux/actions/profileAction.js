@@ -20,7 +20,6 @@ export const getProfileUser = ({ users, id, auth }) => async (dispatch) => {
     }
 }
 
-
 export const updateUserProfile = ({ userData, auth }) => async (dispatch) => {
     if (!userData.fullname) {
         return dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: "Please add your fullname." } });
@@ -45,7 +44,7 @@ export const updateUserProfile = ({ userData, auth }) => async (dispatch) => {
     try {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { loading: true } });
 
-        const res = await putDataAPI('edit_profile', { userData }, auth.token);
+        const res = await putDataAPI('edit_profile', {...userData}, auth.token);
 
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { success: res.data.msg } });
 
@@ -59,6 +58,70 @@ export const updateUserProfile = ({ userData, auth }) => async (dispatch) => {
                 }
             }
         })
+    } catch (error) {
+        dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
+    }
+}
+
+export const follow = ({ users, user, auth }) => async (dispatch) => {
+    var newUser;
+    if (users.every(item => item._id !== user._id)) {
+        newUser = { ...user, followers: [...user.followers, auth.user] }
+    } else {
+        users.forEach(item => {
+            if (item._id === user._id) {
+                newUser = { ...item, followers: [...item.followers, auth.user] }
+            }
+        })
+    }
+
+    dispatch({
+        type: PROFILE_TYPES.FOLLOW,
+        payload: newUser
+    })
+
+    dispatch({
+        type: GLOBLE_TYPES.AUTH,
+        payload: {
+            ...auth,
+            user: {
+                ...auth.user,
+                followings: [
+                    ...auth.user.followings,
+                    newUser
+                ]
+            }
+        }
+    })
+
+    try {
+        await putDataAPI(`/${user._id}/follow`, null, auth.token);
+    } catch (error) {
+        dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
+    }
+}
+
+export const unfollow = ({ users, user, auth }) => async (dispatch) => {
+    const newUser = { ...user, followers: user.followers.filter(user => user._id !== auth.user._id) };
+
+    dispatch({
+        type: PROFILE_TYPES.UNFOLLOW,
+        payload: newUser
+    })
+
+    dispatch({
+        type: GLOBLE_TYPES.AUTH,
+        payload: {
+            ...auth,
+            user: {
+                ...auth.user,
+                followings: auth.user.followings.filter(user => user._id !== newUser._id)
+            }
+        }
+    })
+
+    try {
+        await putDataAPI(`/${user._id}/unfollow`, null, auth.token);
     } catch (error) {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
     }

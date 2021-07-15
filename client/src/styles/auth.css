@@ -95,8 +95,12 @@
     flex-direction: column;
 }
 
+.register__right a img {
+    display: none;
+}
+
 .register__form {
-    width: 70%;
+    width: 100%;
     margin-top: 20px;
 }
 
@@ -162,4 +166,15 @@
     text-align: center;
     margin: 2px 0;
     font-size: 1.3rem;
+}
+
+.register__gender-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register__gender-box a{
+    font-size: 1.4rem;
+    color: var(--color-blue);
 }

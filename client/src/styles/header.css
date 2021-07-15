@@ -1,6 +1,8 @@
 .header {
-    min-width: 275px;
+    width: 275px;
     height: 100vh;
+    position: relative;
+    z-index: 11;
 }
 
 .header__container {
@@ -9,8 +11,8 @@
     width: 275px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     border-right: 1px solid #f1f1f1;
+    background-color: #fff;
 }
 
 .header__logo {
@@ -55,6 +57,38 @@
     font-weight: 700;
     transition: background-color .1s linear;
     border-radius: 40px;
+}
+
+.menu__list-item--btn {
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+.menu__list-item span.menu__list-post-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    padding: 0 50px;
+    width: auto;
+    font-weight: 700;
+    transition: background-color .1s linear;
+    border-radius: 40px;
+    font-size: 1.8rem;
+    color: #fff;
+    width: 70%;
+    height: 45px;
+    background-color: var(--color-blue);
+    cursor: pointer;
+    user-select: none;
+}
+
+.menu__list-item span.menu__list-post-btn i {
+    display: none;
+}
+
+.menu__list-item span.menu__list-post-btn:hover {
+    background-color: var(--color-blue-light-dark);
 }
 
 .menu__list-item a:hover {

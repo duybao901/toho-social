@@ -145,16 +145,20 @@ function Register() {
                             fullWidth
                             helperText={errMsg && errMsg.cf_password ? errMsg.cf_password : " "}
                         />
-
-                        <FormControl style={{ marginBottom: '30px' }} component="fieldset">
-                            <RadioGroup aria-label="gender" name="gender" value={gender} onChange={onHandleChange}>
-                                <div className='register__form-gr'>
-                                    <FormControlLabel value="male" control={<GreenRadio />} label="Male" />
-                                    <FormControlLabel value="female" control={<GreenRadio />} label="Female" />
-                                    <FormControlLabel value="other" control={<GreenRadio />} label="Other" />
-                                </div>
-                            </RadioGroup>
-                        </FormControl>
+                        <div className="register__gender-box">
+                            <FormControl style={{ marginBottom: '10px' }} component="fieldset">
+                                <RadioGroup aria-label="gender" name="gender" value={gender} onChange={onHandleChange}>
+                                    <div className='register__form-gr'>
+                                        <FormControlLabel value="male" control={<GreenRadio />} label="Male" />
+                                        <FormControlLabel value="female" control={<GreenRadio />} label="Female" />
+                                        <FormControlLabel value="other" control={<GreenRadio />} label="Other" />
+                                    </div>
+                                </RadioGroup>
+                            </FormControl>
+                            <Link to='/'>
+                                Login now
+                            </Link>
+                        </div>
                         <button className='button__primary-ds active'>Register</button>
                     </form>
                 </div>

@@ -1,0 +1,72 @@
+.followers__body {
+    max-height: 590px;
+    height: 590px;
+    overflow-y: auto;
+}
+
+.followers__user {
+    min-height: 90px;
+    border-bottom: 1px solid #f1f1f1;
+    position: relative;
+    z-index: 8;
+    transition: all .15s linear;
+}
+
+.followers__user:hover {
+    background-color: #f1f1f1;
+}
+
+.followers__user a {
+    display: flex;
+    padding: 12px;
+}
+
+.followers__user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.followers__user-infor {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.followers__user-infor-wraper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.followers__user-infor-wraper div {
+    display: flex;
+    flex-direction: column;
+}
+
+.followers__user-infor-fullname {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f1419;
+}
+
+.followers__user-infor-username {
+    color: #536471;
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.followers__user-infor-bio {
+    color: #536471;
+    font-size: 1.5rem;
+    color: #0f1419;
+}
+
+.followers__user-follow {
+    position: absolute;
+    z-index: 9;
+    top: 10px;
+    right: 20px;
+}

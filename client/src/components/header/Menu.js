@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../redux/actions/authAction'
+
+import StatusModal from '../StatusModal'
+
 const menuList = [
     {
         path: "/",
@@ -33,7 +36,9 @@ const menuList = [
 function Menu() {
     const location = useLocation();
     const { auth } = useSelector(state => state)
+    const [openStatus, setOpenStatus] = useState(false);
     const dispatch = useDispatch();
+
     function isActive(path) {
         if (path === location.pathname) {
             return 'active'
@@ -43,6 +48,14 @@ function Menu() {
 
     function handleLogout() {
         dispatch(logout());
+    }
+
+    function hanldeOpenStatus() {
+        setOpenStatus(true);
+    }
+
+    function handleCloseStatus() {
+        setOpenStatus(false);
     }
 
     return (
@@ -66,6 +79,16 @@ function Menu() {
                         </span>
                     </Link>
                 </li>
+                <li className='menu__list-item menu__list-item--btn'>
+                    <span className="menu__list-post-btn" onClick={hanldeOpenStatus}>
+                        <i className='bx bxs-edit-alt'></i>
+                        <span>
+                            Post
+                        </span>
+                    </span>
+                    <StatusModal open={openStatus} handleClose={handleCloseStatus} />
+                </li>
+
             </ul>
 
             <div className='menu__dropdown' role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

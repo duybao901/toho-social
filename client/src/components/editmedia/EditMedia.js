@@ -35,6 +35,12 @@ function EditMedia() {
             const newImageURL = imageURL.replace('upload/', `upload/c_crop,h_${croppedAreaPixels.height},w_${croppedAreaPixels.width},x_${croppedAreaPixels.x},y_${croppedAreaPixels.y}/`);
             try {
                 dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { loading: true } })
+                dispatch({
+                    type: body === 'avatar' ? USER_TYPES.CHANGE_AVATAR : USER_TYPES.CHANGE_BACKGROUND,
+                    payload: {
+                        imageURL: newImageURL
+                    }
+                })
                 const res = await axios.patch(`/api/${edit_url}`,
                     body === 'avatar' ? {
                         avatar: newImageURL
@@ -48,12 +54,7 @@ function EditMedia() {
                 dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: {} })
                 dispatch({ type: "SHOW_MEDIA", payload: {} })
                 dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { sussess: res.data.msg } })
-                dispatch({
-                    type: body === 'avatar' ? USER_TYPES.CHANGE_AVATAR : USER_TYPES.CHANGE_BACKGROUND,
-                    payload: {
-                        imageURL: newImageURL
-                    }
-                })
+              
 
             } catch (error) {
                 dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } })

@@ -1,5 +1,6 @@
 :root {
     --color-blue: #1DA1F2;
+    --color-blue-light-dark: #1a89ce;
     --color-light-blue: #59b6f0;
     --color-extra-light-blue: #8ec9ee;
     --color-light-blue-hover: rgba(99, 185, 238, 0.2);
@@ -14,9 +15,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* touch-action: none; */
+}
+
+.App {
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 body {
+    max-width: 100vw;
     overflow-x: hidden;
 }
 
@@ -69,9 +77,17 @@ ul li {
 /* Modal  */
 
 @import url('./styles/modal.css');
-
 /* Edit Media */
+
 @import url('./styles/editmedia.css');
+/* Followers */
+
+@import url('./styles/followers.css');
+/* Status */
+
+@import url('./styles/status.css');
+/* Home */
+@import url('./styles/home.css');
 /*! Reponsive */
 
 @import url('./styles/reponsive.css');

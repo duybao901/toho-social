@@ -51,7 +51,7 @@ class UserController {
             const { email, password } = req.body
 
             const user = await Users.findOne({ email })
-                .populate("followers following", "avatar username fullname followers following")
+                .populate("followers followings", "-password")
 
             if (!user) return res.status(400).json({ msg: "This email does not exist." })
 
@@ -96,7 +96,7 @@ class UserController {
                 if (err) return res.status(400).json({ msg: "Please login now." })
 
                 const user = await Users.findById(result.id).select("-password")
-                    .populate('followers following', 'avatar username fullname followers following')
+                    .populate('followers followings', '-password')
 
                 if (!user) return res.status(400).json({ msg: "This does not exist." })
 
@@ -122,8 +122,8 @@ class UserController {
     }
     async getUser(req, res) {
         try {
-            const user = await Users.findById(req.params.id).select('-password')
-                .populate("followers following", "-password")
+            const user = await Users.findById(req.params.id)
+                .populate("followers followings", "-password")
             if (!user) return res.status(400).json({ msg: "User does not exist." })
 
             res.json({ user })
@@ -155,12 +155,48 @@ class UserController {
     }
     async editProfile(req, res) {
         try {
-            const { userData } = req.body;
-            const user = await Users.findByIdAndUpdate(userData._id, {
-                ...userData
+            const { fullname, mobile, address, story, website, gender } = req.body
+            await Users.findByIdAndUpdate(req.user._id, {
+                fullname, mobile, address, story, website, gender
             })
+            return res.json({ msg: "Edit profile success."});
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+    async follow(req, res) {
+        try {
 
-            return res.json({ msg: "Edit profile success.", user});
+            const user = await Users.find({ _id: req.params._id, followers: req.user._id });
+            if (user.length > 0) {
+                return res.status(400).json({ msg: "You follwed this user." });
+            }
+      
+
+            const newUser = await Users.findOneAndUpdate({ _id: req.params.id }, {
+                $push: { followers: req.user._id }
+            }, { new: true }).populate("followers followings", "-password")
+
+            await Users.findOneAndUpdate({ _id: req.user._id }, {
+                $push: { followings: req.params.id }
+            }, { new: true })
+
+            res.json({ newUser })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+    async unfollow(req, res) {
+        try {
+            const newUser = await Users.findOneAndUpdate({ _id: req.params.id }, {
+                $pull: { followers: req.user._id }
+            }, { new: true }).populate("followers followings", "-password")
+
+            await Users.findOneAndUpdate({ _id: req.user._id }, {
+                $pull: { followings: req.params.id }
+            }, { new: true })
+
+            res.json({ newUser })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }

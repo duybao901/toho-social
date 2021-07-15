@@ -18,6 +18,8 @@ app.use(fileUpload({
 // Router
 app.use('/api', require('./Router/user.route'));
 app.use('/api', require('./Router/upload.router'));
+app.use('/api', require('./Router/post.router'));
+
 
 // Connect mongoodb
 const MONGODB_URL = process.env.MONGODB_URL

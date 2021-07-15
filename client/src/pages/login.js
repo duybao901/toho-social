@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom';
 
-
-
 import * as authActions from '../redux/actions/authAction'
 
 import CssTextField from '../utils/cssTextField';

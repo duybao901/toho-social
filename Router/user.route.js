@@ -15,4 +15,8 @@ router.get('/user/:id', auth, UserController.getUser);
 router.patch('/change_avatar', auth, UserController.changeAvatar);
 router.patch('/change_background', auth, UserController.changeBackground);
 router.put('/edit_profile', auth, UserController.editProfile);
+
+router.put('/:id/follow', auth, UserController.follow);
+router.put('/:id/unfollow', auth, UserController.unfollow);
+
 module.exports = router;

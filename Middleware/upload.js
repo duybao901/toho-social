@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const uploadImg = (req, res, next) => {
     try {
         
