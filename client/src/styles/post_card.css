@@ -1,0 +1,176 @@
+.post__card {
+    width: 100%;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    /* padding: 12px 0px; */
+}
+
+.card__avatar {
+    overflow: hidden;
+    margin-right: 10px;
+    transition: all .15s linear;
+}
+
+.card__avatar:hover {
+    filter: brightness(92%);
+}
+
+.card__avatar img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* border: 1px solid #f1f1f1; */
+}
+
+.card__header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 8px 0px 8px;
+}
+
+.card__header-left {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 9;
+}
+
+.card__header-left.user__popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #f1f1f1;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .15s linear;
+    z-index: 110;
+}
+
+.card__header-left:hover .card__header-left.user__popup {
+    opacity: 1;
+    visibility: visible;
+}
+
+.card__user-infor {
+    display: flex;
+    flex-direction: column;
+}
+
+.card__user-infor-fullname {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-black);
+}
+
+.card__user-infor-username {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #536471;
+}
+
+.card__header-right.dropdown .dropdown__button {
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-text-grey);
+}
+
+.card__header-right.dropdown .dropdown-menu {
+    user-select: none;
+    box-shadow: rgb(101 119 134 / 10%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px;
+    border: none;
+}
+
+.card__header-right.dropdown .dropdown-menu .dropdown-item {
+    cursor: pointer;
+    padding: 8px 14px;
+    top: 100% !important;
+    left: 100% !important;
+    font-size: 1.4rem;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+}
+
+.card__header-right.dropdown .dropdown-menu .dropdown-item i {
+    margin-right: 5px;
+    font-size: 1.6rem;
+    color: var(--color-text-grey);
+}
+
+.card__header-right.dropdown .dropdown-menu .dropdown-item:active {
+    transition: all .15s linear;
+    background-color: #f7f6f6;
+    color: #16181b;
+}
+
+.posts__loading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.posts__loading img {
+    width: 80px;
+    height: 80px;
+}
+
+.card__body-content {
+    font-size: 1.6rem;
+    color: var(--color-text-black);
+    padding: 8px 8px 0px 8px;
+}
+
+.card__body-carousel {
+    margin-top: 8px;
+}
+
+.card__body .readMore {
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.6rem;
+    color: var(--color-blue);
+    /* text-decoration: underline; */
+}
+
+/* Card Footer */
+
+.card__icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+}
+
+.card__icons .card__icons-box i {
+    font-size: 2.4rem;
+    margin-right: 10px;
+    cursor: pointer;
+    color: var(--color-text-grey)
+}
+
+.card__bookmark i {
+    font-size: 2.4rem;
+    cursor: pointer;
+    color: var(--color-text-grey)
+}
+
+.card__likes {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 12px;
+}
+
+.card__likes span {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.card__icons .card__icons-box i.card__post--islike {
+    color: var(--color-blue)
+}

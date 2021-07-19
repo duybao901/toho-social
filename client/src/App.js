@@ -12,32 +12,40 @@ import WatchImg from './components/watchimg/WatchImg';
 import EditMedia from './components/editmedia/EditMedia';
 import Header from './components/header/Header';
 import * as authActions from './redux/actions/authAction'
+import * as postActions from './redux/actions/postAction'
 function App() {
-  const { auth } = useSelector(state => state);
+    const { auth } = useSelector(state => state);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(authActions.refreshToken());
-  }, [dispatch])
+    const dispatch = useDispatch();
 
-  return (
-    <div className="App">
-      <Notify />
-      <WatchImg />
-      <EditMedia />
-      <div className='main'>
-        <div className="main__container">
-          {auth.token && <Header />}
+    useEffect(() => {
+        dispatch(authActions.refreshToken());
+    }, [dispatch])
 
-          <Route path='/' component={auth.token ? Home : Login} exact />
-          <Route path='/register' component={Register} exact />
+    useEffect(() => {
+        if (auth.token) {
+            dispatch(postActions.getPosts({ auth }));
+        }
+    }, [dispatch, auth.token, auth])
 
-          <PrivateRouter path='/:page' component={PageRender} exact />
-          <PrivateRouter path='/:page/:id' component={PageRender} exact />
+    return (
+        <div className="App">
+            <Notify />
+            <WatchImg />
+            <EditMedia />
+            <div className='main'>
+                <div className="main__container">
+                    {auth.token && <Header />}
+
+                    <Route path='/' component={auth.token ? Home : Login} exact />
+                    <Route path='/register' component={Register} exact />
+
+                    <PrivateRouter path='/:page' component={PageRender} exact />
+                    <PrivateRouter path='/:page/:id' component={PageRender} exact />
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default App;

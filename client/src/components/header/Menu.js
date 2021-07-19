@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../redux/actions/authAction'
 
 import StatusModal from '../StatusModal'
+import * as POST_TYPES from '../../redux/constants/post'
 
 const menuList = [
     {
@@ -56,6 +57,7 @@ function Menu() {
 
     function handleCloseStatus() {
         setOpenStatus(false);
+        dispatch({ type: POST_TYPES.STATUS, payload: { onEdit: false } })
     }
 
     return (

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -26,14 +28,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StatusModal({ open, handleClose }) {
     const classes = useStyles();
-
+    const { status } = useSelector(state => state);
     return (
         <div>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={open}
+                open={open || status.onEdit}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -41,7 +43,7 @@ export default function StatusModal({ open, handleClose }) {
                     timeout: 500,
                 }}
             >
-                <Fade in={open}>
+                <Fade in={open || status.onEdit}>
                     <div className={classes.paper}>
                         <div className="modal__heading editprofile__heading">
                             <div className='modal__heading-left'>
@@ -50,7 +52,7 @@ export default function StatusModal({ open, handleClose }) {
                                 </div>
                             </div>
                         </div>
-                        <Status />
+                        <Status open={open}/>
                     </div>
                 </Fade>
             </Modal>

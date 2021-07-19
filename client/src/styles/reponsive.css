@@ -125,6 +125,16 @@
     .infor__user-background {
         width: 103%;
     }
+    /* Status */
+    .status__stream {
+        height: 300px;
+    }
+    .show__images {
+        max-height: 120px;
+    }
+    .show__images-item {
+        height: 120px;
+    }
 }
 
 @media (max-width:767px) {
@@ -143,6 +153,20 @@
     }
     .infor__user-background {
         width: 105%;
+    }
+    .status__stream {
+        flex-direction: column;
+    }
+    .status__stream video {
+        width: 100%;
+        height: 100%;
+    }
+    .status__steam-control {
+        margin-top: 20px;
+        display: flex;
+    }
+    .makeStyles-paper-7{
+        width: 100% !important;
     }
 }
 

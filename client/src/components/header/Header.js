@@ -7,7 +7,7 @@ function Header() {
         <div className="header">
             <div className="header__container">
                 <div className='header__logo'>
-                    <Link to='/'>
+                    <Link to='/' onClick={() => window.scrollTo({ top: 0 })}>
                         <img style={{ width: '40px', }} src={HeaderLogo} alt='logo'>
                         </img>
                     </Link>

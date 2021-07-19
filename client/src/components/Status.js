@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import * as GLOBLE_TYPES from '../redux/constants/index'
-import { createPost } from '../redux/actions/postAction'
+import { createPost, updatePost } from '../redux/actions/postAction'
 
 
-function Status() {
-    const { auth } = useSelector(state => state);
+function Status({ open }) {
+    const { auth, status } = useSelector(state => state);
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
     const [stream, setStream] = useState(false);
@@ -18,16 +18,35 @@ function Status() {
 
     const dispatch = useDispatch();
 
+    // Auto scroll when add image
     useEffect(() => {
         if (refImages.current) {
-            console.log(refImages)
             refImages.current.scrollTo({
                 top: refImages.current.scrollHeight,
                 behavior: 'smooth'
             })
         }
-    }, [refImages.current.scrollHeight])
+    }, [refImages.current && refImages.current.scrollHeight])
 
+    // Edit Post
+    useEffect(() => {
+        if (status.onEdit) {
+            setContent(status.content);
+            setImages(status.images);
+        } else {
+            setContent('');
+            setImages([]);
+            setStream(false);
+        }
+    }, [status])
+
+    // useEffect(() => {
+    //     if (!open) {
+    //         setContent('');
+    //         setImages([]);
+    //         setStream(false);            
+    //     }
+    // }, [open])
     function handleUploadImages(e) {
         let files = [...e.target.files];
         let err = "";
@@ -47,7 +66,6 @@ function Status() {
         }
         setImages([...images, ...newImages]);
     }
-
 
     function handleRemoveImageItem(index) {
         let newImages = [...images];
@@ -96,7 +114,18 @@ function Status() {
         if (images.length === 0) {
             return dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: "Please add your photo." } });
         }
-        dispatch(createPost({ content, images, auth }))
+        if (status.onEdit) {
+            setContent('');
+            setImages([]);
+            setStream(false);
+            dispatch(updatePost({ content, images, auth, status }))
+        } else {
+            dispatch(createPost({ content, images, auth }))
+            setContent('');
+            setImages([]);
+            setStream(false);
+        }
+
     }
 
     return (
@@ -117,10 +146,10 @@ function Status() {
                             onChange={e => setContent(e.target.value)}
                         />
                     </div>
-                    {images.length > 0 && <div ref={refImages} className="show__images">
+                    {<div ref={refImages} className="show__images">
                         {images.map((image, index) => {
                             return <div key={index} className="show__images-item">
-                                <img src={image.camera ? image.camera : URL.createObjectURL(image)} alt='show__images'>
+                                <img src={image.camera ? image.camera : image.url ? image.url : URL.createObjectURL(image)} alt='show__images'>
                                 </img>
                                 <span onClick={() => handleRemoveImageItem(index)} className="show__images-item-remove">
                                     <i className='bx bx-x'></i>
@@ -132,7 +161,7 @@ function Status() {
                     {stream && <div className='status__stream'>
                         <video autoPlay muted ref={refVideo} width='100' height="100"></video>
 
-                        <div>
+                        <div className="status__steam-control">
                             {stream && <span style={{ marginBottom: "10px" }} onClick={hanldeCapture} className="status__stream-close">
                                 <i className='bx bx-camera'></i>
                             </span>}

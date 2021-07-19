@@ -6,6 +6,7 @@ import profile from "./profileReducer";
 import display from './displayReducer'
 import editMedia from './editmediaReducer'
 import homePost from './postReducer';
+import status from './statusReducer'
 
 const myReducer = combineReducers({
     auth,
@@ -13,7 +14,8 @@ const myReducer = combineReducers({
     profile,
     display,
     editMedia,
-    homePost
+    homePost,
+    status
 });
 
 export default myReducer;

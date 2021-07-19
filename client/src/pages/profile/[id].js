@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Infor from '../../components/profile/Infor'
-import Post from '../../components/profile/Post'
+import Posts from '../../components/profile/Posts'
 
 import Loading from '../../images/globle_loading.gif'
 
@@ -15,7 +15,7 @@ const Profile = () => {
             {profile.loading ? <div style={{ width: "600px" }} className="loading__wrapper">
                 <img style={{width:"100px"}} src={Loading} alt='imgloading' />
             </div> : <Infor id={id} />}
-            <Post />
+            <Posts />
         </div>
     )
 }

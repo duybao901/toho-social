@@ -1,6 +1,7 @@
 import React from 'react'
 import Search from '../components/search/Search'
 import Status from '../components/Status'
+import HomePosts from '../components/home/HomePosts'
 function Home() {
     return (
         <div className="main__container-right">
@@ -9,7 +10,7 @@ function Home() {
                     <div className="main__content">
                         <div className="home__header main__header">
                             <div className='main__header-right'>
-                                <h2 className="main__header-title">
+                                <h2 style={{ cursor: 'pointer' }} className="main__header-title" onClick={() => window.scrollTo({ top: 0 })}>
                                     Home
                                 </h2>
                             </div>
@@ -17,8 +18,15 @@ function Home() {
 
                             </div>
                         </div>
+
                         <div className="home__status">
                             <Status />
+                        </div>
+                        <div className="indicator" style={{ marginTop: '50px' }}>
+
+                        </div>
+                        <div className="home__posts">
+                            <HomePosts />
                         </div>
                     </div>
                 </div>

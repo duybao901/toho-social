@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 import Modal from '@material-ui/core/Modal';
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Followings({ users, followings, setFollowings }) {
     const classes = useStyles();
-
+    const { auth } = useSelector(state => state);
     const handleClose = () => {
         setFollowings(false);
     };
@@ -78,7 +79,7 @@ export default function Followings({ users, followings, setFollowings }) {
                                         </div>
                                     </Link>
                                     <div className="followers__user-follow">
-                                        <FollowButton user={user} />
+                                        {user._id !== auth.user._id && <FollowButton user={user} />}
                                     </div>
                                 </div>
                             })}

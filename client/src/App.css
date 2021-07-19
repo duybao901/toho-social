@@ -9,6 +9,8 @@
     --color-light-grey: #AAB8C2;
     --color-extra-light-grey: #E1E8ED;
     --color-extra-extra-light-grey: #F5F8FA;
+    --color-text-black: #0f1419;
+    --color-text-grey: #536471;
 }
 
 * {
@@ -87,7 +89,11 @@ ul li {
 
 @import url('./styles/status.css');
 /* Home */
+
 @import url('./styles/home.css');
+/* Post Card */
+
+@import url('./styles/post_card.css');
 /*! Reponsive */
 
 @import url('./styles/reponsive.css');
