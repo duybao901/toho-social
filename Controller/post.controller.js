@@ -25,6 +25,13 @@ class PostController {
             let posts = await Posts.find({ user: [...req.user.followings, req.user._id] })
                 .sort("-createdAt")
                 .populate("user likes", "user username email fullname avatar followers")
+                .populate({
+                    path: "comments",
+                    populate: {
+                        path: "user likes",
+                        select: "-password"
+                    },                    
+                })
 
             return res.json({
                 msg: "Success!",
@@ -76,7 +83,7 @@ class PostController {
     }
 
     async unlikePost(req, res) {
-        try {         
+        try {
             await Posts.findOneAndUpdate({ _id: req.params.id }, {
                 $pull: {
                     likes: req.user._id

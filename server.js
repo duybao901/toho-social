@@ -19,6 +19,7 @@ app.use(fileUpload({
 app.use('/api', require('./Router/user.route'));
 app.use('/api', require('./Router/upload.router'));
 app.use('/api', require('./Router/post.router'));
+app.use('/api', require('./Router/comment.router'));
 
 
 // Connect mongoodb

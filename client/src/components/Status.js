@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import * as GLOBLE_TYPES from '../redux/constants/index'
+import * as POST_TYPES from '../redux/constants/post'
 import { createPost, updatePost } from '../redux/actions/postAction'
 
 
@@ -115,15 +116,17 @@ function Status({ open }) {
             return dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: "Please add your photo." } });
         }
         if (status.onEdit) {
+            dispatch({ type: POST_TYPES.STATUS, payload: { onEdit: false } })
             setContent('');
             setImages([]);
             setStream(false);
             dispatch(updatePost({ content, images, auth, status }))
         } else {
-            dispatch(createPost({ content, images, auth }))
+            dispatch({ type: POST_TYPES.STATUS, payload: { onEdit: false } })
             setContent('');
             setImages([]);
             setStream(false);
+            dispatch(createPost({ content, images, auth }))
         }
 
     }

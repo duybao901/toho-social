@@ -94,6 +94,10 @@ ul li {
 /* Post Card */
 
 @import url('./styles/post_card.css');
+
+/* Comment */
+@import url('./styles/comment.css');
+
 /*! Reponsive */
 
 @import url('./styles/reponsive.css');

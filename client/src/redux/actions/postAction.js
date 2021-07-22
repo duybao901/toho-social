@@ -6,16 +6,13 @@ import { postDataAPI, getDataAPI, patchDataAPI } from '../../utils/fetchData';
 export const createPost = ({ content, images, auth }) => async dispatch => {
     let media = [];
     try {
-        console.log(images)
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { loading: true, } });
         if (images.length > 0) media = await imagesUpload(images);
-        console.log(media)
 
         const res = await postDataAPI('create_post',
             { content, images: media }, auth.token
         );
 
-        console.log(res.data)
 
         dispatch({
             type: POST_TYPES.CREATE_POST,
@@ -67,12 +64,12 @@ export const updatePost = ({ content, images, auth, status }) => async dispatch 
         if (images.length > 0) media = await imagesUpload(imgNewUrl);
 
         const res = await patchDataAPI(`post/${status._id}`,
-            { content, images: [...media, ...imgOldUrl] }, auth.token
+            { content, images: [...imgOldUrl, ...media] }, auth.token
         );
 
         dispatch({
             type: POST_TYPES.UPDATE_POST,
-            payload: { newPost: { ...res.data.newPost, content, images, user: auth.user } },
+            payload: { newPost: { ...res.data.newPost, content, images: [...imgOldUrl, ...media], user: auth.user, comments: status.comments } },
         })
 
         dispatch({ type: POST_TYPES.STATUS, payload: { onEdit: false } });
@@ -103,8 +100,7 @@ export const likePost = ({ post, auth }) => async dispatch => {
     })
 
     try {
-        const res = await patchDataAPI(`post/${post._id}/like`, null, auth.token);
-        console.log(res);
+        patchDataAPI(`post/${post._id}/like`, null, auth.token);
     } catch (error) {
         if (error) {
             return dispatch({
@@ -117,7 +113,6 @@ export const likePost = ({ post, auth }) => async dispatch => {
 
     }
 }
-
 
 export const unlikePost = ({ post, auth }) => async dispatch => {
     let newPost = {};

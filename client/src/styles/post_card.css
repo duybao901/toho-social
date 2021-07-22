@@ -2,6 +2,7 @@
     width: 100%;
     border-top: 1px solid #f1f1f1;
     border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 40px;
     /* padding: 12px 0px; */
 }
 
@@ -120,7 +121,7 @@
 }
 
 .card__body-content {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     color: var(--color-text-black);
     padding: 8px 8px 0px 8px;
 }
@@ -143,7 +144,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 10px;
+    padding: 8px 8px 4px 8px;
 }
 
 .card__icons .card__icons-box i {
@@ -173,4 +174,51 @@
 
 .card__icons .card__icons-box i.card__post--islike {
     color: var(--color-blue)
+}
+
+.form__comment {
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid #f1f1f1;
+    display: flex;
+    padding: 0 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form__comment input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+    color: var(--color-text-black);
+    padding: 0 12px;
+    background-color: #f1f1f1;
+    height: 70%;
+    margin: 0 6px;
+    border-radius: 40px;
+}
+
+.form__comment i {
+    cursor: pointer;
+    font-size: 2.4rem;
+    color: var(--color-text-grey);
+}
+
+.form__comment input:focus {
+    outline: none;
+}
+
+.form__comment button {
+    border: none;
+    background-color: transparent;
+    color: var(--color-blue);
+    text-transform: capitalize;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.form__comment button:focus {
+    outline: none;
 }

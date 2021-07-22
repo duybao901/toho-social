@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import LikeButton from '../LikeButton'
 import { useSelector, useDispatch } from 'react-redux'
-import { likePost,unlikePost } from '../../redux/actions/postAction'
+import { likePost, unlikePost } from '../../redux/actions/postAction'
 function CardFooter({ post }) {
     const dispatch = useDispatch();
     const { auth } = useSelector(state => state);
@@ -23,12 +23,12 @@ function CardFooter({ post }) {
         setLoadLike(false);
     };
 
-    const hanldeUnLike = () => {
+    const hanldeUnLike = async () => {
         if (loadLike) return;
         setIsLike(false)
 
         setLoadLike(true);
-        dispatch(unlikePost({ post, auth }));
+        await dispatch(unlikePost({ post, auth }));
         setLoadLike(false);
     };
 
@@ -53,7 +53,7 @@ function CardFooter({ post }) {
                     {post.likes.length} likes
                 </span>
                 <span>
-                    0 comments
+                    {post.comments.length} comments
                 </span>
             </div>
         </div>

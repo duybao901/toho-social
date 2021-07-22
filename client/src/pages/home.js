@@ -22,7 +22,7 @@ function Home() {
                         <div className="home__status">
                             <Status />
                         </div>
-                        <div className="indicator" style={{ marginTop: '50px' }}>
+                        <div style={{ marginTop: '50px' }}>
 
                         </div>
                         <div className="home__posts">
