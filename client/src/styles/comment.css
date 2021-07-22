@@ -67,10 +67,16 @@
 
 .comment__card-rep small {
     font-size: 1.2rem;
-    margin-right: 8px;
     color: #8e8e8e;
     cursor: pointer;
     font-weight: 600;
+}
+
+.comment__card-rep small span {
+    margin-right: 4px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #bdbdbd;
 }
 
 .comment__card-rep small.comment__day {
@@ -144,14 +150,24 @@
     object-fit: cover;
     border-radius: 50%;
 }
-.comments__show-more{
-    padding-left: 10px;
+
+.comments__show-box {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    padding: 0px 10px;
+}
+
+.comments__show-length {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.comments__show-more {
     font-size: 1.4rem;
     font-weight: 600;
     margin: 4px 0;
     cursor: pointer;
     color: var(--color-text);
-}
-.comments__show-more:hover{
-    /* text-decoration: underline; */
 }

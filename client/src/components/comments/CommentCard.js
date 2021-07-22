@@ -113,10 +113,10 @@ function CommentCard({ comment, post, next }) {
                 </div>
                 <div className="comment__card-rep">
                     <small className="comment__day">
-                        {moment(comment.createdAt).fromNow()}
+                        {moment(comment.createdAt).fromNow()} <span>&#8226;</span>
                     </small>
                     <small>
-                        {comment.likes.length} likes
+                        {comment.likes.length} likes <span>&#8226;</span>
                     </small>
                     {
                         !onEdit ?
