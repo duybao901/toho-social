@@ -1,0 +1,30 @@
+.profile__posts {
+    display: flex;
+    width: 600px;
+}
+
+.profile__posts .row {
+    margin-right: -6px;
+    margin-left: -6px;
+}
+
+.profile__posts .row .col {
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+.post__thumb {
+    height: 300px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.post__thumb:hover img {
+    filter: brightness(90%);
+}
+
+.post__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

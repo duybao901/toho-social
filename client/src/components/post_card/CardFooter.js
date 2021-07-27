@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import LikeButton from '../LikeButton'
 import { useSelector, useDispatch } from 'react-redux'
 import { likePost, unlikePost } from '../../redux/actions/postAction'
+import { Link } from 'react-router-dom'
 function CardFooter({ post }) {
     const dispatch = useDispatch();
     const { auth } = useSelector(state => state);
@@ -41,7 +42,9 @@ function CardFooter({ post }) {
                         hanldeLike={hanldeLike}
                         hanldeUnLike={hanldeUnLike}
                     />
-                    <i className='bx bx-message-rounded'></i>
+                    <Link to={`/post/${post._id}`}>
+                        <i className='bx bx-message-rounded'></i>
+                    </Link>
                     <i className='bx bx-share' ></i>
                 </div>
                 <div className="card__bookmark">

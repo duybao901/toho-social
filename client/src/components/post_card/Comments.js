@@ -6,12 +6,18 @@ const Comments = ({ post }) => {
     const [showComments, setShowComments] = useState([])
     const [next, setNext] = useState(2)
 
+    const [replyComments, setReplyComments] = useState([]);
+
     useEffect(() => {
         const newCm = post.comments.filter(cm => !cm.reply)
         setComments(newCm)
         setShowComments(newCm.slice(newCm.length - next < 0 ? 0 : newCm.length - next))
     }, [post.comments, next])
 
+    useEffect(() => {
+        const newRep = post.comments.filter(cm => cm.reply)
+        setReplyComments(newRep)
+    }, [post.comments])
     return comments.length > 0 ? <div className="comments__wapper">
         {
             comments.length - next > 0 ?
@@ -36,12 +42,13 @@ const Comments = ({ post }) => {
 
         }
         {
-            showComments.map((comment, index) => (
-                <CommentDisplay key={index} comment={comment} post={post} />
-            ))
+            showComments.map((comment, index) => {
+                return (
+                    <CommentDisplay key={comment._id ? comment._id : index} comment={comment} post={post}
+                        replyCm={replyComments.filter(item => item.reply === comment._id)} />
+                )
+            })
         }
-
-       
     </div> : ""
 
 

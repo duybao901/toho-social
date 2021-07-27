@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 
-import Search from "../search/Search"
-import * as profileAction from '../../redux/actions/profileAction'
+
 import EditProfile from '../editprofile/EditProfile'
 import Followings from '../follow/Followings'
 import Followers from '../follow/Followers'
 
 import FollowButton from '../FollowButton'
 
-function Infor({ id }) {
-    const dispatch = useDispatch();
-    const { auth, profile } = useSelector(state => state)
+function Infor({ id, auth, profile, dispatch }) {
     const [userData, setUserData] = useState([]);
     const [openEdit, setOpenEdit] = useState(false);
     const [followers, setFollowers] = useState(false);
@@ -39,7 +35,6 @@ function Infor({ id }) {
         if (id === auth.user._id) {
             setUserData([auth.user]);
         } else {
-            dispatch(profileAction.getProfileUser({ users: profile.users, id, auth }));
             const newData = profile.users.filter(user => user._id === id);
             setUserData(newData);
         }
@@ -118,12 +113,11 @@ function Infor({ id }) {
                         </div>
 
                     </div>
-
-                    <div className="infor__search">
+                    {/* <div className="infor__search">
                         <div className="infor__search-container">
                             <Search />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             })}
             <EditProfile open={openEdit} handleClose={closeModalEditProfile} users={userData && userData} />

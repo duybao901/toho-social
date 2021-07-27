@@ -1,0 +1,12 @@
+.detailt__post-loading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+}
+
+.detailt__post-loading img {
+    width: 100px;
+    height: 100px;
+}

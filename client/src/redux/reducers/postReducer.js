@@ -9,12 +9,11 @@ const initialState = {
 
 const postReducer = (state = initialState, action) => {
     switch (action.type) {
-        case POST_TYPES.CREATE_POST: {
+        case POST_TYPES.CREATE_POST:
             return {
                 ...state,
                 posts: [action.payload.newPost, ...state.posts]
-            }
-        }
+            };
         case POST_TYPES.LOADING_POST: {
             return {
                 ...state,

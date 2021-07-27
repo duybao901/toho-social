@@ -6,12 +6,12 @@ import CardFooter from '../post_card/CardFooter';
 
 import Comments from './Comments';
 import InputComment from './InputComment';
-function PostsCard({ post }) {
+function PostsCard({ post, isDetailPost }) {
     return (
         <div className="post__card">
             <div className="indicator"></div>
             <CardHeader post={post} />
-            <CardBody post={post} id={post._id} />
+            <CardBody post={post} id={post._id} isDetailPost={isDetailPost}/>
             <CardFooter post={post} />
 
 

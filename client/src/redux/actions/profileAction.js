@@ -2,22 +2,39 @@ import * as PROFILE_TYPES from '../constants/profile'
 import * as GLOBLE_TYPES from '../constants/index'
 import { getDataAPI, putDataAPI } from '../../utils/fetchData'
 
-export const getProfileUser = ({ users, id, auth }) => async (dispatch) => {
-    if (users.every(user => user._id !== id)) {
-        try {
-            dispatch({ type: PROFILE_TYPES.LOADING, payload: true })
+export const getProfileUser = ({id, auth }) => async (dispatch) => {
+    dispatch({ type: PROFILE_TYPES.GET_ID, payload: id })
+    try {
+        dispatch({ type: PROFILE_TYPES.LOADING, payload: true })
 
-            const res = await getDataAPI(`/user/${id}`, auth.token);
+        const res = await getDataAPI(`/user/${id}`, auth.token);
 
-            dispatch({ type: PROFILE_TYPES.GET_USER, payload: res.data })
-            dispatch({ type: PROFILE_TYPES.LOADING, payload: false })
+        const res1 = await getDataAPI(`/user_posts/${id}`, auth.token)
 
-        } catch (err) {
-            if (err) {
-                dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: err.response.data.msg } })
-            }
+        const users = await res;
+        const posts = await res1;
+
+
+
+        dispatch({
+            type: PROFILE_TYPES.GET_USER,
+            payload: users.data
+        })
+
+        dispatch({
+            type: PROFILE_TYPES.GET_POSTS,
+            payload: { ...posts.data, _id: id, page: 2 }
+        })
+
+
+        dispatch({ type: PROFILE_TYPES.LOADING, payload: false })
+
+    } catch (err) {
+        if (err) {
+            dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: err.response.data.msg } })
         }
     }
+
 }
 
 export const updateUserProfile = ({ userData, auth }) => async (dispatch) => {
@@ -44,7 +61,7 @@ export const updateUserProfile = ({ userData, auth }) => async (dispatch) => {
     try {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { loading: true } });
 
-        const res = await putDataAPI('edit_profile', {...userData}, auth.token);
+        const res = await putDataAPI('edit_profile', { ...userData }, auth.token);
 
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { success: res.data.msg } });
 

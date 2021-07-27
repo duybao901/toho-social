@@ -30,7 +30,7 @@ class PostController {
                     populate: {
                         path: "user likes",
                         select: "-password"
-                    },                    
+                    },
                 })
 
             return res.json({
@@ -49,7 +49,14 @@ class PostController {
 
             const post = await Posts.findOneAndUpdate({ _id: req.params.id }, {
                 content, images
-            })
+            }).populate("user likes", "user username email fullname avatar followers")
+                .populate({
+                    path: "comments",
+                    populate: {
+                        path: "user likes",
+                        select: "-password"
+                    },
+                })
 
             return res.json({
                 msg: "Update post",
@@ -90,6 +97,39 @@ class PostController {
                 }
             }, { new: true })
             return res.json({ msg: "unLike post" });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+
+    async getUserPosts(req, res) {
+        try {
+            const posts = await Posts.find({ user: req.params.id }).sort("-createdAt")
+
+            return res.json({
+                posts,
+                result: posts.length
+            });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+
+    async getDetailPost(req, res) {
+        try {
+            const post = await Posts.findById(req.params.id)
+                .populate("user likes", "user username email fullname avatar followers")
+                .populate({
+                    path: "comments",
+                    populate: {
+                        path: "user likes",
+                        select: "-password"
+                    },
+                })
+
+            return res.json({
+                post
+            });
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }

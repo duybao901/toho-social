@@ -9,7 +9,7 @@ function HomePosts() {
     return (
         <div className="posts">
             {!homePost.loading ?
-                homePost.result > 0 ? homePost.posts.map(post => {
+                homePost.posts.length > 0 ? homePost.posts.map((post) => {
                     return <PostsCard post={post} key={post._id} />
                 }) : <div>
                     <h2>

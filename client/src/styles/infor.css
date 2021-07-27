@@ -1,3 +1,12 @@
+.profile {
+    display: flex;
+}
+
+.profile__container {
+    min-height: 100vh;
+    border-right: 1px solid #f1f1f1;
+}
+
 .infor__container {
     display: flex;
 }
@@ -5,7 +14,6 @@
 .infor__content {
     max-width: 600px;
     width: 600px;
-    border-right: 1px solid #f1f1f1;
     position: relative;
     z-index: 1;
 }

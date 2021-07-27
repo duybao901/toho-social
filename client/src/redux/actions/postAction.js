@@ -16,7 +16,7 @@ export const createPost = ({ content, images, auth }) => async dispatch => {
 
         dispatch({
             type: POST_TYPES.CREATE_POST,
-            payload: { newPost: { ...res.data.newPost, user: auth.user } },
+            payload: { newPost: { ...res.data.newPost, user: auth.user }, },
         })
 
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: {} });
@@ -133,6 +133,24 @@ export const unlikePost = ({ post, auth }) => async dispatch => {
                 }
             })
         }
+    }
+}
 
+export const getDetailPost = (detailPost, id, auth) => async dispatch => {
+    if (detailPost.every(post => post._id !== id)) {
+        try {
+            const res = await getDataAPI(`/post/${id}`, auth.token)
+            dispatch({ type: POST_TYPES.GET_POST, payload: res.data.post })
+        } catch (error) {
+            if (error) {
+                return dispatch({
+                    type: GLOBLE_TYPES.NOTIFY,
+                    payload: {
+                        err: error.response.data.msg
+                    }
+                })
+            }
+
+        }
     }
 }

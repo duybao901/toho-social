@@ -1,12 +1,21 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { removeComment } from '../../redux/actions/commentAction'
 
 function CommentMenu({ post, comment, auth, setOnedit }) {
+    const dispatch = useDispatch()
+
+    function handleRemoveComment() {
+        dispatch(removeComment(post, comment, auth));
+    }
+
     const menuItem = () => {
         return <>
             <div onClick={() => setOnedit(true)} className="dropdown-item comment__menu-item"><i className='bx bx-pencil'></i>Edit</div>
-            <div className="dropdown-item comment__menu-item"><i className='bx bx-trash-alt' ></i>Remove</div>
+            <div onClick={handleRemoveComment} className="dropdown-item comment__menu-item"><i className='bx bx-trash-alt' ></i>Remove</div>
         </>
     }
+
     return (
         <div className="comment__menu">
             {
@@ -18,7 +27,7 @@ function CommentMenu({ post, comment, auth, setOnedit }) {
                             post.user._id === auth.user._id ?
                                 comment.user._id === auth.user._id ? menuItem() :
                                     <div>
-                                        <div className="dropdown-item comment__menu-item"><i className='bx bx-trash-alt' ></i>Remove</div>
+                                        <div onClick={handleRemoveComment} className="dropdown-item comment__menu-item"><i className='bx bx-trash-alt' ></i>Remove</div>
                                     </div> : comment.user._id === auth.user._id && menuItem()
                         }
                     </div>

@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import Carousel from '../Carousel'
-function CardBody({ post, id }) {
+function CardBody({ post, isDetailPost }) {
     const [readMore, setReadMore] = useState(false);
-
-
 
     return (
         <div className="card__body">
@@ -23,7 +21,7 @@ function CardBody({ post, id }) {
                 }
             </div>}
             <div className="card__body-carousel">
-                {post.images.length > 0 && <Carousel images={post.images} id={post._id} />}
+                {post.images.length > 0 && <Carousel images={post.images} id={post._id} isDetailPost={isDetailPost}/>}
             </div>
         </div>
     )

@@ -165,7 +165,7 @@
         margin-top: 20px;
         display: flex;
     }
-    .makeStyles-paper-7{
+    .makeStyles-paper-7 {
         width: 100% !important;
     }
 }
@@ -248,6 +248,12 @@
     }
     .status__body {
         width: 100%;
+    }
+    .profile__container {
+        width: 100%;
+    }
+    .loading__wrapper{
+        width: 100% !important;
     }
 }
 

@@ -1,16 +1,23 @@
-import React from 'react'
-// import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
 
-// import CardHeader from '../post_card/CardHeader';
-// import CardBody from '../post_card/CardBody';
-// import CardFooter from '../post_card/CardFooter';
+import PostThumb from '../PostThumb';
 
-function Posts() {
-    // const { homePost } = useSelector(state => state);
-    // const { posts } = homePost;
+function Posts({ id, auth, profile, dispatch }) {
+    const [posts, setPosts] = useState([]);
+    const [result, setResult] = useState();
+    useEffect(() => {
+        profile.userPosts.forEach(item => {
+            if (item._id === id) {
+                setPosts(item.posts)
+                setResult(item.result)
+            }
+        })
+    }, [profile.userPosts, id])
     return (
-        <div>
-            
+        <div className="profile__posts">
+            <div className="row">
+                <PostThumb result={result} posts={posts} id={id} auth={auth} dispatch={dispatch} />
+            </div>
         </div>
     )
 }
