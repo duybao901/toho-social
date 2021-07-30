@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 
 import { createComment } from '../../redux/actions/commentAction'
 
-const InputComment = ({ children, comment, post, onReply, setOnReply }) => {
+const InputComment = ({ children, post, onReply, setOnReply }) => {
     const dispatch = useDispatch();
     const { auth } = useSelector(state => state);
     const [content, setContent] = useState('');
+
     function handleSubmit(e) {
         e.preventDefault();
         if (!content.trim()) {
@@ -32,7 +33,7 @@ const InputComment = ({ children, comment, post, onReply, setOnReply }) => {
     return (
         <form onSubmit={handleSubmit} className="form__comment">
             {children}
-            {onReply && <Link to={`/profile/${onReply.user._id}`} className="reply__username">{onReply && '@' + onReply.user.username}: </Link>}            
+            {onReply && <Link to={`/profile/${onReply.user._id}`} className="reply__username">{onReply && '@' + onReply.user.username}: </Link>}
             <img className="form__comment-avatar" src={auth.user.avatar} alt="input-avatar"></img>
             <input placeholder="Add a comment..." type="text" value={content} onChange={e => setContent(e.target.value)} />
             <button type="submit">

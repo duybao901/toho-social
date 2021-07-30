@@ -28,3 +28,11 @@
     height: 100%;
     object-fit: cover;
 }
+
+.post__thumb-icon-carousel{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    color: #fff;
+    font-size: 2rem;
+}

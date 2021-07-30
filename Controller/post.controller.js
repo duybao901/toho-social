@@ -1,5 +1,20 @@
 const Posts = require('../Model/post.model')
 
+class Apifeatures {
+    constructor(query, queryString) {
+        this.query = query;
+        this.queryString = queryString;
+    }
+
+    paginating() {
+        const page = this.queryString.page * 1 || 1
+        const limit = this.queryString.limit * 1 || 9
+        const skip = (page - 1) * limit
+        this.query = this.query.skip(skip).limit(limit);
+        return this;
+    }
+
+}
 class PostController {
     async createPost(req, res) {
         try {
@@ -22,8 +37,10 @@ class PostController {
 
     async getPosts(req, res) {
         try {
-            let posts = await Posts.find({ user: [...req.user.followings, req.user._id] })
-                .sort("-createdAt")
+
+            const features = new Apifeatures(Posts.find({ user: [...req.user.followings, req.user._id] }), req.query).paginating()
+
+            let posts = await features.query.sort("-createdAt")
                 .populate("user likes", "user username email fullname avatar followers")
                 .populate({
                     path: "comments",
@@ -104,7 +121,8 @@ class PostController {
 
     async getUserPosts(req, res) {
         try {
-            const posts = await Posts.find({ user: req.params.id }).sort("-createdAt")
+            const feature = new Apifeatures(Posts.find({ user: req.params.id }), req.query).paginating()
+            const posts = await feature.query.sort("-createdAt")
 
             return res.json({
                 posts,
@@ -130,6 +148,27 @@ class PostController {
             return res.json({
                 post
             });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+
+    async getDiscoverPosts(req, res) {
+        try {
+
+            const features = new Apifeatures(
+                Posts.find(
+                    { user: { $nin: [...req.user.followings, req.user._id] } }),
+                req.query)
+                .paginating()
+
+            let posts = await features.query.sort("-createdAt")
+
+            return res.json({
+                msg: "Success!",
+                result: posts.length,
+                posts
+            })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }

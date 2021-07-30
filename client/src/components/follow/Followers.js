@@ -62,7 +62,6 @@ export default function Followers({ users, followers, setFollowers }) {
                         </div>
                         <div className='followers__body'>
                             {users.map((user, index) => {
-                                console.log(user);
                                 return <div key={index} className='followers__user'>
                                     <Link to={`/profile/${user._id}`} onClick={() => setFollowers(false)}>
                                         <img className='followers__user-avatar' src={user.avatar} alt='useravatar'>

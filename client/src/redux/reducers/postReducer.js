@@ -4,7 +4,8 @@ const initialState = {
     loading: false,
     posts: [],
     result: 0,
-    page: 0,
+    page: 2,
+    stopScroll: false
 }
 
 const postReducer = (state = initialState, action) => {
@@ -25,6 +26,16 @@ const postReducer = (state = initialState, action) => {
                 ...state,
                 posts: [...action.payload.posts],
                 result: action.payload.result
+            }
+        }
+        case POST_TYPES.UPDATE_HOME_POSTS: {
+            console.log(action.payload)
+            return {
+                ...state,
+                posts: [...action.payload.posts],
+                result: action.payload.result,
+                page: state.page + 1,
+                stopScroll: state.result === action.payload.result ? true : false
             }
         }
         case POST_TYPES.UPDATE_POST: {

@@ -105,6 +105,10 @@ ul li {
 /* Detail Post */
 
 @import url('./styles/detail_post.css');
+
+/* Discover */
+@import url('./styles/discover.css');
+
 /*! Reponsive */
 
 @import url('./styles/reponsive.css');

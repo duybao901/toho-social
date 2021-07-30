@@ -6,7 +6,7 @@ import * as POST_TYPES from '../redux/constants/post'
 import { createPost, updatePost } from '../redux/actions/postAction'
 
 
-function Status({ open }) {
+function Status({ setOpenStatus }) {
     const { auth, status } = useSelector(state => state);
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
@@ -120,12 +120,14 @@ function Status({ open }) {
             setContent('');
             setImages([]);
             setStream(false);
+            if (setOpenStatus) setOpenStatus(false); // close modal
             dispatch(updatePost({ content, images, auth, status }))
         } else {
             dispatch({ type: POST_TYPES.STATUS, payload: { onEdit: false } })
             setContent('');
             setImages([]);
             setStream(false);
+            if (setOpenStatus) setOpenStatus(false); // close modal
             dispatch(createPost({ content, images, auth }))
         }
 

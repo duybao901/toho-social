@@ -15,6 +15,7 @@ const Profile = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const { profile, auth } = useSelector(state => state);
+
     useEffect(() => {
         if (profile.ids.every(item => item !== id)) {
             dispatch(profileAction.getProfileUser({ id, auth }));
@@ -24,12 +25,13 @@ const Profile = () => {
     return (
         <div className="main__container-right profile">
             <div className="profile__container">
-                {profile.loading ? <div style={{ width: "600px" }} className="loading__wrapper">
-                    <img style={{ width: "100px" }} src={Loading} alt='imgloading' />
-                </div> : <div>
-                    <Infor id={id} auth={auth} profile={profile} dispatch={dispatch} />
-                    <Posts id={id} auth={auth} profile={profile} dispatch={dispatch} />
-                </div>
+                {
+                    profile.loading ? <div style={{ width: "600px" }} className="loading__wrapper">
+                        <img style={{ width: "100px" }} src={Loading} alt='imgloading' />
+                    </div> : <div>
+                        <Infor id={id} auth={auth} profile={profile} dispatch={dispatch} />
+                        <Posts id={id} auth={auth} profile={profile} dispatch={dispatch} />
+                    </div>
                 }
             </div>
             <div className="infor__search">

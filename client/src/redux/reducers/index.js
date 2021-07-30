@@ -8,6 +8,7 @@ import editMedia from './editmediaReducer'
 import homePost from './postReducer';
 import status from './statusReducer'
 import detailPost from './detailPostReducer'
+import discover from './discoverReducer'
 
 const myReducer = combineReducers({
     auth,
@@ -17,7 +18,8 @@ const myReducer = combineReducers({
     editMedia,
     homePost,
     status,
-    detailPost
+    detailPost,
+    discover
 });
 
 export default myReducer;

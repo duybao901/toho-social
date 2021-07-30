@@ -107,21 +107,25 @@ function CommentCard({ children, comment, post, next, commentId, isReply }) {
                                     @{comment.tag.username}
                                 </Link>}
                             </div>
-                            {!onEdit && <span className="comment__card-content">
-                                {
-                                    content.length < 100 ? content :
-                                        readMore ? content + " " : content.slice(0, 100) + "... "
-                                }
-                                {
-                                    content.length > 100 &&
-                                    <span className="readMore" onClick={() => setReadeMore(!readMore)}>
-                                        {readMore ? "Hide content" : "Read more"}
-                                    </span>
-                                }
-                            </span>}
-                            {onEdit && <div className="comment__edit" style={{ display: "block" }}>
-                                <input autoFocus={onEdit} value={content} type='text' onChange={(e) => setContent(e.target.value)}></input>
-                            </div>}
+                            {
+                                !onEdit && <span className="comment__card-content">
+                                    {
+                                        content.length < 100 ? content :
+                                            readMore ? content + " " : content.slice(0, 100) + "... "
+                                    }
+                                    {
+                                        content.length > 100 &&
+                                        <span className="readMore" onClick={() => setReadeMore(!readMore)}>
+                                            {readMore ? "Hide content" : "Read more"}
+                                        </span>
+                                    }
+                                </span>
+                            }
+                            {
+                                onEdit && <div className="comment__edit" style={{ display: "block" }}>
+                                    <input autoFocus={onEdit} value={content} type='text' onChange={(e) => setContent(e.target.value)}></input>
+                                </div>
+                            }
                         </div>
                         <div className="comment__action">
                             <CommentMenu post={post} comment={comment} auth={auth} setOnedit={setOnedit} />
@@ -152,18 +156,18 @@ function CommentCard({ children, comment, post, next, commentId, isReply }) {
                             <small style={{ color: '#1DA1F2' }} onClick={handleUpdateComment}>
                                 Update
                             </small>
-                            <small style={{ color: 'crimson', marginLeft: "8px" }} onClick={() => setOnedit(false)}>
+                            <small style={{ color: 'crimson', marginLeft: "8px" }} onClick={() => { setOnedit(false); setContent(comment.content) }}>
                                 Cancel
                             </small>
                         </>
                 }
             </div>
             {
-        onReply && <InputComment comment={comment} post={post} onReply={onReply} setOnReply={setOnReply}>
+                onReply && <InputComment comment={comment} post={post} onReply={onReply} setOnReply={setOnReply}>
 
-        </InputComment>
-    }
-    { children }
+                </InputComment>
+            }
+            {children}
         </>
     )
 }

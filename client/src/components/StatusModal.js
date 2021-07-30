@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function StatusModal({ open, handleClose }) {
+export default function StatusModal({ open, setOpenStatus, handleClose }) {
     const classes = useStyles();
     const { status } = useSelector(state => state);
     return (
@@ -52,7 +52,7 @@ export default function StatusModal({ open, handleClose }) {
                                 </div>
                             </div>
                         </div>
-                        <Status open={open}/>
+                        <Status handleClose={handleClose} setOpenStatus={setOpenStatus}/>
                     </div>
                 </Fade>
             </Modal>

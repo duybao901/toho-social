@@ -2,19 +2,17 @@ import * as PROFILE_TYPES from '../constants/profile'
 import * as GLOBLE_TYPES from '../constants/index'
 import { getDataAPI, putDataAPI } from '../../utils/fetchData'
 
-export const getProfileUser = ({id, auth }) => async (dispatch) => {
+export const getProfileUser = ({ id, auth }) => async (dispatch) => {
     dispatch({ type: PROFILE_TYPES.GET_ID, payload: id })
     try {
         dispatch({ type: PROFILE_TYPES.LOADING, payload: true })
 
         const res = await getDataAPI(`/user/${id}`, auth.token);
 
-        const res1 = await getDataAPI(`/user_posts/${id}`, auth.token)
+        const res1 = await getDataAPI(`/user_posts/${id}?limit=4`, auth.token)
 
         const users = await res;
         const posts = await res1;
-
-
 
         dispatch({
             type: PROFILE_TYPES.GET_USER,
@@ -23,7 +21,7 @@ export const getProfileUser = ({id, auth }) => async (dispatch) => {
 
         dispatch({
             type: PROFILE_TYPES.GET_POSTS,
-            payload: { ...posts.data, _id: id, page: 2 }
+            payload: { ...posts.data, _id: id, page: 2, stopScroll: false }
         })
 
 

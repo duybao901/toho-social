@@ -1,5 +1,5 @@
 import * as PROFILE_TYPES from '../constants/profile'
-
+import { EditData } from '../constants/index'
 const initialState = {
     loading: false,
     ids: [],
@@ -45,6 +45,12 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userPosts: [...state.userPosts, action.payload]
+            }
+        }
+        case PROFILE_TYPES.UPDATE_POST: {
+            return {
+                ...state,
+                userPosts: EditData(state.userPosts, action.payload._id, action.payload),
             }
         }
         default: {

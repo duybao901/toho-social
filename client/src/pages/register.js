@@ -82,7 +82,7 @@ function Register() {
         <div className='register'>
             <div className='register__container'>
                 <div className="register__left">
-                    <img src="https://abs.twimg.com/sticky/illustrations/lohp_en_1302x955.png" alt='a'>
+                    <img src="https://res.cloudinary.com/dxnfxl89q/image/upload/v1627573258/toho/fy3jf6mv7nucunkgmjgj.jpg" alt='a'>
                     </img>
                 </div>
                 <div className="register__right">

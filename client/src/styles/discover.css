@@ -1,0 +1,13 @@
+.discover__loading-container {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.discover__loading-container img {
+    width: 100px;
+    height: 100px;
+}
+

@@ -88,7 +88,7 @@ function Menu() {
                             Post
                         </span>
                     </span>
-                    <StatusModal open={openStatus} handleClose={handleCloseStatus} />
+                    <StatusModal open={openStatus} setOpenStatus={setOpenStatus} handleClose={handleCloseStatus} />
                 </li>
 
             </ul>
