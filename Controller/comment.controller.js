@@ -10,6 +10,8 @@ class CommentController {
                 user: req.user._id, content, tag, reply, postUserId, postId
             })
 
+            const post = await Posts.findById(postId);
+
             await Posts.findOneAndUpdate({ _id: postId }, {
                 $push: {
                     comments: newComment._id
