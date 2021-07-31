@@ -12,7 +12,6 @@ function Header() {
                         </img>
                     </Link>
                 </div>
-
                 <Menu />
             </div>
         </div>
