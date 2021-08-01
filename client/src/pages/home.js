@@ -30,11 +30,9 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-5 home__left main__left">
-                    <div className="home__search">
-                        <div className="home__search-container">
-                            <Search />
-                        </div>
+                <div className="col-lg-5 right__sidebar">
+                    <div className="infor__search-container">
+                        <Search />
                     </div>
                 </div>
             </div>

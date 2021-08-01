@@ -1,6 +1,6 @@
 .profile__posts {
     display: flex;
-    width: 600px;
+    width: 100%;
 }
 
 .profile__posts .row {

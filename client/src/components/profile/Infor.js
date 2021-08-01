@@ -45,7 +45,7 @@ function Infor({ id, auth, profile, dispatch }) {
     }
 
     return (
-        <div className="infor">
+        <>
             {userData.length > 0 && userData.map((user) => {
                 return <div className="infor__container" key={user._id}>
                     <div className="infor__content">
@@ -121,7 +121,7 @@ function Infor({ id, auth, profile, dispatch }) {
                 </div>
             })}
             <EditProfile open={openEdit} handleClose={closeModalEditProfile} users={userData && userData} />
-        </div >
+        </>
     )
 }
 

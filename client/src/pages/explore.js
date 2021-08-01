@@ -6,6 +6,7 @@ import PostThumb from '../components/PostThumb'
 import InfiniteScroll from "react-infinite-scroll-component";
 import * as DISCOVER_TYPES from '../redux/constants/discover'
 import { getDataAPI } from '../utils/fetchData'
+import Search from '../components/search/Search'
 
 function Explore() {
     const dispatch = useDispatch();
@@ -26,32 +27,42 @@ function Explore() {
 
     return (
         <div className="main__container-right discover">
-            {
-                discover.loading ?
-                    <div className="discover__loading-container">
-                        <img src={Loading} alt='discover-loading'>
-                        </img>
-                    </div>
-                    :
-                    discover.posts.length === 0 ? <h2 className="mx-auto d-block">No Posts</h2> :
-                        discover.posts.length < 9 ?
-                            <div className="row no-gutters " style={{ padding: "10px" }}>
-                                <PostThumb colLg={4} posts={discover.posts} result={discover.result} />
+            <div className="row">
+                <div className="col col-sm-12 col-md-12 col-lg-7 ">                 
+                    {
+                        discover.loading ?
+                            <div className="discover__loading-container">
+                                <img src={Loading} alt='discover-loading'>
+                                </img>
                             </div>
                             :
-                            <InfiniteScroll
-                                dataLength={discover.posts}
-                                next={fetchMoreData}
-                                hasMore={true}
-                                loader={!discover.stopScroll && <img className="mx-auto d-block" style={{ width: "50px", }} src={Loading} alt='discover-loading'>
-                                </img>}
-                            >
-                                <div className="row no-gutters " style={{ padding: "10px" }}>
-                                    <PostThumb colLg={4} posts={discover.posts} result={discover.result} />
-                                </div>
-                            </InfiniteScroll>
+                            discover.posts.length === 0 ? <h2 className="mx-auto d-block">No Posts</h2> :
+                                discover.posts.length < 9 ?
+                                    <div className="row no-gutters middle__content" style={{ padding: "10px" }}>
+                                        <PostThumb colLg={6} posts={discover.posts} result={discover.result} />
+                                    </div>
+                                    :
+                                    <InfiniteScroll
+                                        dataLength={discover.posts}
+                                        next={fetchMoreData}
+                                        hasMore={true}
+                                        loader={!discover.stopScroll && <img className="mx-auto d-block" style={{ width: "50px", }} src={Loading} alt='discover-loading'>
+                                        </img>}
+                                    >
+                                        <div className="row no-gutters middle__content" style={{ padding: "5px 0px" }}>
+                                            <PostThumb colLg={6} posts={discover.posts} result={discover.result} />
+                                        </div>
+                                    </InfiniteScroll>
 
-            }
+                    }
+                </div>
+                <div className="col-lg-5 right__sidebar">
+                    <div className="infor__search-container">
+                        <Search />
+                    </div>
+                </div>
+            </div>
+
         </div>
     )
 }

@@ -19,4 +19,6 @@ router.put('/edit_profile', auth, UserController.editProfile);
 router.put('/:id/follow', auth, UserController.follow);
 router.put('/:id/unfollow', auth, UserController.unfollow);
 
+router.get('/suggestion', auth, UserController.suggestionUser);
+
 module.exports = router;

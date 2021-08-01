@@ -24,21 +24,27 @@ const Profile = () => {
 
     return (
         <div className="main__container-right profile">
-            <div className="profile__container">
-                {
-                    profile.loading ? <div style={{ width: "600px" }} className="loading__wrapper">
-                        <img style={{ width: "100px" }} src={Loading} alt='imgloading' />
-                    </div> : <div>
-                        <Infor id={id} auth={auth} profile={profile} dispatch={dispatch} />
-                        <Posts id={id} auth={auth} profile={profile} dispatch={dispatch} />
+            <div className="row">
+                <div className="col col-sm-12 col-md-12 col-lg-7 home__content">
+                    <div className="profile__container">
+                        {
+                            profile.loading ? <div style={{ width: "100%" }} className="loading__wrapper">
+                                <img style={{ width: "100px" }} src={Loading} alt='imgloading' />
+                            </div> : <div>
+                                <Infor id={id} auth={auth} profile={profile} dispatch={dispatch} />
+                                <Posts id={id} auth={auth} profile={profile} dispatch={dispatch} />
+                            </div>
+                        }
                     </div>
-                }
-            </div>
-            <div className="infor__search">
-                <div className="infor__search-container">
-                    <Search />
+                </div>
+                <div className="col-lg-5 right__sidebar">
+                    <div className="infor__search-container">
+                        <Search />
+                    </div>
                 </div>
             </div>
+
+
         </div>
     )
 }

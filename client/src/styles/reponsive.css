@@ -252,8 +252,12 @@
     .profile__container {
         width: 100%;
     }
-    .loading__wrapper{
+    .loading__wrapper {
         width: 100% !important;
+    }
+    /* Card */
+    .card__body-carousel{
+        /* height: 400px; */
     }
 }
 

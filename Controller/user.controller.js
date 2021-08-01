@@ -159,7 +159,7 @@ class UserController {
             await Users.findByIdAndUpdate(req.user._id, {
                 fullname, mobile, address, story, website, gender
             })
-            return res.json({ msg: "Edit profile success."});
+            return res.json({ msg: "Edit profile success." });
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
@@ -171,7 +171,7 @@ class UserController {
             if (user.length > 0) {
                 return res.status(400).json({ msg: "You follwed this user." });
             }
-      
+
 
             const newUser = await Users.findOneAndUpdate({ _id: req.params.id }, {
                 $push: { followers: req.user._id }
@@ -197,6 +197,41 @@ class UserController {
             }, { new: true })
 
             res.json({ newUser })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+    async suggestionUser(req, res) {
+        try {
+            const newArr = [...req.user.followings, req.user._id]
+            const num = req.query.num || 10;
+
+            const users = await Users.aggregate([
+                { $match: { _id: { $nin: newArr } } },
+                { $sample: { size: num } },// Chon ngau nhien 10 user
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "followers",
+                        foreignField: "_id",
+                        as: "followers"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "followings",
+                        foreignField: "_id",
+                        as: "followings"
+                    }
+                }
+            ]).project("-password")
+
+            return res.json({
+                users,
+                result: users.length
+            })
+
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }

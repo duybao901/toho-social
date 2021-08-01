@@ -13,6 +13,8 @@ import EditMedia from './components/editmedia/EditMedia';
 import Header from './components/header/Header';
 import * as authActions from './redux/actions/authAction'
 import * as postActions from './redux/actions/postAction'
+import * as suggestionActions from './redux/actions/suggestionAction'
+
 function App() {
     const { auth, notify } = useSelector(state => state);
 
@@ -25,13 +27,14 @@ function App() {
     useEffect(() => {
         if (auth.token) {
             dispatch(postActions.getPosts({ auth }));
+            dispatch(suggestionActions.getSuggestionUser({ auth }));
         }
     }, [dispatch, auth.token, auth])
     return (
         <div className="App"
             style={{
                 overflowY: notify.loading ? 'hidden' : "auto",
-                maxHeight: notify.loading && '100vh' 
+                maxHeight: notify.loading && '100vh'
             }}
         >
             <Notify />
