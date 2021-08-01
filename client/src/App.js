@@ -14,7 +14,7 @@ import Header from './components/header/Header';
 import * as authActions from './redux/actions/authAction'
 import * as postActions from './redux/actions/postAction'
 function App() {
-    const { auth } = useSelector(state => state);
+    const { auth, notify } = useSelector(state => state);
 
     const dispatch = useDispatch();
 
@@ -27,9 +27,13 @@ function App() {
             dispatch(postActions.getPosts({ auth }));
         }
     }, [dispatch, auth.token, auth])
-
     return (
-        <div className="App">
+        <div className="App"
+            style={{
+                overflowY: notify.loading ? 'hidden' : "auto",
+                maxHeight: notify.loading && '100vh' 
+            }}
+        >
             <Notify />
             <WatchImg />
             <EditMedia />

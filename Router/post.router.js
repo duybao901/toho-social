@@ -18,6 +18,8 @@ router.patch('/post/:id/unlike', auth, PostController.unlikePost);
 
 router.get('/user_posts/:id', auth, PostController.getUserPosts);
 
-router.get('/post_discover',auth,PostController.getDiscoverPosts)
+router.get('/post_discover', auth, PostController.getDiscoverPosts)
+
+router.delete('/post/:id', auth, PostController.deletePost);
 
 module.exports = router;

@@ -1,14 +1,29 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import * as POST_TYPES from '../../redux/constants/post'
+import { deletePost } from '../../redux/actions/postAction'
+import { BASE_URL } from '../../utils/config'
 function CardHeader({ post }) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { auth } = useSelector(state => state)
+
 
     function handleEditPost() {
         dispatch({ type: POST_TYPES.STATUS, payload: { ...post, onEdit: true } })
+    }
+
+    const hanldeDeletePost = () => {
+        if (window.confirm("Are you sure want to delete this post?")) {
+            dispatch(deletePost(post._id, auth));
+            return history.push('/')
+        }
+    }
+
+    const hanldeCopyLink = () => {
+        navigator.clipboard.writeText(`${BASE_URL}/post/${post._id}`)
     }
 
     return (
@@ -36,10 +51,10 @@ function CardHeader({ post }) {
                     {
                         auth.user._id === post.user._id ? <>
                             <div onClick={handleEditPost} className="dropdown-item" href="#"><i className='bx bx-pencil'></i>Edit Post</div>
-                            <div className="dropdown-item" href="#"><i className='bx bx-trash-alt' ></i>Remove Post</div>
+                            <div className="dropdown-item" href="#" onClick={hanldeDeletePost}><i className='bx bx-trash-alt'  ></i>Remove Post</div>
                         </> : ""
                     }
-                    <div className="dropdown-item" href="#"><i className='bx bx-copy' ></i>Copy Link</div>
+                    <div className="dropdown-item" href="#" onClick={hanldeCopyLink}><i className='bx bx-copy'  ></i>Copy Link</div>
                 </div>
             </div>
         </div>

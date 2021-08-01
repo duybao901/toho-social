@@ -59,3 +59,17 @@
 .modal__save-btn:focus {
     outline: none;
 }
+
+.modal__title {
+    color: #0f1419;
+}
+
+/* Share Post */
+
+.share__body {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    padding: 0px 12px;
+    justify-content: space-around;
+}

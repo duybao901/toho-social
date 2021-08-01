@@ -3,12 +3,15 @@ import LikeButton from '../LikeButton'
 import { useSelector, useDispatch } from 'react-redux'
 import { likePost, unlikePost } from '../../redux/actions/postAction'
 import { Link } from 'react-router-dom'
+import ShareModal from '../ShareModal'
+// import { BASE_URL } from '../../utils/config'
 function CardFooter({ post }) {
     const dispatch = useDispatch();
     const { auth } = useSelector(state => state);
     const [isLike, setIsLike] = useState(false);
     const [loadLike, setLoadLike] = useState(false);
 
+    const [openShareModal, setOpenShareModal] = useState(false);
 
     useEffect(() => {
         if (post.likes.find(like => like._id === auth.user._id)) {
@@ -33,6 +36,11 @@ function CardFooter({ post }) {
         setLoadLike(false);
     };
 
+    function handleCloseShareModal() {
+        setOpenShareModal({
+            [`openshare-${post._id}`]: false
+        })
+    }
     return (
         <div className="card__footer">
             <div className="card__icons">
@@ -45,8 +53,9 @@ function CardFooter({ post }) {
                     <Link to={`/post/${post._id}`}>
                         <i className='bx bx-message-rounded'></i>
                     </Link>
-                    <i className='bx bx-share' ></i>
+                    <i className='bx bx-share' onClick={() => setOpenShareModal({ [`openshare-${post._id}`]: true })}></i>
                 </div>
+                <ShareModal url='https://google.com' open={openShareModal && openShareModal[`openshare-${post._id}`]} handleClose={handleCloseShareModal} />
                 <div className="card__bookmark">
                     <i className='bx bx-bookmark' ></i>
                 </div>

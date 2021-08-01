@@ -1,5 +1,5 @@
 import * as POST_TYPES from '../constants/post'
-
+import { DeleteData } from '../constants/index'
 const initialState = {
     loading: false,
     posts: [],
@@ -46,6 +46,12 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: [...newArrayPost]
+            }
+        }
+        case POST_TYPES.DELETE_POST: {
+            return {
+                ...state,
+                posts: DeleteData(state.posts, action.payload)
             }
         }
         default: {

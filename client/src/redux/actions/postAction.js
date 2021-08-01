@@ -1,7 +1,7 @@
 import * as GLOBLE_TYPES from '../constants/index';
 import * as POST_TYPES from '../constants/post';
 import { imagesUpload } from '../../utils/imageUpload';
-import { postDataAPI, getDataAPI, patchDataAPI } from '../../utils/fetchData';
+import { postDataAPI, getDataAPI, patchDataAPI, deleteDataAPI } from '../../utils/fetchData';
 
 export const createPost = ({ content, images, auth }) => async dispatch => {
     let media = [];
@@ -137,7 +137,7 @@ export const unlikePost = ({ post, auth }) => async dispatch => {
 }
 
 export const getDetailPost = (detailPost, id, auth) => async dispatch => {
-    if (detailPost.every(post => post._id !== id)) {
+    if (detailPost.every(post => post && post._id !== id)) {
         try {
             const res = await getDataAPI(`/post/${id}`, auth.token)
             dispatch({ type: POST_TYPES.GET_POST, payload: res.data.post })
@@ -152,5 +152,24 @@ export const getDetailPost = (detailPost, id, auth) => async dispatch => {
             }
 
         }
+    }   
+}
+
+export const deletePost = (postId, auth) => async (dispatch) => {
+    try {
+        dispatch({ type: POST_TYPES.DELETE_POST, payload: postId })
+
+        await deleteDataAPI(`/post/${postId}`, auth.token)
+
+    } catch (error) {
+        if (error) {
+            return dispatch({
+                type: GLOBLE_TYPES.NOTIFY,
+                payload: {
+                    err: error.response.data.msg
+                }
+            })
+        }
+
     }
 }

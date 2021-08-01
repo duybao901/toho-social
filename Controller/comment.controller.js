@@ -11,6 +11,16 @@ class CommentController {
             })
 
             const post = await Posts.findById(postId);
+            if (!post) {
+                return res.status(400).json({ msg: "This post is not exist." })
+            }
+
+            if (reply) {
+                const cm = await Comments.findById(reply);
+                if (!cm) {
+                    return res.status(400).json({ msg: "This post is not exist." })
+                }
+            }
 
             await Posts.findOneAndUpdate({ _id: postId }, {
                 $push: {
@@ -82,13 +92,13 @@ class CommentController {
                     { postUserId: req.user._id }
                 ]
             })
-            
+
             await Posts.findOneAndUpdate({ _id: comment.postId }, {
                 $pull: { comments: req.params.id }
             })
 
             res.json({ msg: 'Deleted Comment!' })
-            
+
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }

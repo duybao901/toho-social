@@ -1,5 +1,5 @@
 const Posts = require('../Model/post.model')
-
+const Comments = require('../Model/comment.model')
 class Apifeatures {
     constructor(query, queryString) {
         this.query = query;
@@ -95,11 +95,16 @@ class PostController {
                 return res.status(400).json({ msg: "You liked this post." })
             }
 
-            await Posts.findOneAndUpdate({ _id: req.params.id }, {
+            const like = await Posts.findOneAndUpdate({ _id: req.params.id }, {
                 $push: {
                     likes: req.user._id
                 }
             }, { new: true })
+
+            if (!like) {
+                return res.status(400).json({ msg: "This post is not exist." })
+            }
+
             return res.json({ msg: "Like post" });
         } catch (err) {
             return res.status(500).json({ msg: err.message })
@@ -108,11 +113,15 @@ class PostController {
 
     async unlikePost(req, res) {
         try {
-            await Posts.findOneAndUpdate({ _id: req.params.id }, {
+            const unlike = await Posts.findOneAndUpdate({ _id: req.params.id }, {
                 $pull: {
                     likes: req.user._id
                 }
             }, { new: true })
+
+            if (!unlike) {
+                return res.status(400).json({ msg: "This post is not exist." })
+            }
             return res.json({ msg: "unLike post" });
         } catch (err) {
             return res.status(500).json({ msg: err.message })
@@ -169,6 +178,18 @@ class PostController {
                 result: posts.length,
                 posts
             })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }
+
+    async deletePost(req, res) {
+        try {
+            const post = await Posts.findOneAndDelete({ _id: req.params.id, user: req.user._id });
+
+            await Comments.deleteMany({ _id: { $in: post.comments } });
+
+            res.json({ msg: "Deleted post!" });
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }

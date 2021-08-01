@@ -25,8 +25,9 @@ function Posts({ id, profile, auth }) {
     }, [profile.userPosts, id, result])
 
     const fetchMoreData = async () => {
+
         if (!stopScroll) {
-            const res = await getDataAPI(`/user_posts/${id}?limit=${page * 4}`, auth.token);
+            const res = await getDataAPI(`/user_posts/${id}?limit=${page * 4}`, auth.token);        
             const newData = {
                 ...res.data,
                 page: page + 1,
@@ -47,8 +48,8 @@ function Posts({ id, profile, auth }) {
                         </div>
                         :
                         <InfiniteScroll
-                            style={{ overflowX: "hidden" }}
-                            dataLength={posts}
+                            style={{ overflowX: "hidden"}}
+                            dataLength={posts.length}
                             next={fetchMoreData}
                             hasMore={true}
                             loader={!stopScroll && <img className="mx-auto d-block" style={{ width: "50px", }} src={Loading} alt='discover-loading'>
@@ -58,6 +59,7 @@ function Posts({ id, profile, auth }) {
                                 <PostThumb colLg={6} posts={posts} result={result} />
                             </div>
                         </InfiniteScroll>
+                      
             }
         </div>
     )

@@ -30,7 +30,7 @@ function HomePosts() {
                             :
                             <InfiniteScroll
                                 style={{ overflowX: "hidden" }}
-                                dataLength={homePost.posts}
+                                dataLength={homePost.posts.length}
                                 next={fetchMoreData}
                                 hasMore={true}
                                 loader={!homePost.stopScroll && <img className="mx-auto d-block" style={{ width: "50px", }} src={Loading} alt='discover-loading'>
