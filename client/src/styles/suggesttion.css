@@ -1,0 +1,108 @@
+.suggest-container {
+    top: 60px;
+    z-index: 2;
+}
+
+.suggest {
+    background-color: rgb(239, 243, 244);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.suggest__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+}
+
+.suggest__header .suggest__title {
+    color: #0f1419;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.suggest__header .suggest__reload {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-blue);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.suggest__header .suggest__reload i {
+    font-size: 2rem;
+}
+
+.suggest__header .suggest__reload:hover {
+    background-color: var(--color-light-blue-hover);
+}
+
+.suggest__card {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.suggest__card:first-child {
+    border-top: 1px solid #e7e7e7;
+}
+
+.suggest__card:not(:last-child) {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.suggest__card:last-child {
+    padding-bottom: 0px;
+}
+
+.suggest__card .infor__user-btn-edit.btn__follow {
+    width: 90px;
+    height: 35px;
+    padding: 8px 20px;
+}
+
+.suggest__card-image img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 4px;
+}
+
+.suggest__card-right {
+    display: flex;
+    align-items: center;
+}
+
+.suggest__card-infor {
+    display: flex;
+    flex-direction: column;
+}
+
+.suggest__loading-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.suggest__copyright {
+    margin-top: 10px;
+    color: var(--color-text-grey);
+    font-size: 1.2rem;
+}
+
+.suggest__copyright p {
+    margin: 5px 0px;
+}
+
+.suggest__copyright  a{
+    margin: 5px 0px;
+    display: block;
+}

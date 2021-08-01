@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-
 import Infor from '../../components/profile/Infor'
 import Posts from '../../components/profile/Posts'
 import Search from '../../components/search/Search'
-
 import Loading from '../../images/globle_loading.gif'
-
 import * as profileAction from '../../redux/actions/profileAction'
-
+import Suggestion from '../../components/Suggestion'
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -40,6 +37,9 @@ const Profile = () => {
                 <div className="col-lg-5 right__sidebar">
                     <div className="infor__search-container">
                         <Search />
+                    </div>
+                    <div className="infor__search-container suggest-container">
+                        <Suggestion />
                     </div>
                 </div>
             </div>

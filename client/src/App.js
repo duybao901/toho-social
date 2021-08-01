@@ -26,10 +26,10 @@ function App() {
 
     useEffect(() => {
         if (auth.token) {
-            dispatch(postActions.getPosts({ auth }));
-            dispatch(suggestionActions.getSuggestionUser({ auth }));
+            dispatch(postActions.getPosts(auth.token));
+            dispatch(suggestionActions.getSuggestionUser(auth.token));
         }
-    }, [dispatch, auth.token, auth])
+    }, [dispatch, auth.token])
     return (
         <div className="App"
             style={{

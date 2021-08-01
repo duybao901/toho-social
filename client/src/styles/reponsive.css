@@ -77,9 +77,16 @@
     }
     .main__container-right {
         width: 100%;
+        margin-left: 10px;
     }
     .main__header {
-        width: 100%;
+        /* width: 513.58px; */
+    }
+    .infor__heading {
+        /* width: 513.58px; */
+    }
+    .infor__user {
+        padding: 20px;
     }
 }
 
@@ -113,7 +120,7 @@
         display: none;
     }
     .main__container-right {
-        width: 90%;
+        width: 100%;
     }
     .infor__content {
         max-width: 100%;
@@ -134,6 +141,15 @@
     }
     .show__images-item {
         height: 120px;
+    }
+    .row {
+        margin: 0;
+    }
+    .col {
+        padding: 0;
+    }
+    .suggest-container {
+        display: none;
     }
 }
 
@@ -168,12 +184,24 @@
     .makeStyles-paper-7 {
         width: 100% !important;
     }
+    .row {
+        margin: 0;
+    }
+    .col {
+        padding: 0;
+    }
+    .suggest-container {
+        display: none;
+    }
+    .infor__search-container{
+        display: none;
+    }
 }
 
 @media all and (max-width: 480px) {
     .alert__message {
-        display: none;
-        visibility: hidden;
+        /* display: none;
+        visibility: hidden; */
     }
     .main .main__container {
         width: 100%;
@@ -239,6 +267,7 @@
     }
     .main__container-right {
         width: 100%;
+        margin-left: 0px;
     }
     .menu__list-item--btn {
         display: none;
@@ -256,8 +285,11 @@
         width: 100% !important;
     }
     /* Card */
-    .card__body-carousel{
+    .card__body-carousel {
         /* height: 400px; */
+    }
+    .suggest-container {
+        display: none;
     }
 }
 

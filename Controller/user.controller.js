@@ -204,11 +204,11 @@ class UserController {
     async suggestionUser(req, res) {
         try {
             const newArr = [...req.user.followings, req.user._id]
-            const num = req.query.num || 10;
+            const num = req.query.num || 8;
 
             const users = await Users.aggregate([
                 { $match: { _id: { $nin: newArr } } },
-                { $sample: { size: num } },// Chon ngau nhien 10 user
+                { $sample: { size: Number(num) } },// Chon ngau nhien 10 user
                 {
                     $lookup: {
                         from: "users",

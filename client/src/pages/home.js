@@ -2,6 +2,7 @@ import React from 'react'
 import Search from '../components/search/Search'
 import Status from '../components/Status'
 import HomePosts from '../components/home/HomePosts'
+import Suggestion from '../components/Suggestion'
 function Home() {
     return (
         <div className="main__container-right">
@@ -33,6 +34,9 @@ function Home() {
                 <div className="col-lg-5 right__sidebar">
                     <div className="infor__search-container">
                         <Search />
+                    </div>
+                    <div className="infor__search-container suggest-container">
+                        <Suggestion />
                     </div>
                 </div>
             </div>

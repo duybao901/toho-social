@@ -165,14 +165,22 @@ class PostController {
     async getDiscoverPosts(req, res) {
         try {
 
-            const features = new Apifeatures(
-                Posts.find(
-                    { user: { $nin: [...req.user.followings, req.user._id] } }),
-                req.query)
-                .paginating()
+            // const features = new Apifeatures(
+            //     Posts.find(
+            //         { user: { $nin: [...req.user.followings, req.user._id] } }),
+            //     req.query)
+            //     .paginating()
 
-            let posts = await features.query.sort("-createdAt")
+            // let posts = await features.query.sort("-createdAt")
 
+            const newArr = [...req.user.followings, req.user._id]
+            const num = req.query.num || 6;
+
+            const posts = await Posts.aggregate([
+                { $match: { user: { $nin: newArr } } },
+                { $sample: { size: Number(num) } },// Chon ngau nhien num post
+
+            ])
             return res.json({
                 msg: "Success!",
                 result: posts.length,

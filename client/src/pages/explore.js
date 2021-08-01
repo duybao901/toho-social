@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import * as DISCOVER_TYPES from '../redux/constants/discover'
 import { getDataAPI } from '../utils/fetchData'
 import Search from '../components/search/Search'
+import Suggestion from '../components/Suggestion'
 
 function Explore() {
     const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function Explore() {
 
     const fetchMoreData = async () => {
         if (!discover.stopScroll) {
-            const res = await getDataAPI(`/post_discover?limit=${discover.page * 9}`, auth.token);
+            const res = await getDataAPI(`/post_discover?num=${discover.page * 6}`, auth.token);
             dispatch({ type: DISCOVER_TYPES.UPDATE_DISCOVER, payload: res.data })
         }
     }
@@ -37,7 +38,7 @@ function Explore() {
                             </div>
                             :
                             discover.posts.length === 0 ? <h2 className="mx-auto d-block">No Posts</h2> :
-                                discover.posts.length < 9 ?
+                                discover.posts.length < 6 ?
                                     <div className="row no-gutters middle__content" style={{ padding: "10px" }}>
                                         <PostThumb colLg={6} posts={discover.posts} result={discover.result} />
                                     </div>
@@ -59,6 +60,9 @@ function Explore() {
                 <div className="col-lg-5 right__sidebar">
                     <div className="infor__search-container">
                         <Search />
+                    </div>
+                    <div className="infor__search-container suggest-container">
+                        <Suggestion />
                     </div>
                 </div>
             </div>

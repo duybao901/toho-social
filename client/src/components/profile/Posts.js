@@ -48,6 +48,7 @@ function Posts({ id, profile, auth }) {
                         </div>
                         :
                         <InfiniteScroll
+                            className="profile__post-wrapper"
                             style={{ overflowX: "hidden"}}
                             dataLength={posts.length}
                             next={fetchMoreData}
@@ -55,7 +56,7 @@ function Posts({ id, profile, auth }) {
                             loader={!stopScroll && <img className="mx-auto d-block" style={{ width: "50px", }} src={Loading} alt='discover-loading'>
                             </img>}
                         >
-                            <div className="row no-gutters " style={{ padding: "10px" }}>
+                            <div className="row no-gutters ">
                                 <PostThumb colLg={6} posts={posts} result={result} />
                             </div>
                         </InfiniteScroll>

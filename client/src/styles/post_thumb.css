@@ -4,8 +4,8 @@
 }
 
 .profile__posts .row {
-    margin-right: -6px;
-    margin-left: -6px;
+    /* margin-right: -6px;
+    margin-left: -6px; */
 }
 
 .profile__posts .row .col {
@@ -29,10 +29,11 @@
     object-fit: cover;
 }
 
-.post__thumb-icon-carousel{
+.post__thumb-icon-carousel {
     position: absolute;
     right: 15px;
     top: 10px;
     color: #fff;
     font-size: 2rem;
 }
+

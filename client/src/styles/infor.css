@@ -67,6 +67,7 @@
     position: fixed;
     width: 350px;
     margin-top: 4px;
+    z-index: 3;
 }
 
 .infor__box {

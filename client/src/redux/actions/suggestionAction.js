@@ -2,12 +2,12 @@ import * as SUGGESTION_TYPES from '../constants/suggestion'
 import * as GLOBLE_TYPES from '../constants/index'
 import { getDataAPI } from '../../utils/fetchData'
 
-export const getSuggestionUser = ({ auth }) => async dispatch => {
+export const getSuggestionUser = (token) => async dispatch => {
     try {
 
         dispatch({ type: SUGGESTION_TYPES.LOADING, payload: true })
 
-        const res = await getDataAPI('/suggestion', auth.token);
+        const res = await getDataAPI('/suggestion', token);
 
         dispatch({ type: SUGGESTION_TYPES.GET_USERS, payload: res.data.users })
 
