@@ -10,6 +10,8 @@ import status from './statusReducer'
 import detailPost from './detailPostReducer'
 import discover from './discoverReducer'
 import suggestion from './suggestionReducer'
+import socket from './socketReducer'
+
 
 const myReducer = combineReducers({
     auth,
@@ -21,7 +23,8 @@ const myReducer = combineReducers({
     status,
     detailPost,
     discover,
-    suggestion
+    suggestion,
+    socket
 });
 
 export default myReducer;

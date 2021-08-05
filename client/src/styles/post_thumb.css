@@ -37,3 +37,24 @@
     font-size: 2rem;
 }
 
+.post__thumb:hover .post__thumb-infor {
+    display: block;
+}
+
+.post__thumb-infor {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    color: #fff;
+    font-size: 1.5rem;
+    display: none;
+}
+
+.post__thumb-infor div {
+    display: flex;
+    align-items: center;
+}
+
+.post__thumb-infor div span {
+    margin-right: 4px;
+}

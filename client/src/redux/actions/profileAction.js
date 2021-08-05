@@ -116,7 +116,7 @@ export const follow = ({ users, user, auth }) => async (dispatch) => {
     }
 }
 
-export const unfollow = ({ users, user, auth }) => async (dispatch) => {
+export const unfollow = ({ user, auth }) => async (dispatch) => {
     const newUser = { ...user, followers: user.followers.filter(user => user._id !== auth.user._id) };
 
     dispatch({

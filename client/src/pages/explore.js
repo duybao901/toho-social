@@ -23,13 +23,17 @@ function Explore() {
         if (!discover.stopScroll) {
             const res = await getDataAPI(`/post_discover?num=${discover.page * 6}`, auth.token);
             dispatch({ type: DISCOVER_TYPES.UPDATE_DISCOVER, payload: res.data })
+            window.scrollTo({
+                top: discover.page* 400,
+                behavior: 'smooth'
+            });
         }
     }
 
     return (
         <div className="main__container-right discover">
             <div className="row">
-                <div className="col col-sm-12 col-md-12 col-lg-7 ">                 
+                <div className="col col-sm-12 col-md-12 col-lg-7 ">
                     {
                         discover.loading ?
                             <div className="discover__loading-container">

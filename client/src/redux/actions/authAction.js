@@ -43,6 +43,8 @@ export const refreshToken = () => async (dispatch) => {
         } catch (err) {
             dispatch({ type: AUTHTYPES.NOTIFY, payload: { err: err.response.data.msg } });
         }
+    } else {
+        return;
     }
 }
 

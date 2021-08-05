@@ -151,6 +151,12 @@
     .suggest-container {
         display: none;
     }
+    .main__header {
+        margin-top: -2px;
+        margin-left: -2px;
+        width: 100%;
+        border-bottom: 1px solid #f1f1f1;
+    }
 }
 
 @media (max-width:767px) {
@@ -193,8 +199,11 @@
     .suggest-container {
         display: none;
     }
-    .infor__search-container{
+    .infor__search-container {
         display: none;
+    }
+    .main__header {
+        margin-left: 0px;
     }
 }
 

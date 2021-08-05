@@ -12,7 +12,7 @@ import { updateComment, likeComment, unlikeComment } from '../../redux/actions/c
 
 function CommentCard({ children, comment, post, next, commentId, isReply }) {
     const dispatch = useDispatch();
-    const { auth } = useSelector(state => state);
+    const { auth, socket } = useSelector(state => state);
     const [content, setContent] = useState('');
     const [readMore, setReadeMore] = useState(false);
 
@@ -28,7 +28,7 @@ function CommentCard({ children, comment, post, next, commentId, isReply }) {
         setIsLike(true)
 
         setLoadLike(true);
-        await dispatch(likeComment(post, comment, auth))
+        await dispatch(likeComment(post, comment, auth, socket))
         setLoadLike(false);
     }
 
@@ -39,7 +39,7 @@ function CommentCard({ children, comment, post, next, commentId, isReply }) {
         setIsLike(true)
 
         setLoadLike(true);
-        await dispatch(unlikeComment(post, comment, auth))
+        await dispatch(unlikeComment(post, comment, auth, socket))
         setLoadLike(false);
     }
 
@@ -71,7 +71,7 @@ function CommentCard({ children, comment, post, next, commentId, isReply }) {
 
     const handleUpdateComment = () => {
         if (comment.content !== content) {
-            dispatch(updateComment(post, comment, content, auth))
+            dispatch(updateComment(post, comment, content, auth, socket))
             setOnedit(false);
         } else {
             setOnedit(false);

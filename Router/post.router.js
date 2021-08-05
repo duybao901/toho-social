@@ -22,4 +22,10 @@ router.get('/post_discover', auth, PostController.getDiscoverPosts)
 
 router.delete('/post/:id', auth, PostController.deletePost);
 
+router.patch('/post/:id/save', auth, PostController.savePost);
+
+router.patch('/post/:id/unsave', auth, PostController.unsavePost);
+
+router.get('/get_saved_post', auth, PostController.getSavedPost);
+
 module.exports = router;

@@ -42,7 +42,7 @@ function Posts({ id, profile, auth }) {
         <div className="profile__posts">
             {
                 posts.length === 0 ? <h2 className="mx-auto d-block">No Posts</h2> :
-                    posts.length < 3 ?
+                    posts.length < 4 ?
                         <div className="row no-gutters " style={{ padding: "10px" }}>
                             <PostThumb result={result} posts={posts} />
                         </div>

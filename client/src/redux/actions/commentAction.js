@@ -2,7 +2,7 @@ import * as POST_TYPES from '../constants/post'
 import * as GLOBLE_TYPES from '../constants/index'
 import { patchDataAPI, postDataAPI, deleteDataAPI } from '../../utils/fetchData'
 
-export const createComment = (post, newComnent, auth) => async dispatch => {
+export const createComment = (post, newComnent, auth, socket) => async dispatch => {
     let newPost = { ...post, comments: [...post.comments, newComnent] }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: { newPost } })
 
@@ -17,7 +17,7 @@ export const createComment = (post, newComnent, auth) => async dispatch => {
         const newData = { ...res.data.newComment, user: auth.user, postUserId: post.user._id }
         let newPost = { ...post, comments: [...post.comments, newData] }
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: { newPost } })
-
+        socket.emit("createComment", newPost);
     } catch (error) {
         if (error) {
             return dispatch({
@@ -30,7 +30,7 @@ export const createComment = (post, newComnent, auth) => async dispatch => {
     }
 }
 
-export const updateComment = (post, comment, content, auth) => async dispatch => {
+export const updateComment = (post, comment, content, auth, socket) => async dispatch => {
     const newComments = post.comments.map(item => {
         return item._id === comment._id ? { ...comment, content } : item
     })
@@ -40,6 +40,7 @@ export const updateComment = (post, comment, content, auth) => async dispatch =>
 
     try {
         await patchDataAPI(`comment/${comment._id}`, { content }, auth.token);
+        socket.emit("updateComment", newData);
     } catch (error) {
         if (error) {
             return dispatch({
@@ -53,7 +54,7 @@ export const updateComment = (post, comment, content, auth) => async dispatch =>
 
 }
 
-export const likeComment = (post, comment, auth) => async dispatch => {
+export const likeComment = (post, comment, auth, socket) => async dispatch => {
     const newComment = { ...comment, likes: [...comment.likes, auth.user] };
 
     const newComments = post.comments.map(item => item._id === newComment._id ? newComment : item)
@@ -61,8 +62,11 @@ export const likeComment = (post, comment, auth) => async dispatch => {
     const newData = { ...post, comments: newComments }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: { newPost: newData } })
 
+
+
     try {
         await patchDataAPI(`comment/${comment._id}/like`, null, auth.token);
+        socket.emit("likeComment", newData);
     } catch (error) {
         if (error) {
             return dispatch({
@@ -75,7 +79,7 @@ export const likeComment = (post, comment, auth) => async dispatch => {
     }
 }
 
-export const unlikeComment = (post, comment, auth) => async dispatch => {
+export const unlikeComment = (post, comment, auth, socket) => async dispatch => {
     const newComment = { ...comment, likes: comment.likes.filter(item => item._id !== auth.user._id) };
 
     const newComments = post.comments.map(item => item._id === newComment._id ? newComment : item)
@@ -85,7 +89,7 @@ export const unlikeComment = (post, comment, auth) => async dispatch => {
 
     try {
         await patchDataAPI(`comment/${comment._id}/unlike`, null, auth.token);
-
+        socket.emit("unlikeComment", newData);
     } catch (error) {
         if (error) {
             return dispatch({
@@ -98,7 +102,7 @@ export const unlikeComment = (post, comment, auth) => async dispatch => {
     }
 }
 
-export const removeComment = (post, comment, auth) => async dispatch => {
+export const removeComment = (post, comment, auth, socket) => async dispatch => {
     const arrCmtDelete = [...post.comments.filter(cm => cm.reply === comment._id), comment];
 
     const newPost = {
@@ -112,6 +116,7 @@ export const removeComment = (post, comment, auth) => async dispatch => {
         arrCmtDelete.forEach(item => {
             deleteDataAPI(`/comment/${item._id}`, auth.token);
         })
+        socket.emit("removeComment", newPost);
     } catch (error) {
         if (error) {
             return dispatch({

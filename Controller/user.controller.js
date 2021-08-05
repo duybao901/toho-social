@@ -236,6 +236,7 @@ class UserController {
             return res.status(500).json({ msg: err.message })
         }
     }
+    
 }
 
 function createAccessToken(payload) {

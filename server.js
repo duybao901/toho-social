@@ -6,6 +6,7 @@ const fileUpload = require('express-fileupload')
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const socketSever = require('./socketSever');
 
 // Middleware 
 app.use(cors());
@@ -14,6 +15,14 @@ app.use(cookiePasrer());
 app.use(fileUpload({
     useTempFiles: true
 }))
+
+// Socket
+const httpServer = require('http').createServer(app);
+const io = require('socket.io')(httpServer);
+
+io.on("connection", (socket) => {
+    socketSever(socket);
+});
 
 // Router
 app.use('/api', require('./Router/user.route'));
@@ -38,10 +47,6 @@ mongoose.connect(MONGODB_URL, {
 
 const port = process.env.PORT || 5000;
 
-app.get('', (req, res) => {
-    return res.json({ msg: "Hello world 🐊" });
-})
-
-app.listen(port, () => {
+httpServer.listen(port, () => {
     console.log('Applistening on port ', port);
 })

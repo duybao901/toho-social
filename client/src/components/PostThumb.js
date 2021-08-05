@@ -9,6 +9,15 @@ function PostThumb({ posts, result, colLg }) {
             <img src={post.images[0].url} alt="post_image_thumb">
             </img>
             <i className='bx bxs-carousel post__thumb-icon-carousel'></i>
+            <div className="post__thumb-infor">
+                <div>
+                    <span>{post.likes.length}</span><i className='bx bxs-heart'></i>
+                </div>
+                <div>
+                    <span>{post.comments.length}</span><i className='bx bxs-comment' ></i>
+                </div>
+               
+            </div>
         </Link>
     })
 }

@@ -14,14 +14,22 @@ import Header from './components/header/Header';
 import * as authActions from './redux/actions/authAction'
 import * as postActions from './redux/actions/postAction'
 import * as suggestionActions from './redux/actions/suggestionAction'
+import * as GLOBLE_TYPES from './redux/constants/index'
+// Socket IO
+import { io } from 'socket.io-client'
+import SocketClient from './SocketClient';
 
 function App() {
+
     const { auth, notify } = useSelector(state => state);
-
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(authActions.refreshToken());
+        const socket = io();
+        dispatch({ type: GLOBLE_TYPES.SOCKET, payload: socket })
+        return () => {
+            socket.close();
+        }
     }, [dispatch])
 
     useEffect(() => {
@@ -40,6 +48,7 @@ function App() {
             <Notify />
             <WatchImg />
             <EditMedia />
+            {auth.token && <SocketClient />}
             <div className='main'>
                 <div className="main__container">
                     {auth.token && <Header />}

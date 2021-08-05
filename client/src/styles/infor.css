@@ -259,3 +259,41 @@
     /* margin-right: 4px */
     color: #0f1419;
 }
+
+/* Tab */
+
+.profile__tab {
+    margin: 0 auto;
+    width: 95%;
+    height: 40px;
+    border-top: 1px solid #dddddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile__tab-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px;
+    cursor: pointer;
+    color: var(--color-text-grey);
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-top: 2px solid transparent;
+    margin-right: 20px;
+}
+
+.profile__tab-item i {
+    font-size: 1.4rem;
+    margin-right: 4px;
+}
+
+.profile__tab-item.active {
+    color: var(--color-text-black);
+    border-top: 2px solid black;
+}

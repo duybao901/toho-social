@@ -1,12 +1,13 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeComment } from '../../redux/actions/commentAction'
 
 function CommentMenu({ post, comment, auth, setOnedit }) {
     const dispatch = useDispatch()
+    const { socket } = useSelector(state => state);
 
     function handleRemoveComment() {
-        dispatch(removeComment(post, comment, auth));
+        dispatch(removeComment(post, comment, auth, socket));
     }
 
     const menuItem = () => {
