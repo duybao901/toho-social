@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { follow, unfollow } from '../redux/actions/profileAction'
 function FollowButton({ user }) {
     const dispatch = useDispatch();
-    const { auth, profile } = useSelector(state => state)
+    const { auth, profile, socket } = useSelector(state => state)
     const [followed, setFollowed] = useState(false);
 
     useEffect(() => {
@@ -13,13 +13,13 @@ function FollowButton({ user }) {
     }, [auth.user.followings, user._id])
 
     function handleFollowed() {
-        dispatch(follow({ users: profile.users, user, auth }));
+        dispatch(follow({ users: profile.users, user, auth, socket}));
         setFollowed(true);
     }
 
     function hanldeUnFollowed() {
         setFollowed(false);
-        dispatch(unfollow({ users: profile.users, user, auth }));
+        dispatch(unfollow({ users: profile.users, user, auth, socket }));
     }
 
 

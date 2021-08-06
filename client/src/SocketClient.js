@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as POST_TYPES from './redux/constants/post'
+import * as GLOBLE_TYPES from './redux/constants/index'
 function SocketClient() {
     const dispatch = useDispatch();
     const { auth, socket } = useSelector(state => state);
@@ -99,6 +100,39 @@ function SocketClient() {
             socket.off("updateCommentToClient");
         }
     }, [socket, dispatch])
+
+    // Follow User
+    useEffect(() => {
+        socket.on("followUserToClient", newUser => {
+            dispatch({
+                type: GLOBLE_TYPES.AUTH,
+                payload: {
+                    token: auth.token,
+                    user: newUser
+                }
+            })
+        })
+        return () => {
+            socket.off("followUserToClient");
+        }
+    }, [socket, dispatch])
+
+    // Follow User
+    useEffect(() => {
+        socket.on("unfollowUserToClient", newUser => {
+            dispatch({
+                type: GLOBLE_TYPES.AUTH,
+                payload: {
+                    token: auth.token,
+                    user: newUser
+                }
+            })
+        })
+        return () => {
+            socket.off("unfollowUserToClient");
+        }
+    }, [socket, dispatch])
+
 
     return <> </>
 }

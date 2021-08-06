@@ -157,6 +157,23 @@
         width: 100%;
         border-bottom: 1px solid #f1f1f1;
     }
+    .infor__search-container {
+        display: none;
+    }
+    .discover__search-header {
+        display: block;
+        margin-top: -2px;
+    }
+    .discover__search-header .search__form form {
+        border-radius: 0px;
+    }
+    .discover__search-header .search__users {
+        margin-top: 0px;
+        border-radius: 0px;
+    }
+    .main__container-right.discover .row {
+        margin-top: 20px;
+    }
 }
 
 @media (max-width:767px) {
@@ -204,6 +221,9 @@
     }
     .main__header {
         margin-left: 0px;
+    }
+    .discover__search-header {
+        width: 100%;
     }
 }
 
@@ -299,6 +319,9 @@
     }
     .suggest-container {
         display: none;
+    }
+    .discover__search-header {
+        width: 100%;
     }
 }
 

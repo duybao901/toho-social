@@ -45,7 +45,7 @@ function App() {
                 maxHeight: notify.loading && '100vh'
             }}
         >
-            <Notify />
+            {notify && <Notify />}
             <WatchImg />
             <EditMedia />
             {auth.token && <SocketClient />}

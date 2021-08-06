@@ -22,17 +22,15 @@ const profileReducer = (state = initialState, action) => {
             };
 
         case PROFILE_TYPES.FOLLOW: {
-            state.users.map((user) => user._id === action.payload._id)
             return {
                 ...state,
-                users: state.users.map((user) => user._id === action.payload._id ? action.payload : user)
+                users: EditData(state.users, action.payload._id, action.payload)
             }
         }
         case PROFILE_TYPES.UNFOLLOW: {
-            state.users.map((user) => user._id === action.payload._id)
             return {
                 ...state,
-                users: state.users.map((user) => user._id === action.payload._id ? action.payload : user)
+                users: EditData(state.users, action.payload._id, action.payload)
             }
         }
         case PROFILE_TYPES.GET_ID: {

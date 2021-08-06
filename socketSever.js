@@ -79,6 +79,18 @@ const socketSever = (socket) => {
             }
         })
     })
+
+    // Follow User
+    socket.on('followUser', newUser => {
+        const user = users.find(user => user.id === newUser._id)
+        user && socket.to(`${user.socketId}`).emit("followUserToClient", newUser);
+    });
+
+    // UnFollow User
+    socket.on('unfollowUser', newUser => {
+        const user = users.find(user => user.id === newUser._id)
+        user && socket.to(`${user.socketId}`).emit("unfollowUserToClient", newUser);
+    });
 }
 
 module.exports = socketSever;

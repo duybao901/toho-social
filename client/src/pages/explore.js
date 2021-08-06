@@ -24,7 +24,7 @@ function Explore() {
             const res = await getDataAPI(`/post_discover?num=${discover.page * 6}`, auth.token);
             dispatch({ type: DISCOVER_TYPES.UPDATE_DISCOVER, payload: res.data })
             window.scrollTo({
-                top: discover.page* 400,
+                top: discover.page * 400,
                 behavior: 'smooth'
             });
         }
@@ -32,7 +32,10 @@ function Explore() {
 
     return (
         <div className="main__container-right discover">
-            <div className="row">
+            <div className="discover__search-header">
+                <Search />
+            </div>
+            <div className="row" >
                 <div className="col col-sm-12 col-md-12 col-lg-7 ">
                     {
                         discover.loading ?

@@ -78,7 +78,7 @@ export const updateUserProfile = ({ userData, auth }) => async (dispatch) => {
     }
 }
 
-export const follow = ({ users, user, auth }) => async (dispatch) => {
+export const follow = ({ users, user, auth, socket }) => async (dispatch) => {
     var newUser;
     if (users.every(item => item._id !== user._id)) {
         newUser = { ...user, followers: [...user.followers, auth.user] }
@@ -109,14 +109,16 @@ export const follow = ({ users, user, auth }) => async (dispatch) => {
         }
     })
 
+
     try {
-        await putDataAPI(`/${user._id}/follow`, null, auth.token);
+        const res = await putDataAPI(`/${user._id}/follow`, null, auth.token);
+        socket.emit("followUser", res.data.newUser);
     } catch (error) {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
     }
 }
 
-export const unfollow = ({ user, auth }) => async (dispatch) => {
+export const unfollow = ({ user, auth, socket }) => async (dispatch) => {
     const newUser = { ...user, followers: user.followers.filter(user => user._id !== auth.user._id) };
 
     dispatch({
@@ -136,7 +138,8 @@ export const unfollow = ({ user, auth }) => async (dispatch) => {
     })
 
     try {
-        await putDataAPI(`/${user._id}/unfollow`, null, auth.token);
+        const res = await putDataAPI(`/${user._id}/unfollow`, null, auth.token);
+        socket.emit("unfollowUser", res.data.newUser);
     } catch (error) {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
     }

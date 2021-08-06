@@ -72,6 +72,7 @@
     border-radius: 5px;
     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .1);
     margin-top: 2px;
+    z-index: 10;
 }
 
 .search__users-list img {
@@ -112,4 +113,11 @@
 
 .search__users-list li:not(:last-child) {
     border-bottom: 1px solid #f1f1f1;
+}
+
+.discover__search-header {
+    position: fixed;
+    width: calc(100% - 78px);
+    display: none;
+    z-index: 10;
 }

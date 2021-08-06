@@ -22,7 +22,7 @@ const Profile = () => {
 
             dispatch(profileAction.getProfileUser({ id, auth }));
         }
-    }, [id, auth, dispatch, profile.ids])
+    }, [id, auth, dispatch, profile.ids, profile])
 
 
     return (
