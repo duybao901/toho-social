@@ -17,7 +17,7 @@ function Carousel({ images, id, isDetailPost }) {
                 <div className="carousel-inner">
                     {images.map((img, index) => {
                         return <div key={index} className={`carousel-item ${isActive(index)}`}>
-                            <img style={{ height: "500px", objectFit: isDetailPost ? "contain" : "cover" }} src={img.url} className="d-block w-100" alt={img.url} />
+                            <img style={{ height: "520px", objectFit: isDetailPost ? "contain" : "cover" }} src={img.url} className="d-block w-100" alt={img.url} />
                         </div>
                     })}
                     <a className="carousel-control-prev" href={`#images${id}`} role="button" data-slide="prev">

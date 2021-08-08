@@ -8,7 +8,7 @@ import { BASE_URL } from '../../utils/config'
 function CardHeader({ post }) {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { auth } = useSelector(state => state)
+    const { auth, socket } = useSelector(state => state)
 
 
     function handleEditPost() {
@@ -17,7 +17,7 @@ function CardHeader({ post }) {
 
     const hanldeDeletePost = () => {
         if (window.confirm("Are you sure want to delete this post?")) {
-            dispatch(deletePost(post._id, auth));
+            dispatch(deletePost(post._id, auth, socket));
             return history.push('/')
         }
     }

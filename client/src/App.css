@@ -105,12 +105,15 @@ ul li {
 /* Detail Post */
 
 @import url('./styles/detail_post.css');
-
 /* Discover */
+
 @import url('./styles/discover.css');
 /* Suggestion */
-@import url('./styles/suggesttion.css');
 
+@import url('./styles/suggesttion.css');
+/* Notification */
+
+@import url('./styles/notification.css');
 /*! Reponsive */
 
 @import url('./styles/reponsive.css');

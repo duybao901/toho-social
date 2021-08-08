@@ -28,7 +28,10 @@ class PostController {
 
             res.json({
                 msg: "Create post",
-                newPost
+                newPost: {
+                    ...newPost._doc,
+                    user: req.user
+                }
             })
 
         } catch (err) {
@@ -198,7 +201,13 @@ class PostController {
 
             await Comments.deleteMany({ _id: { $in: post.comments } });
 
-            res.json({ msg: "Deleted post!" });
+            res.json({
+                msg: "Deleted post!",
+                newPost: {
+                    ...post._doc,
+                    user: req.user
+                }
+            });
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }

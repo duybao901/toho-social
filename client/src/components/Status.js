@@ -7,7 +7,7 @@ import { createPost, updatePost } from '../redux/actions/postAction'
 
 
 function Status({ setOpenStatus }) {
-    const { auth, status } = useSelector(state => state);
+    const { auth, status, socket } = useSelector(state => state);
     const [content, setContent] = useState('');
     const [images, setImages] = useState([]);
     const [stream, setStream] = useState(false);
@@ -41,13 +41,6 @@ function Status({ setOpenStatus }) {
         }
     }, [status])
 
-    // useEffect(() => {
-    //     if (!open) {
-    //         setContent('');
-    //         setImages([]);
-    //         setStream(false);            
-    //     }
-    // }, [open])
     function handleUploadImages(e) {
         let files = [...e.target.files];
         let err = "";
@@ -128,7 +121,7 @@ function Status({ setOpenStatus }) {
             setImages([]);
             setStream(false);
             if (setOpenStatus) setOpenStatus(false); // close modal
-            dispatch(createPost({ content, images, auth }))
+            dispatch(createPost({ content, images, auth, socket }))
         }
 
     }

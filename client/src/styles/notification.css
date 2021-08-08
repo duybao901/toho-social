@@ -1,0 +1,123 @@
+.notify__card {
+    display: block;
+    width: 100%;
+}
+
+.notify__card-wrapper {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px 20px;
+    border-bottom: 1px solid #f1f1f1;
+    width: 100%;
+}
+
+.notify__card:hover {
+    color: inherit;
+    background-color: #fbfbfb;
+    transition: all .15s linear;
+}
+
+.notify__user-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.notify__wrapper {
+    margin-left: 5px;
+    flex: 1;
+}
+
+.notify__user-infor {
+    display: flex;
+    align-items: center;
+}
+
+.notify__user-infor-wrapper {
+    display: flex;
+}
+
+.notify__user-infor h2, p {
+    margin: 0;
+}
+
+.notify__user-infor h2 {
+    font-size: 1.5rem;
+    color: var(--color-text-black);
+    font-weight: 600;
+}
+
+.notify__user-infor p {
+    font-size: 1.4rem;
+    color: var(--color-text-black);
+    font-weight: 600;
+    margin-left: 5px;
+    margin-top: -2px;
+}
+
+.notify__user-infor p span {
+    font-size: 1.2rem;
+    color: var(--color-text-grey);
+}
+
+.notify__content {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 10px;
+}
+
+.notify__content p {
+    font-size: 1.4rem;
+    color: var(--color-text-black);
+    font-weight: 400;
+    width: 58%;
+    margin: 0;
+}
+
+.notify__content-image {
+    width: 40%;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.notify__isRead {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-left: auto;
+}
+
+.notify__isRead.NotRead {
+    background-color: var(--color-blue);
+}
+
+.notify__isRead.isRead {
+    background-color: transparent;
+}
+
+.notify__delete-all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 1.2rem;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: rgb(221, 48, 83);
+    width: 100px;
+    height: 30px;
+    text-transform: uppercase;
+    margin-left: auto;
+    transition: all .15s linear;
+}
+
+.notify__delete-all:hover {
+    background-color: rgb(225, 92, 119);
+}

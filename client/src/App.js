@@ -14,6 +14,8 @@ import Header from './components/header/Header';
 import * as authActions from './redux/actions/authAction'
 import * as postActions from './redux/actions/postAction'
 import * as suggestionActions from './redux/actions/suggestionAction'
+import * as notifyActions from './redux/actions/notifyAction'
+
 import * as GLOBLE_TYPES from './redux/constants/index'
 // Socket IO
 import { io } from 'socket.io-client'
@@ -36,6 +38,8 @@ function App() {
         if (auth.token) {
             dispatch(postActions.getPosts(auth.token));
             dispatch(suggestionActions.getSuggestionUser(auth.token));
+            dispatch(notifyActions.getNotifies(auth.token));
+
         }
     }, [dispatch, auth.token])
     return (

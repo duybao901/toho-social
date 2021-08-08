@@ -29,7 +29,6 @@ const postReducer = (state = initialState, action) => {
             }
         }
         case POST_TYPES.UPDATE_HOME_POSTS: {
-            console.log(action.payload)
             return {
                 ...state,
                 posts: [...action.payload.posts],

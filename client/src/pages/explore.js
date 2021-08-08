@@ -21,7 +21,7 @@ function Explore() {
 
     const fetchMoreData = async () => {
         if (!discover.stopScroll) {
-            const res = await getDataAPI(`/post_discover?num=${discover.page * 6}`, auth.token);
+            const res = await getDataAPI(`/post_discover?num=${discover.page * 9}`, auth.token);
             dispatch({ type: DISCOVER_TYPES.UPDATE_DISCOVER, payload: res.data })
             window.scrollTo({
                 top: discover.page * 400,

@@ -36,7 +36,7 @@ const menuList = [
 
 function Menu() {
     const location = useLocation();
-    const { auth } = useSelector(state => state)
+    const { auth, notification } = useSelector(state => state)
     const [openStatus, setOpenStatus] = useState(false);
     const dispatch = useDispatch();
 
@@ -63,16 +63,25 @@ function Menu() {
     return (
         <div className='menu'>
             <ul className="menu__list">
-                {menuList.map((menu, index) => {
-                    return <li className={`menu__list-item ${isActive(menu.path)}`} key={index}>
-                        <Link to={menu.path}>
-                            <i className={isActive(menu.path) ? menu.iconActive : menu.icon}></i>
-                            <span>
-                                {menu.text}
-                            </span>
-                        </Link>
-                    </li>
-                })}
+                {
+                    menuList.map((menu, index) => {
+                        return <li className={`menu__list-item ${isActive(menu.path)}`} key={index}>
+                            <Link to={menu.path}>
+                                <div className={menu.text === "notifications" ? "menu__notifications" : ""}>
+                                    <i className={isActive(menu.path) ? menu.iconActive : menu.icon}></i>
+                                    {
+                                        menu.text === "notifications" && notification.data.length > 0 && <span className="menu__notifications-badge">
+                                            {notification.data.length}
+                                        </span>
+                                    }
+                                </div>
+                                <span>
+                                    {menu.text}
+                                </span>
+                            </Link>
+                        </li>
+                    })
+                }
                 <li className={`menu__list-item ${isActive(`/profile/${auth.user._id}`)}`}>
                     <Link to={`/profile/${auth.user._id}`}>
                         <i className={!isActive(`/profile/${auth.user._id}`) ? "bx bx-user" : "bx bxs-user"}></i>

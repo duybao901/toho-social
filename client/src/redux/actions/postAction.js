@@ -3,8 +3,9 @@ import * as POST_TYPES from '../constants/post';
 import * as AUTH_TYPES from '../constants/index';
 import { imagesUpload } from '../../utils/imageUpload';
 import { postDataAPI, getDataAPI, patchDataAPI, deleteDataAPI } from '../../utils/fetchData';
+import { createNotify, removeNotify } from '../actions/notifyAction'
 
-export const createPost = ({ content, images, auth }) => async dispatch => {
+export const createPost = ({ content, images, auth, socket }) => async dispatch => {
     let media = [];
     try {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { loading: true, } });
@@ -14,11 +15,21 @@ export const createPost = ({ content, images, auth }) => async dispatch => {
             { content, images: media }, auth.token
         );
 
-
         dispatch({
             type: POST_TYPES.CREATE_POST,
             payload: { newPost: { ...res.data.newPost, user: auth.user }, },
         })
+        console.log(media)
+        const msg = {
+            id: res.data.newPost._id,
+            text: "added a new post.",
+            recipients: res.data.newPost.user.followers,
+            url: `/post/${res.data.newPost._id}`,
+            content,
+            image: media[0].url,
+        }
+
+        dispatch(createNotify({ msg, auth, socket }))
 
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: {} });
 
@@ -119,7 +130,7 @@ export const likePost = ({ post, auth, socket }) => async dispatch => {
 
 export const unlikePost = ({ post, auth, socket }) => async dispatch => {
     let newPost = {};
-    newPost = { ...post, likes: post.likes.filter(like => like._id !== auth.user._id) }    
+    newPost = { ...post, likes: post.likes.filter(like => like._id !== auth.user._id) }
 
     dispatch({
         type: POST_TYPES.UPDATE_POST,
@@ -160,11 +171,19 @@ export const getDetailPost = (detailPost, id, auth) => async dispatch => {
     }
 }
 
-export const deletePost = (postId, auth) => async (dispatch) => {
+export const deletePost = (postId, auth, socket) => async (dispatch) => {
     try {
         dispatch({ type: POST_TYPES.DELETE_POST, payload: postId })
 
-        await deleteDataAPI(`/post/${postId}`, auth.token)
+        const res = await deleteDataAPI(`/post/${postId}`, auth.token)
+        const msg = {
+            id: res.data.newPost._id,
+            text: "added a new post.",
+            recipients: res.data.newPost.user.followers,
+            url: `/post/${res.data.newPost._id}`,
+        }
+
+        dispatch(removeNotify({ msg, auth, socket }))
 
     } catch (error) {
         if (error) {

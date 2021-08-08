@@ -115,7 +115,7 @@ function SocketClient() {
         return () => {
             socket.off("followUserToClient");
         }
-    }, [socket, dispatch])
+    }, [socket, dispatch, auth.token])
 
     // Follow User
     useEffect(() => {
@@ -131,7 +131,7 @@ function SocketClient() {
         return () => {
             socket.off("unfollowUserToClient");
         }
-    }, [socket, dispatch])
+    }, [socket, dispatch, auth.token])
 
 
     return <> </>

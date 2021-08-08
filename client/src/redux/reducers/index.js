@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import auth from './authReducer';
-import notify from "./notifyReducer";
+import notify from "./notifyReducer"; // Loading 
 import profile from "./profileReducer";
 import display from './displayReducer'
 import editMedia from './editmediaReducer'
@@ -11,7 +11,7 @@ import detailPost from './detailPostReducer'
 import discover from './discoverReducer'
 import suggestion from './suggestionReducer'
 import socket from './socketReducer'
-
+import notification from './notificationReducer';
 
 const myReducer = combineReducers({
     auth,
@@ -24,7 +24,8 @@ const myReducer = combineReducers({
     detailPost,
     discover,
     suggestion,
-    socket
+    socket,
+    notification
 });
 
 export default myReducer;

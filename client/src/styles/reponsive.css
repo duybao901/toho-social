@@ -88,6 +88,9 @@
     .infor__user {
         padding: 20px;
     }
+    .menu__notifications .menu__notifications-badge {
+        right: -10px;
+    }
 }
 
 @media (max-width: 1023px) {
@@ -174,6 +177,9 @@
     .main__container-right.discover .row {
         margin-top: 20px;
     }
+    .main__header {
+        width: 90%;
+    }
 }
 
 @media (max-width:767px) {
@@ -220,10 +226,14 @@
         display: none;
     }
     .main__header {
+        width: 100%;
         margin-left: 0px;
     }
     .discover__search-header {
         width: 100%;
+    }
+    .card__body .carousel-item img {
+        height: 360px !important;
     }
 }
 
@@ -322,6 +332,18 @@
     }
     .discover__search-header {
         width: 100%;
+    }
+    .infor__user-btn-edit {
+        width: 180px;
+        max-width: 180px;
+    }
+    /* notify */
+    .notify__user-infor-wrapper {
+        flex-direction: column;
+        margin-bottom: 5px;
+    }
+    .notify__user-infor p {
+        margin-left: 0px;
     }
 }
 
