@@ -2,6 +2,23 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as POST_TYPES from './redux/constants/post'
 import * as GLOBLE_TYPES from './redux/constants/index'
+import * as NOTIFY_TYPES from './redux/constants/notifycation'
+
+function spawnNotification(body, icon, url, title) {
+    var options = {
+        body: body,
+        icon: icon
+    }
+    var notification = new Notification(title, options);
+    console.log(notification)
+    notification.onclick = e => {
+        e.preventDefault();
+        window.open(url, "_blank")
+    }
+}
+
+
+
 function SocketClient() {
     const dispatch = useDispatch();
     const { auth, socket } = useSelector(state => state);
@@ -133,6 +150,40 @@ function SocketClient() {
         }
     }, [socket, dispatch, auth.token])
 
+    // Create Notify
+    useEffect(() => {
+        socket.on("createNotifyToClient", msg => {
+
+            spawnNotification(
+                msg.user.username + ' ' + msg.text,
+                msg.user.avatar,
+                msg.url,
+                'Toho-network'
+            )
+
+            dispatch({
+                type: NOTIFY_TYPES.CREATE_NOTIFICATION,
+                payload: msg
+            })
+        })
+        return () => {
+            socket.off("createNotifyToClient");
+        }
+    }, [socket, dispatch])
+
+
+    // Create Notify
+    useEffect(() => {
+        socket.on("removeNotifyToClient", msg => {           
+            dispatch({
+                type: NOTIFY_TYPES.REMOVE_NOTIFICATION,
+                payload: msg
+            })
+        })
+        return () => {
+            socket.off("removeNotifyToClient");
+        }
+    }, [socket, dispatch])
 
     return <> </>
 }

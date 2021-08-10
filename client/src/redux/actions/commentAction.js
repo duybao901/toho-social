@@ -1,15 +1,16 @@
 import * as POST_TYPES from '../constants/post'
 import * as GLOBLE_TYPES from '../constants/index'
 import { patchDataAPI, postDataAPI, deleteDataAPI } from '../../utils/fetchData'
+import { createNotify, removeNotify } from '../actions/notifyAction'
 
-export const createComment = (post, newComnent, auth, socket) => async dispatch => {
-    let newPost = { ...post, comments: [...post.comments, newComnent] }
+export const createComment = (post, newComment, auth, socket) => async dispatch => {
+    let newPost = { ...post, comments: [...post.comments, newComment] }
     dispatch({ type: POST_TYPES.UPDATE_POST, payload: { newPost } })
 
     try {
         const res = await postDataAPI('comment',
             {
-                ...newComnent,
+                ...newComment,
                 postId: post._id,
                 postUserId: post.user._id,
             },
@@ -18,6 +19,17 @@ export const createComment = (post, newComnent, auth, socket) => async dispatch 
         let newPost = { ...post, comments: [...post.comments, newData] }
         dispatch({ type: POST_TYPES.UPDATE_POST, payload: { newPost } })
         socket.emit("createComment", newPost);
+
+        const msg = {
+            id: res.data.newComment._id,
+            text: newComment.reply ? "mentioned you in a comment 💬." : "has commented on your post 💬.",
+            recipients: newComment.reply ? [newComment.tag._id] : [post.user._id],
+            url: `/post/${post._id}`,
+            content: post.content,
+            image: post.images[0].url
+        }
+
+        dispatch(createNotify({ msg, auth, socket }))
     } catch (error) {
         if (error) {
             return dispatch({
@@ -103,6 +115,7 @@ export const unlikeComment = (post, comment, auth, socket) => async dispatch => 
 }
 
 export const removeComment = (post, comment, auth, socket) => async dispatch => {
+    console.log(post.comments);
     const arrCmtDelete = [...post.comments.filter(cm => cm.reply === comment._id), comment];
 
     const newPost = {
@@ -115,8 +128,18 @@ export const removeComment = (post, comment, auth, socket) => async dispatch => 
     try {
         arrCmtDelete.forEach(item => {
             deleteDataAPI(`/comment/${item._id}`, auth.token);
+            const msg = {
+                id: item._id,              
+                recipients: comment.reply ? [comment.tag._id] : [post.user._id],
+                url: `/post/${post._id}`,
+            }
+
+            dispatch(removeNotify({ msg, auth, socket }))
         })
         socket.emit("removeComment", newPost);
+
+       
+
     } catch (error) {
         if (error) {
             return dispatch({

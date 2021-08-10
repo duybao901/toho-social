@@ -41,6 +41,30 @@ class NotifyController {
             return res.status(500).json({ msg: err.message });
         }
     }
+
+    async isReadNotify(req, res) {
+        try {
+
+            const notify = await Notifies.findOneAndUpdate({ _id: req.params.id }, {
+                isRead: true
+            });
+            return res.json({ msg: "Read notify", notify });
+
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    }
+
+    async deleteAllNotify(req, res) {
+        try {
+
+            let notifies = await Notifies.deleteMany({ recipients: req.user._id });
+            return res.json({ notifies });
+
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    }
 }
 
 module.exports = new NotifyController;

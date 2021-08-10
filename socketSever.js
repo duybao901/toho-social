@@ -91,6 +91,24 @@ const socketSever = (socket) => {
         const user = users.find(user => user.id === newUser._id)
         user && socket.to(`${user.socketId}`).emit("unfollowUserToClient", newUser);
     });
+
+    // Create Notify
+    socket.on('createNotify', msg => {
+        users.forEach(user => {
+            if (msg.recipients.includes(user.id)) {
+                socket.to(`${user.socketId}`).emit("createNotifyToClient", msg);
+            }
+        })
+    });
+
+    // Remove Notify
+    socket.on('removeNotify', msg => {
+        users.forEach(user => {
+            if (msg.recipients.includes(user.id)) {
+                socket.to(`${user.socketId}`).emit("removeNotifyToClient", msg);
+            }
+        })
+    });
 }
 
 module.exports = socketSever;

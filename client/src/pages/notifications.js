@@ -5,10 +5,20 @@ import Search from '../components/search/Search';
 import Suggestion from '../components/Suggestion';
 import Loading from "../images/globle_loading.gif"
 import moment from 'moment'
+import { isReadNotify } from "../redux/actions/notifyAction"
+import * as NOTIFICATION_TYPES from '../redux/constants/notifycation'
 
 function Notifications() {
-    // const dispatch = useDispatch();
-    const { notification } = useSelector(state => state);
+    const dispatch = useDispatch();
+    const { auth, notification } = useSelector(state => state);
+
+    const handleisReadNotify = (msg) => {
+        dispatch(isReadNotify(msg, auth))
+    }
+    const handleSound = () => {
+        dispatch({ type: NOTIFICATION_TYPES.SOUND_NOTIFICATION, payload: !notification.sound })
+    }
+
     return (
         <div className="main__container-right notification">
             <div className="row" style={{ marginTop: '0px' }}>
@@ -25,11 +35,15 @@ function Notifications() {
                                     notification.sound ?
                                         <i
                                             style={{ fontSize: '2rem', color: "#1DA1F2", cursor: 'pointer' }}
-                                            className='bx bx-bell'></i>
+                                            className='bx bx-bell'
+                                            onClick={handleSound}
+                                        ></i>
                                         :
                                         <i
                                             style={{ fontSize: '2rem', color: "#1DA1F2", cursor: 'pointer' }}
-                                            className='bx bx-bell-off' ></i>
+                                            className='bx bx-bell-off'
+                                            onClick={handleSound}
+                                        ></i>
                                 }
                             </div>
                         </div>
@@ -45,15 +59,15 @@ function Notifications() {
                                             {
                                                 notification.data.map((msg, index) => {
                                                     return <li key={index}>
-                                                        <Link to={msg.url} className="notify__card">
+                                                        <Link to={msg.url} className="notify__card" onClick={() => handleisReadNotify(msg)}>
                                                             <div className="notify__card-wrapper">
                                                                 <img className="notify__user-image" src={msg.user.avatar} alt="user-notify" >
                                                                 </img>
                                                                 <div className="notify__wrapper">
                                                                     <div className="notify__user-infor">
                                                                         <div className="notify__user-infor-wrapper">
-                                                                            <h2>{msg.user.username}</h2>
-                                                                            <p>{msg.text} <span>&#8226;</span> <span>{moment(msg.createdAt).fromNow(true)}</span></p>
+                                                                            <h2>{msg.user.username} <p>{msg.text} <span>&#8226;</span> <span>{moment(msg.createdAt).fromNow()}</span></p></h2>
+
                                                                         </div>
                                                                         {
                                                                             <span className={msg.isRead ? "notify__isRead isRead" : "notify__isRead NotRead"}>
@@ -67,7 +81,7 @@ function Notifications() {
                                                                         </p>
                                                                         {
                                                                             msg.image &&
-                                                                            <img alt="image-post" src={msg.image} className="notify__content-image">
+                                                                            <img alt="image__post" src={msg.image} className="notify__content-image">
                                                                             </img>
                                                                         }
                                                                     </div>

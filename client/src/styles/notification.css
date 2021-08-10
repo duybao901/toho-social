@@ -36,6 +36,7 @@
 
 .notify__user-infor-wrapper {
     display: flex;
+    align-items: flex-end;
 }
 
 .notify__user-infor h2, p {
@@ -46,14 +47,15 @@
     font-size: 1.5rem;
     color: var(--color-text-black);
     font-weight: 600;
+    display: flex;
+    align-items: flex-end;
 }
 
 .notify__user-infor p {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     color: var(--color-text-black);
-    font-weight: 600;
-    margin-left: 5px;
-    margin-top: -2px;
+    font-weight: 400;
+    margin-left: 3px;
 }
 
 .notify__user-infor p span {
@@ -84,14 +86,14 @@
 }
 
 .notify__isRead {
-    width: 8px;
-    height: 8px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     margin-left: auto;
 }
 
 .notify__isRead.NotRead {
-    background-color: var(--color-blue);
+    background-color: #2e89ff;
 }
 
 .notify__isRead.isRead {

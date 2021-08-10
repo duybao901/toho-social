@@ -19,10 +19,9 @@ export const createPost = ({ content, images, auth, socket }) => async dispatch 
             type: POST_TYPES.CREATE_POST,
             payload: { newPost: { ...res.data.newPost, user: auth.user }, },
         })
-        console.log(media)
         const msg = {
             id: res.data.newPost._id,
-            text: "added a new post.",
+            text: "added a new post .",
             recipients: res.data.newPost.user.followers,
             url: `/post/${res.data.newPost._id}`,
             content,
@@ -113,8 +112,20 @@ export const likePost = ({ post, auth, socket }) => async dispatch => {
     })
 
     try {
-        patchDataAPI(`post/${post._id}/like`, null, auth.token);
+        await patchDataAPI(`post/${post._id}/like`, null, auth.token);
         socket.emit("likePost", newPost);
+
+        const msg = {
+            id: newPost._id,
+            text: "like your post ❤️.",
+            recipients: [newPost.user._id],
+            url: `/post/${newPost._id}`,
+            content: newPost.content,
+            image: newPost.images[0].url,
+        }
+
+        dispatch(createNotify({ msg, auth, socket }))
+
     } catch (error) {
         if (error) {
             return dispatch({
@@ -140,6 +151,16 @@ export const unlikePost = ({ post, auth, socket }) => async dispatch => {
     try {
         await patchDataAPI(`post/${post._id}/unlike`, null, auth.token);
         socket.emit("unlikePost", newPost);
+
+        const msg = {
+            id: newPost._id,
+            text: "❤️ like your post .",
+            recipients: [newPost.user._id],
+            url: `/post/${newPost._id}`,
+        }
+
+        dispatch(removeNotify({ msg, auth, socket }))
+
     } catch (error) {
         if (error) {
             return dispatch({

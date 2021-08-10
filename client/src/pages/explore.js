@@ -24,7 +24,7 @@ function Explore() {
             const res = await getDataAPI(`/post_discover?num=${discover.page * 9}`, auth.token);
             dispatch({ type: DISCOVER_TYPES.UPDATE_DISCOVER, payload: res.data })
             window.scrollTo({
-                top: discover.page * 400,
+                top: discover.page * 300,
                 behavior: 'smooth'
             });
         }

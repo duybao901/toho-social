@@ -1,6 +1,7 @@
 import * as PROFILE_TYPES from '../constants/profile'
 import * as GLOBLE_TYPES from '../constants/index'
 import { getDataAPI, putDataAPI } from '../../utils/fetchData'
+import { createNotify, removeNotify } from '../../redux/actions/notifyAction'
 
 export const getProfileUser = ({ id, auth }) => async (dispatch) => {
     dispatch({ type: PROFILE_TYPES.GET_ID, payload: id })
@@ -113,6 +114,16 @@ export const follow = ({ users, user, auth, socket }) => async (dispatch) => {
     try {
         const res = await putDataAPI(`/${user._id}/follow`, null, auth.token);
         socket.emit("followUser", res.data.newUser);
+
+        const msg = {
+            id: auth.user._id,
+            text: "has started to follow you 🍀.",
+            recipients: [newUser._id],
+            url: `/profile/${auth.user._id}`,
+        }
+
+        dispatch(createNotify({ msg, auth, socket }))
+
     } catch (error) {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
     }
@@ -140,6 +151,15 @@ export const unfollow = ({ user, auth, socket }) => async (dispatch) => {
     try {
         const res = await putDataAPI(`/${user._id}/unfollow`, null, auth.token);
         socket.emit("unfollowUser", res.data.newUser);
+
+        const msg = {
+            id: auth.user._id,
+            recipients: [newUser._id],
+            url: `/profile/${auth.user._id}`,
+        }
+
+        dispatch(removeNotify({ msg, auth, socket }))
+
     } catch (error) {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
     }
