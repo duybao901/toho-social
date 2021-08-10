@@ -40,10 +40,16 @@ const notificationReducer = (state = initialState, action) => {
                 data: EditData(state.data, action.payload._id, action.payload)
             }
         }
-        case NOTIFY_TYPES.SOUND_NOTIFICATION: {          
+        case NOTIFY_TYPES.SOUND_NOTIFICATION: {
             return {
                 ...state,
                 sound: action.payload
+            }
+        }
+        case NOTIFY_TYPES.DELETE_ALL_NOTIFICATION: {
+            return {
+                ...state,
+                data: action.payload,
             }
         }
         default: return state;

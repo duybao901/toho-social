@@ -4,7 +4,7 @@ class NotifyController {
     async createNotify(req, res) {
         try {
             const { id, recipients, url, text, content, image } = req.body;
-            console.log(image);
+
             const notify = new Notifies({
                 id, user: req.user._id, recipients, url, text, content, image
             })
@@ -57,8 +57,8 @@ class NotifyController {
 
     async deleteAllNotify(req, res) {
         try {
-
             let notifies = await Notifies.deleteMany({ recipients: req.user._id });
+
             return res.json({ notifies });
 
         } catch (err) {

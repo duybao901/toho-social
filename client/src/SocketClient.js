@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as POST_TYPES from './redux/constants/post'
 import * as GLOBLE_TYPES from './redux/constants/index'
 import * as NOTIFY_TYPES from './redux/constants/notifycation'
 
+import SoundNotification from './audio/sound_notify.mp3'
+
 function spawnNotification(body, icon, url, title) {
+
     var options = {
         body: body,
         icon: icon
     }
     var notification = new Notification(title, options);
-    console.log(notification)
+
     notification.onclick = e => {
         e.preventDefault();
         window.open(url, "_blank")
@@ -21,7 +24,9 @@ function spawnNotification(body, icon, url, title) {
 
 function SocketClient() {
     const dispatch = useDispatch();
-    const { auth, socket } = useSelector(state => state);
+    const { auth, socket, notification } = useSelector(state => state);
+
+    const audioRef = useRef();
 
     useEffect(() => {
         socket.emit('joinUser', auth.user._id);
@@ -153,6 +158,7 @@ function SocketClient() {
     // Create Notify
     useEffect(() => {
         socket.on("createNotifyToClient", msg => {
+            if (notification.sound) audioRef.current.play();
 
             spawnNotification(
                 msg.user.username + ' ' + msg.text,
@@ -169,12 +175,11 @@ function SocketClient() {
         return () => {
             socket.off("createNotifyToClient");
         }
-    }, [socket, dispatch])
-
+    }, [socket, dispatch, notification.sound])
 
     // Create Notify
     useEffect(() => {
-        socket.on("removeNotifyToClient", msg => {           
+        socket.on("removeNotifyToClient", msg => {
             dispatch({
                 type: NOTIFY_TYPES.REMOVE_NOTIFICATION,
                 payload: msg
@@ -184,8 +189,11 @@ function SocketClient() {
             socket.off("removeNotifyToClient");
         }
     }, [socket, dispatch])
-
-    return <> </>
+    return <>
+        <audio style={{ display: 'none' }} controls ref={audioRef}>
+            <source src={SoundNotification} type="audio/mp3"></source>
+        </audio>
+    </>
 }
 
 export default SocketClient

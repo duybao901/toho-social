@@ -1,6 +1,7 @@
 
 import * as GLOBLE_TYPES from '../constants/index';
 import * as NOTIFY_TYPES from '../constants/notifycation';
+import axios from 'axios'
 
 import { postDataAPI, deleteDataAPI, getDataAPI, patchDataAPI } from '../../utils/fetchData';
 
@@ -71,5 +72,24 @@ export const isReadNotify = (msg, auth) => async dispatch => {
                 err: error.response.data.msg
             }
         })
+    }
+}
+export const deleteAllNotify = (auth) => async dispatch => {
+    console.log("deleteAllNotify")
+    dispatch({ type: NOTIFY_TYPES.DELETE_ALL_NOTIFICATION, payload: [] })
+    try {     
+       await axios.delete(`/api/delete_notifies`, {
+            headers: {
+                Authorization: auth.token
+            }
+        })
+    } catch (error) {
+        return dispatch({
+            type: GLOBLE_TYPES.NOTIFY,
+            payload: {
+                err: error.response.data.msg
+            }
+        })
+
     }
 }

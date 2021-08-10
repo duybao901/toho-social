@@ -345,6 +345,9 @@
     .notify__user-infor p {
         margin-left: 0px;
     }
+    .notify__user-infor p{
+        margin-left: 5px;
+    }
 }
 
 @media all and (max-width: 359px) {

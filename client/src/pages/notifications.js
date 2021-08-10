@@ -5,7 +5,7 @@ import Search from '../components/search/Search';
 import Suggestion from '../components/Suggestion';
 import Loading from "../images/globle_loading.gif"
 import moment from 'moment'
-import { isReadNotify } from "../redux/actions/notifyAction"
+import { isReadNotify, deleteAllNotify } from "../redux/actions/notifyAction"
 import * as NOTIFICATION_TYPES from '../redux/constants/notifycation'
 
 function Notifications() {
@@ -17,6 +17,16 @@ function Notifications() {
     }
     const handleSound = () => {
         dispatch({ type: NOTIFICATION_TYPES.SOUND_NOTIFICATION, payload: !notification.sound })
+    }
+
+    const deleteAllNotification = () => {
+        const newArray = notification.data.filter(item => item.isRead === false);
+
+        if (newArray.length === 0) return dispatch(deleteAllNotify(auth));
+
+        if (window.confirm(`You have ${newArray.length} unread notices. Are you sure want to delete all?`)) {
+            return dispatch(deleteAllNotify(auth));
+        }
     }
 
     return (
@@ -91,7 +101,7 @@ function Notifications() {
                                                     </li>
                                                 })
                                             }
-                                            <div className="notify__delete-all">
+                                            <div className="notify__delete-all" onClick={deleteAllNotification}>
                                                 Delete all
                                             </div>
                                         </ul>
