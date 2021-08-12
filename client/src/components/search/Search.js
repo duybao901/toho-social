@@ -37,11 +37,6 @@ function Search() {
         setUsers([]);
     }
 
-    // useEffect(() => {
-    // if (search && auth.token) {
-
-    // }
-    // }, [auth.token, dispatch, search])
     return (
         <div className="search">
             <div className="search__box">

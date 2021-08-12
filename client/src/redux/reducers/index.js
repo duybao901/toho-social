@@ -12,6 +12,7 @@ import discover from './discoverReducer'
 import suggestion from './suggestionReducer'
 import socket from './socketReducer'
 import notification from './notificationReducer';
+import message from './messageReducer'
 
 const myReducer = combineReducers({
     auth,
@@ -25,7 +26,8 @@ const myReducer = combineReducers({
     discover,
     suggestion,
     socket,
-    notification
+    notification,
+    message
 });
 
 export default myReducer;

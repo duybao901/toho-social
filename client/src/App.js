@@ -23,7 +23,7 @@ import SocketClient from './SocketClient';
 
 function App() {
 
-    const { auth, notify, notification } = useSelector(state => state);
+    const { auth, notify } = useSelector(state => state);
     const dispatch = useDispatch();
 
     useEffect(() => {

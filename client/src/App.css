@@ -114,6 +114,9 @@ ul li {
 /* Notification */
 
 @import url('./styles/notification.css');
-/*! Reponsive */
+/* Notification */
+
+@import url('./styles/message.css');
+/** Reponsive */
 
 @import url('./styles/reponsive.css');
