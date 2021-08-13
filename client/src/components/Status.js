@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as GLOBLE_TYPES from '../redux/constants/index'
 import * as POST_TYPES from '../redux/constants/post'
 import { createPost, updatePost } from '../redux/actions/postAction'
-
+import Icons from './Icons'
 
 function Status({ setOpenStatus }) {
     const { auth, status, socket } = useSelector(state => state);
@@ -49,14 +49,13 @@ function Status({ setOpenStatus }) {
             if (!file) {
                 return err = "File does not exist."
             }
-            if (file.type !== 'image/jpeg' && file.type !== 'image/jpg' && file.type !== 'image/png') {
-                return err = "File format is incorrect."
+            if (file.size > 1024 * 1024 * 5) {
+                return err = "File largest is 5mb."
             }
             return newImages.push(file);
         });
-
         if (err) {
-            return dispatch({ type: GLOBLE_TYPES.NOTIFY, err });
+            return dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err } });
         }
         setImages([...images, ...newImages]);
     }
@@ -126,6 +125,18 @@ function Status({ setOpenStatus }) {
 
     }
 
+    function imagesShow(src) {
+        return <img src={src} alt='show__images'>
+        </img>
+    }
+    function videosShow(src) {
+        return <video
+            src={src}
+            controls
+            alt='show__images'>
+        </video>
+    }
+
     return (
         <div className="status__container">
             <div className="status__avatar">
@@ -144,17 +155,37 @@ function Status({ setOpenStatus }) {
                             onChange={e => setContent(e.target.value)}
                         />
                     </div>
-                    {<div ref={refImages} className="show__images">
-                        {images.map((image, index) => {
-                            return <div key={index} className="show__images-item">
-                                <img src={image.camera ? image.camera : image.url ? image.url : URL.createObjectURL(image)} alt='show__images'>
-                                </img>
-                                <span onClick={() => handleRemoveImageItem(index)} className="show__images-item-remove">
-                                    <i className='bx bx-x'></i>
-                                </span>
-                            </div>
-                        })}
-                    </div>}
+                    {
+                        <div ref={refImages} className="show__images">
+                            {
+                                images.map((image, index) => {
+                                    return <div key={index} className="show__images-item">
+                                        {
+                                            image.camera ? imagesShow(image.camera)
+                                                : image.url
+                                                    ?
+                                                    <>
+                                                        {
+                                                            image.url.match(/video/i) ?
+                                                                videosShow(image.url) : imagesShow(image.url)
+                                                        }
+                                                    </> :
+                                                    <>
+                                                        {
+                                                            image.type.match(/video/i) ?
+                                                                videosShow(URL.createObjectURL(image)) : imagesShow(URL.createObjectURL(image))
+                                                        }
+                                                    </>
+
+                                        }
+                                        <span onClick={() => handleRemoveImageItem(index)} className="show__images-item-remove">
+                                            <i className='bx bx-x'></i>
+                                        </span>
+                                    </div>
+                                })
+                            }
+                        </div>
+                    }
 
                     {stream && <div className='status__stream'>
                         <video autoPlay muted ref={refVideo} width='100' height="100"></video>
@@ -173,13 +204,17 @@ function Status({ setOpenStatus }) {
                     </div>}
                     <div className="status__bottom">
                         <div className="status__bottom-left">
-                            {!stream ? <React.Fragment>
-                                <i className='bx bx-camera' onClick={hanldeStream}></i>
-                                <div className="status__file-upload">
-                                    <input onChange={handleUploadImages} type='file' id="file" name='file' multiple accept="image/*" />
-                                    <i className='bx bx-image'></i>
-                                </div>
-                            </React.Fragment> : ""}
+                            {
+                                !stream ? <React.Fragment>
+                                    <i className='bx bx-camera' onClick={hanldeStream}></i>
+                                    <div className="status__file-upload">
+                                        <input onChange={handleUploadImages} type='file' id="file" name='file' multiple accept="image/*,video/*" />
+                                        <i className='bx bx-image'></i>
+                                    </div>
+                                    <Icons setContent={setContent} content={content} />
+
+                                </React.Fragment> : ""
+                            }
                         </div>
                         <div>
                             <button className="status__button" onClick={hanldeSubmit}>

@@ -164,6 +164,13 @@
     user-select: none;
 }
 
+.show__images-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+}
+
 .show__images-item-remove {
     position: absolute;
     top: 5px;
@@ -209,4 +216,25 @@
 .status__stream i {
     font-size: 2rem;
     color: #fff;
+}
+
+/* Icons */
+
+.reactions_list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: 200px;
+}
+
+.reactions_list .reactions_icon {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.reactions_list .reactions_icon:hover{
+    background-color: #f3f3f3;
 }

@@ -193,9 +193,9 @@
     outline: none;
     font-size: 1.4rem;
     color: var(--color-text-black);
-    padding: 0 12px;
+    padding: 0 6px;
     background-color: #f1f1f1;
-    height: 70%;
+    height: 100%;
     margin: 0 6px;
     border-radius: 40px;
 }

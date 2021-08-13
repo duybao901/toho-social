@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { createComment } from '../../redux/actions/commentAction'
+import Icons from '../Icons'
 
 const InputComment = ({ children, post, onReply, setOnReply }) => {
     const dispatch = useDispatch();
@@ -35,7 +36,10 @@ const InputComment = ({ children, post, onReply, setOnReply }) => {
             {children}
             {onReply && <Link to={`/profile/${onReply.user._id}`} className="reply__username">{onReply && '@' + onReply.user.username}: </Link>}
             <img className="form__comment-avatar" src={auth.user.avatar} alt="input-avatar"></img>
-            <input placeholder="Add a comment..." type="text" value={content} onChange={e => setContent(e.target.value)} />
+            <div className="form__comment-input">
+                <input placeholder="Add a comment..." type="text" value={content} onChange={e => setContent(e.target.value)} />
+                <Icons setContent={setContent} content={content} />
+            </div>
             <button type="submit">
                 post
             </button>

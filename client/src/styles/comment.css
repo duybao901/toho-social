@@ -147,16 +147,6 @@
     width: 100%;
 }
 
-.comment__edit input {
-    width: 100%;
-    height: 40px;
-    border: 1px solid #f8f8f8;
-    outline: none;
-    font-size: 1.4rem;
-    color: var(--color-tex-black);
-    padding: 4px 6px;
-}
-
 .form__comment-avatar {
     width: 40px;
     height: 40px;
@@ -219,4 +209,25 @@
 
 .comments__showmore-reply p:hover {
     text-decoration: underline;
+}
+
+.form__comment-input {
+    border: 1px solid #f8f8f8;
+    width: 100%;
+    height: 40px;
+    padding: 4px 6px;
+    display: flex;
+    margin: 0 6px;
+    border-radius: 40px;
+    background-color: #f3f3f3;
+    align-items: center;
+
+}
+
+.form__comment-input .comment__edit input {
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+    color: var(--color-tex-black);
+    padding: 0 !important;
 }
