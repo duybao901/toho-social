@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Icons({ setContent, content }) {
+function Icons({ setContent, content, className }) {
     const reactions = [
         '👍', '👎', '✌️', '🤞', '👌', '🤙', '🤘', '🖕',
         '❤️', '😆', '😯', '😢', '😡', '👍', '👎', '😄',
@@ -14,7 +14,7 @@ function Icons({ setContent, content }) {
 
     return (
         <div className="dropdown">
-            <i className='bx bx-smile' id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" ></i>
+            <i className={`bx bx-smile ${className}`} id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" ></i>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div className="reactions_list">
                     {

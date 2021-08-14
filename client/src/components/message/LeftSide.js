@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as GLOBLETYPES from '../../redux/constants/index'
 import Loading from '../../components/norify/globle_loading.gif'
 import { addUser } from '../../redux/actions/messageAction'
+import UserCardMessage from '../UserCardMessage'
 
 
 function LeftSide() {
-    const { id } = useParams();
     const [search, setSearch] = useState('');
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -43,10 +43,6 @@ function LeftSide() {
         setSearch('');
         setUsers([]);
         dispatch(addUser(user, message));
-    }
-
-    function isActive(user) {
-        return (user._id === id) ? "active" : ""
     }
 
     return (
@@ -90,15 +86,7 @@ function LeftSide() {
                 </ul>
                 {
                     message.users.length > 0 && message.users.map(user => {
-                        return <Link key={user._id} className={`user_message ${isActive(user)}`} to={`/message/${user._id}`}>
-                            <img style={{ width: '40px' }} src={user.avatar} alt="user_avatar">
-                            </img>
-                            <div className="search__users-infor">
-                                <span style={{ fontSize: '14px', fontWeight: "700" }}>{user.fullname}</span>
-                                <span style={{ fontSize: '14px', fontWeight: "400" }}>@{user.username}</span>
-                            </div>
-                            <i className='bx bxs-circle'></i>
-                        </Link>
+                        return <UserCardMessage user={user} key={user._id} />
                     })
                 }
 

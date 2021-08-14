@@ -50,7 +50,7 @@ function Status({ setOpenStatus }) {
                 return err = "File does not exist."
             }
             if (file.size > 1024 * 1024 * 5) {
-                return err = "File largest is 5mb."
+                return err = "The File/Video largest is 5mb."
             }
             return newImages.push(file);
         });
@@ -187,21 +187,25 @@ function Status({ setOpenStatus }) {
                         </div>
                     }
 
-                    {stream && <div className='status__stream'>
-                        <video autoPlay muted ref={refVideo} width='100' height="100"></video>
+                    {
+                        stream && <div className='status__stream'>
+                            <video autoPlay muted ref={refVideo} width='100' height="100"></video>
 
-                        <div className="status__steam-control">
-                            {stream && <span style={{ marginBottom: "10px" }} onClick={hanldeCapture} className="status__stream-close">
-                                <i className='bx bx-camera'></i>
-                            </span>}
-                            <span onClick={hanldeStopStream} className="status__stream-close">
-                                <i className='bx bx-x'></i>
-                            </span>
+                            <div className="status__steam-control">
+                                {stream && <span style={{ marginBottom: "10px" }} onClick={hanldeCapture} className="status__stream-close">
+                                    <i className='bx bx-camera'></i>
+                                </span>}
+                                <span onClick={hanldeStopStream} className="status__stream-close">
+                                    <i className='bx bx-x'></i>
+                                </span>
+                            </div>
+
+                            <canvas style={{ display: "none" }} ref={refCanvas}></canvas>
+
                         </div>
+                    }
 
-                        <canvas style={{ display: "none" }} ref={refCanvas}></canvas>
-
-                    </div>}
+                    
                     <div className="status__bottom">
                         <div className="status__bottom-left">
                             {

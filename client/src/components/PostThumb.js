@@ -5,9 +5,16 @@ function PostThumb({ posts, result, colLg }) {
         return <h2 style={{ marginLeft: "15px", textAlign: "center" }}>No posts</h2>
     }
     return posts.map(post => {
+        console.log(post);
         return <Link key={post._id} to={`/post/${post._id}`} className={`post__thumb col px-md-2 col-12 col-lg-${colLg ? colLg : 6} col-sm-12`}>
-            <img src={post.images[0].url} alt="post_image_thumb">
-            </img>
+            {
+
+                post.images[0].url.match(/video/i) ?
+                    <video controls src={post.images[0].url} alt="post_image_thumb" >
+
+                    </video> :
+                    < img src={post.images[0].url} alt="post_image_thumb" />
+            }
             <i className='bx bxs-carousel post__thumb-icon-carousel'></i>
             <div className="post__thumb-infor">
                 <div>
@@ -16,9 +23,9 @@ function PostThumb({ posts, result, colLg }) {
                 <div>
                     <span>{post.comments.length}</span><i className='bx bxs-comment' ></i>
                 </div>
-               
+
             </div>
-        </Link>
+        </Link >
     })
 }
 

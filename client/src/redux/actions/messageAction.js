@@ -5,3 +5,9 @@ export const addUser = (user, message) => async (dispatch) => {
         dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: { user } })
     }
 }
+
+
+
+export const addMessage = ({ msg, auth, socket }) => async (dispatch) => {
+    dispatch({ type: MESSAGE_TYPES.ADD_MESSAGE, payload: msg });
+}

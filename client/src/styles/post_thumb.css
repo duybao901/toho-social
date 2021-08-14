@@ -29,6 +29,12 @@
     object-fit: cover;
 }
 
+.post__thumb video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .post__thumb-icon-carousel {
     position: absolute;
     right: 15px;
