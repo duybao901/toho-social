@@ -19,7 +19,7 @@ function Icons({ setContent, content, className }) {
                 <div className="reactions_list">
                     {
                         reactions.map((icon, index) => {
-                            return <div className="reactions_list-item" key={index} className="reactions_icon" onClick={() => addIcon(icon)}>
+                            return <div key={index} className="reactions_icon reactions_list-item" onClick={() => addIcon(icon)}>
                                 {icon}
                             </div>
                         })

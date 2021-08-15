@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { getDataAPI } from '../../utils/fetchData'
 import { useDispatch, useSelector } from 'react-redux'
 import * as GLOBLETYPES from '../../redux/constants/index'
 import Loading from '../../components/norify/globle_loading.gif'
-import { addUser } from '../../redux/actions/messageAction'
+import { addUser, getConversation } from '../../redux/actions/messageAction'
 import UserCardMessage from '../UserCardMessage'
 
 
@@ -44,6 +44,11 @@ function LeftSide() {
         setUsers([]);
         dispatch(addUser(user, message));
     }
+
+    useEffect(() => {
+        if (message.firstLoad) return;
+        dispatch(getConversation({ auth }))
+    }, [dispatch, message.firstLoad, auth])
 
     return (
         <div className="message__left-side">

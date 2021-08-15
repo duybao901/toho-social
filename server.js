@@ -30,6 +30,8 @@ app.use('/api', require('./Router/upload.router'));
 app.use('/api', require('./Router/post.router'));
 app.use('/api', require('./Router/comment.router'));
 app.use('/api', require('./Router/notify.router'));
+app.use('/api', require('./Router/message.router'));
+
 
 
 

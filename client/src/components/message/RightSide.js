@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import MessageDisplay from './MessageDisplay'
 import * as GLOBLE_TYPES from '../../redux/constants/index'
 import { imagesUpload } from '../../utils/imageUpload';
-import { addMessage } from '../../redux/actions/messageAction'
+import { addMessage, getMessages } from '../../redux/actions/messageAction'
 import LoadingImage from '../../images/globle_loading.gif'
 import Icons from '../../components/Icons'
 function RightSide() {
@@ -24,15 +24,26 @@ function RightSide() {
     }, [message.users, id])
 
 
+    useEffect(() => {
+        if (id) {
+            const getMessagesData = async () => {
+                await dispatch(getMessages({ id, auth }))
+            }
+            getMessagesData();
+        }
+    }, [id, dispatch, auth])
+
     const onSubmit = async (e) => {
         e.preventDefault();
         if (text.trim() === '' && images.length === 0) return;
         setText('');
         setImages([]);
 
-        setLoadImages(true);
         let newArray = [];
-        if (images.length > 0) newArray = await imagesUpload(images);
+        if (images.length > 0) {
+            setLoadImages(true);
+            newArray = await imagesUpload(images);
+        }
 
         const msg = {
             sender: auth.user._id,
@@ -47,6 +58,7 @@ function RightSide() {
         setLoadImages(false);
 
     }
+
     function hanldeChange(e) {
         setText(e.target.value)
     }
@@ -89,33 +101,40 @@ function RightSide() {
                 </div>
 
                 <div className={images.length > 0 ? "chat__container active" : "chat__container"}>
-                    <div className="chat_display">
-                        {
-                            message.data.map((msg, index) => {
-                                return <div>
-                                    {
-                                        msg.sender !== auth.user._id && <div className="chat_row orther_message">
-                                            <MessageDisplay user={user} msg={msg} key={index} />
+                    {
+                        message.loadingMessage ? <div className="loading__container">
+                            <img src={LoadingImage} alt="loading..." style={{ width: "50px" }}>
+                            </img>
+                        </div> :
+                            <div className="chat_display">
+                                {
+                                    message.data.map((msg, index) => {
+                                        return <div key={index}>
+                                            {
+                                                msg.sender !== auth.user._id && <div className="chat_row orther_message">
+                                                    <MessageDisplay user={user} msg={msg} />
+                                                </div>
+                                            }
+                                            {
+                                                msg.sender === auth.user._id ? <div className="chat_row you_message">
+                                                    <MessageDisplay user={auth.user} msg={msg} />
+                                                </div> : ""
+                                            }
                                         </div>
-                                    }
-                                    {
-                                        msg.sender === auth.user._id ? <div className="chat_row you_message">
-                                            <MessageDisplay user={auth.user} msg={msg} key={index} />
-                                        </div> : ""
-                                    }
-                                </div>
 
-                            })
-                        }
+                                    })
+                                }
 
 
-                        {
-                            loadimages && <div className="chat_row">
-                                <img style={{ width: "50px", marginLeft: 'auto' }} src={LoadingImage} alt="loadimages">
-                                </img>
+                                {
+                                    loadimages && <div className="chat_row">
+                                        <img style={{ width: "50px", marginLeft: 'auto' }} src={LoadingImage} alt="loadimages">
+                                        </img>
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
+                    }
+
                 </div>
 
 

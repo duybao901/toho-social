@@ -41,7 +41,6 @@ function Menu() {
     const dispatch = useDispatch();
 
     function isActive(path) {
-        console.log(location.pathname)
         if (location.pathname === "/" && path === '/') {
             return "active"
         } else {

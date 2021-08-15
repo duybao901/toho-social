@@ -75,6 +75,7 @@
     width: 100%;
     max-height: calc(100vh - 100px);
     overflow-y: auto;
+    z-index: 20;
 }
 
 .message__users-list li a {
@@ -94,9 +95,10 @@
     object-fit: cover;
 }
 
-.message__users-list li .search__users-infor div{
+.message__users-list li .search__users-infor {
+    display: flex;
+    flex-direction: column;
     margin-left: 10px;
-    display: block;
 }
 
 .message__users-list li:hover {
@@ -257,8 +259,12 @@
     width: 100%;
 }
 
+.chat_display .chat_row.orther_message .message_display .message_content {
+    align-items: flex-start;
+}
+
 .chat_display .chat_row.orther_message {
-    justify-content: flex-start;
+    align-items: flex-end;
 }
 
 .chat_display .chat_row.you_message {
@@ -461,7 +467,8 @@
     border-radius: 10px;
     margin: 10px 0px;
 }
-.chat_icons{
+
+.chat_icons {
     font-size: 2rem;
     cursor: pointer;
     color: var(--color-blue);
