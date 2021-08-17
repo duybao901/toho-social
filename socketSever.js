@@ -109,6 +109,12 @@ const socketSever = (socket) => {
             }
         })
     });
+
+    // Message
+    socket.on("addMessage", msg => {
+        const user = users.find(user => user.id === msg.recipient);
+        user && socket.to(`${user.socketId}`).emit("addMessageToClient", msg);
+    })
 }
 
 module.exports = socketSever;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { getDataAPI } from '../../utils/fetchData'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +14,8 @@ function LeftSide() {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const { auth, message } = useSelector(state => state);
-
+    const refMoreUserCard = useRef();
+    const [page, setPage] = useState(1)
 
     function handleChange(e) {
         setSearch(e.target.value.trim().replace(/ /g, ''))
@@ -45,10 +46,26 @@ function LeftSide() {
         dispatch(addUser(user, message));
     }
 
+
     useEffect(() => {
         if (message.firstLoad) return;
         dispatch(getConversation({ auth }))
     }, [dispatch, message.firstLoad, auth])
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                setPage(p => p + 1);
+            }
+        })
+        observer.observe(refMoreUserCard.current)
+    }, [setPage])
+
+    useEffect(() => {
+        if (message.resultUsers >= (page - 1) * 10 && page > 1) {
+            dispatch(getConversation({ auth, page }))
+        }
+    }, [message.resultUsers, page, auth])
 
     return (
         <div className="message__left-side">
@@ -89,11 +106,18 @@ function LeftSide() {
                         })
                     }
                 </ul>
-                {
-                    message.users.length > 0 && message.users.map(user => {
-                        return <UserCardMessage user={user} key={user._id} />
-                    })
-                }
+
+                <div className="message_card-list">
+                    {
+                        message.users.length > 0 && message.users.map(user => {
+                            return <UserCardMessage user={user} key={user._id} />
+                        })
+                    }
+                    <div style={{ opacity: 0 }} ref={refMoreUserCard}>
+                        loadmore
+                    </div>
+                </div>
+
 
 
             </div>

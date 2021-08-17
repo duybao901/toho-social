@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import MessageDisplay from './MessageDisplay'
 import * as GLOBLE_TYPES from '../../redux/constants/index'
@@ -7,31 +7,61 @@ import { imagesUpload } from '../../utils/imageUpload';
 import { addMessage, getMessages } from '../../redux/actions/messageAction'
 import LoadingImage from '../../images/globle_loading.gif'
 import Icons from '../../components/Icons'
+import * as MESSAGE_TYPES from '../../redux/constants/message'
 function RightSide() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { auth, message, socket } = useSelector(state => state);
     const { id } = useParams();
     const [user, setUser] = useState({});
     const [text, setText] = useState('');
     const [images, setImages] = useState([]);
     const [loadimages, setLoadImages] = useState(false);
+    const [page, setPage] = useState(0);
+
+    const refChatDisplay = useRef();
+    const pageEnd = useRef();
+    const [data, setData] = useState([]);
+
 
     useEffect(() => {
         const newUser = message.users.find(user => user._id === id);
         if (newUser) {
             setUser(newUser);
+        } else {
+            history.push('/message');
         }
-    }, [message.users, id])
+    }, [message.users, id, history])
 
 
     useEffect(() => {
         if (id) {
             const getMessagesData = async () => {
+                dispatch({ type: MESSAGE_TYPES.GET_MESSAGES, payload: { messages: [] } });
+                setPage(0);
                 await dispatch(getMessages({ id, auth }))
+                if (refChatDisplay.current) {
+                    refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+
+                }
             }
             getMessagesData();
         }
     }, [id, dispatch, auth])
+
+    useEffect(() => {
+        if (refChatDisplay.current) {
+            refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+        }
+    }, [text])
+
+    // Set Data
+    useEffect(() => {
+        const newData = message.data.filter((item) => {
+            return item.sender === auth.user._id || item.sender === id
+        });
+        setData(newData);
+    }, [message.data, auth.user._id, id]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -53,7 +83,14 @@ function RightSide() {
             createdAt: new Date().toISOString(),
         }
 
+        refChatDisplay.current.scrollIntoView({ behavior: 'smooth' })
+
         await dispatch(addMessage({ msg, auth, socket }))
+
+        if (refChatDisplay.current) {
+            refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+        }
+
 
         setLoadImages(false);
 
@@ -88,6 +125,27 @@ function RightSide() {
         setImages(newArray);
     }
 
+    // load more
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+
+            if (entries[0].isIntersecting) {
+                setPage(page => page + 1)
+            }
+        }, {
+            threshold: 0.1
+        })
+
+        observer.observe(pageEnd.current)
+    }, [setPage])
+
+    // Get more message
+    useEffect(() => {
+
+        if (message.resultData >= (page - 1) * 9 && page > 1) {
+            dispatch(getMessages({ id, auth, page }))
+        }
+    }, [page, message.resultData, id, auth])
     return (
         <div className="message__right-chat">
             <div className="message__box">
@@ -102,37 +160,34 @@ function RightSide() {
 
                 <div className={images.length > 0 ? "chat__container active" : "chat__container"}>
                     {
-                        message.loadingMessage ? <div className="loading__container">
-                            <img src={LoadingImage} alt="loading..." style={{ width: "50px" }}>
-                            </img>
-                        </div> :
-                            <div className="chat_display">
-                                {
-                                    message.data.map((msg, index) => {
-                                        return <div key={index}>
-                                            {
-                                                msg.sender !== auth.user._id && <div className="chat_row orther_message">
-                                                    <MessageDisplay user={user} msg={msg} />
-                                                </div>
-                                            }
-                                            {
-                                                msg.sender === auth.user._id ? <div className="chat_row you_message">
-                                                    <MessageDisplay user={auth.user} msg={msg} />
-                                                </div> : ""
-                                            }
-                                        </div>
-
-                                    })
-                                }
-
-
-                                {
-                                    loadimages && <div className="chat_row">
-                                        <img style={{ width: "50px", marginLeft: 'auto' }} src={LoadingImage} alt="loadimages">
-                                        </img>
+                        <div className="chat_display" ref={refChatDisplay}>
+                            <button style={{ marginTop: '-15px', opacity: 0, display: 'flex' }} ref={pageEnd}>
+                                Load more
+                            </button>
+                            {
+                                data.map((msg, index) => {
+                                    return <div key={index}>
+                                        {
+                                            msg.sender !== auth.user._id && <div className="chat_row orther_message">
+                                                <MessageDisplay user={user} msg={msg} />
+                                            </div>
+                                        }
+                                        {
+                                            msg.sender === auth.user._id ? <div className="chat_row you_message">
+                                                <MessageDisplay user={auth.user} msg={msg} />
+                                            </div> : ""
+                                        }
                                     </div>
-                                }
-                            </div>
+                                })
+                            }
+
+                            {
+                                loadimages && <div className="chat_row">
+                                    <img style={{ width: "50px", marginLeft: 'auto' }} src={LoadingImage} alt="loadimages">
+                                    </img>
+                                </div>
+                            }
+                        </div>
                     }
 
                 </div>

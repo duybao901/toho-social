@@ -59,7 +59,7 @@ class MessageController {
         try {
             const feature = new ApiFeatures(Conversations.find({
                 recipients: req.user._id
-            }), req.query);
+            }), req.query).pagination();
 
             const conversation = await feature.query.sort("-updatedAt")
                 .populate("recipients", "avatar username fullname");

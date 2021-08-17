@@ -32,9 +32,6 @@ app.use('/api', require('./Router/comment.router'));
 app.use('/api', require('./Router/notify.router'));
 app.use('/api', require('./Router/message.router'));
 
-
-
-
 // Connect mongoodb
 const MONGODB_URL = process.env.MONGODB_URL
 mongoose.connect(MONGODB_URL, {

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as POST_TYPES from './redux/constants/post'
 import * as GLOBLE_TYPES from './redux/constants/index'
 import * as NOTIFY_TYPES from './redux/constants/notifycation'
+import * as MESSAGE_TYPES from './redux/constants/message'
+
 
 import SoundNotification from './audio/sound_notify.mp3'
 
@@ -187,6 +189,19 @@ function SocketClient() {
         })
         return () => {
             socket.off("removeNotifyToClient");
+        }
+    }, [socket, dispatch])
+
+    // Message
+    useEffect(() => {
+        socket.on("addMessageToClient", msg => {
+            dispatch({
+                type: MESSAGE_TYPES.ADD_MESSAGE,
+                payload: msg
+            })
+        })
+        return () => {
+            socket.off("addMessageToClient");
         }
     }, [socket, dispatch])
     return <>

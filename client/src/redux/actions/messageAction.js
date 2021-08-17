@@ -11,18 +11,18 @@ export const addUser = (user, message) => async (dispatch) => {
 
 export const addMessage = ({ msg, auth, socket }) => async (dispatch) => {
     dispatch({ type: MESSAGE_TYPES.ADD_MESSAGE, payload: msg });
-
+    socket.emit("addMessage", msg);
     try {
-        const res = await postDataAPI('message', msg, auth.token);
+        await postDataAPI('message', msg, auth.token);
     } catch (error) {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
 
     }
 }
 
-export const getConversation = ({ auth }) => async (dispatch) => {
+export const getConversation = ({ auth, page }) => async (dispatch) => {
     try {
-        const res = await getDataAPI('conversation', auth.token);
+        const res = await getDataAPI(`conversation?limit=${page ? page * 10 : 10}`, auth.token);
         const newArray = [];
 
         res.data.conversation.forEach(item => {
@@ -46,7 +46,7 @@ export const getConversation = ({ auth }) => async (dispatch) => {
     }
 }
 
-export const getMessages = ({ id, auth }) => async (dispatch) => {
+export const getMessages = ({ id, auth, page }) => async (dispatch) => {
     try {
 
         dispatch({
@@ -54,7 +54,7 @@ export const getMessages = ({ id, auth }) => async (dispatch) => {
             payload: true
         })
 
-        const res = await getDataAPI(`message/${id}`, auth.token);
+        const res = await getDataAPI(`message/${id}?limit=${page * 9}`, auth.token);
 
         dispatch({
             type: MESSAGE_TYPES.GET_MESSAGES,

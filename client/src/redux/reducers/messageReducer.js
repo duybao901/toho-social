@@ -45,7 +45,7 @@ const messageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: action.payload.messages.reverse(),
-                dataUsers: action.payload.result
+                resultData: action.payload.result
             }
         }
         default: {

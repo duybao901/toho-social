@@ -205,7 +205,7 @@ function Status({ setOpenStatus }) {
                         </div>
                     }
 
-                    
+
                     <div className="status__bottom">
                         <div className="status__bottom-left">
                             {
