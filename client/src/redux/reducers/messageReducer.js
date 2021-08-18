@@ -1,12 +1,11 @@
 import * as MESSAGE_TYPES from '../constants/message';
-
+import { EditData } from '../constants/index'
 const initialState = {
     users: [],
     resultUsers: 0,
     data: [],
-    resultData: 0,
     firstLoad: false,
-    loadingMessage: false
+    loadingMessages: false,
 }
 
 const messageReducer = (state = initialState, action) => {
@@ -14,7 +13,7 @@ const messageReducer = (state = initialState, action) => {
         case MESSAGE_TYPES.LOADING_MESSAGES: {
             return {
                 ...state,
-                loadingMessage: action.payload
+                loadingMessages: action.payload
             }
         }
         case MESSAGE_TYPES.ADD_USER: {
@@ -26,7 +25,11 @@ const messageReducer = (state = initialState, action) => {
         case MESSAGE_TYPES.ADD_MESSAGE: {
             return {
                 ...state,
-                data: [...state.data, action.payload],
+                data: state.data.map(item => item._id === action.payload.recipient || item._id === action.payload.sender ? {
+                    ...item,
+                    messages: [...item.messages, action.payload],
+                    result: item.result + 1
+                } : ""),
                 users: state.users.map(user => {
                     return user._id === action.payload.recipient || user._id === action.payload.sender ?
                         { ...user, text: action.payload.text, media: action.payload.media } : user
@@ -44,8 +47,13 @@ const messageReducer = (state = initialState, action) => {
         case MESSAGE_TYPES.GET_MESSAGES: {
             return {
                 ...state,
-                data: action.payload.messages.reverse(),
-                resultData: action.payload.result
+                data: [...state.data, action.payload]
+            }
+        }
+        case MESSAGE_TYPES.UPDATE_MESSAGES: {          
+            return {
+                ...state,
+                data: EditData(state.data, action.payload._id, action.payload)
             }
         }
         default: {

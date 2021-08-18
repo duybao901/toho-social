@@ -4,10 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import MessageDisplay from './MessageDisplay'
 import * as GLOBLE_TYPES from '../../redux/constants/index'
 import { imagesUpload } from '../../utils/imageUpload';
-import { addMessage, getMessages } from '../../redux/actions/messageAction'
+import { addMessage, getMessages, updateMessages } from '../../redux/actions/messageAction'
 import LoadingImage from '../../images/globle_loading.gif'
 import Icons from '../../components/Icons'
-import * as MESSAGE_TYPES from '../../redux/constants/message'
 function RightSide() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -17,38 +16,46 @@ function RightSide() {
     const [text, setText] = useState('');
     const [images, setImages] = useState([]);
     const [loadimages, setLoadImages] = useState(false);
-    const [page, setPage] = useState(0);
 
     const refChatDisplay = useRef();
     const pageEnd = useRef();
     const [data, setData] = useState([]);
+    const [result, setResult] = useState(0);
+    const [page, setPage] = useState(1);
+    const [isLoadMore, setIsLoadMore] = useState(0);
 
-
+    // get Users Card
     useEffect(() => {
-        const newUser = message.users.find(user => user._id === id);
-        if (newUser) {
-            setUser(newUser);
-        } else {
-            history.push('/message');
+        if (id && message.users.length > 0) {
+            const newUser = message.users.find(user => user._id === id);
+            setTimeout(() => {
+                refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+            }, 50)
+
+            if (newUser) {
+                setUser(newUser);
+            } else {
+                history.push('/message');
+            }
         }
     }, [message.users, id, history])
 
-
+    // Get Messages
     useEffect(() => {
-        if (id) {
-            const getMessagesData = async () => {
-                dispatch({ type: MESSAGE_TYPES.GET_MESSAGES, payload: { messages: [] } });
-                setPage(0);
+        const getMessagesData = async () => {
+            if (message.data.every(item => item._id !== id)) {
                 await dispatch(getMessages({ id, auth }))
-                if (refChatDisplay.current) {
+
+                setTimeout(() => {
+
                     refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-
-                }
+                }, 50)
             }
-            getMessagesData();
         }
-    }, [id, dispatch, auth])
+        getMessagesData();
+    }, [id, dispatch, auth, message.data])
 
+    // Chat then scroll bottom
     useEffect(() => {
         if (refChatDisplay.current) {
             refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -57,11 +64,40 @@ function RightSide() {
 
     // Set Data
     useEffect(() => {
-        const newData = message.data.filter((item) => {
-            return item.sender === auth.user._id || item.sender === id
-        });
-        setData(newData);
-    }, [message.data, auth.user._id, id]);
+        let newData = message.data.find((item) => {
+            return item._id === id;
+        });;
+        if (newData) {
+            setData(newData.messages);
+            setResult(newData.result);
+            setPage(newData.page);
+            setIsLoadMore(1);
+        }
+    }, [message.data, id]);
+
+    // load more
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+
+                setIsLoadMore(p => p + 1)
+            }
+        }, {
+            threshold: 0.1
+        })
+
+        observer.observe(pageEnd.current)
+    }, [setIsLoadMore])
+
+    // Get more message
+    useEffect(() => {
+        if (isLoadMore > 1) {
+            if (result >= page * 9) {
+                dispatch(updateMessages({ id, auth, page: page + 1 }))
+                setIsLoadMore(1)
+            }
+        }
+    }, [isLoadMore])
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -82,17 +118,16 @@ function RightSide() {
             media: newArray,
             createdAt: new Date().toISOString(),
         }
-
-        refChatDisplay.current.scrollIntoView({ behavior: 'smooth' })
+        setLoadImages(false);
 
         await dispatch(addMessage({ msg, auth, socket }))
 
         if (refChatDisplay.current) {
-            refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+            setTimeout(() => {
+                refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+            }, 0)
         }
 
-
-        setLoadImages(false);
 
     }
 
@@ -125,43 +160,25 @@ function RightSide() {
         setImages(newArray);
     }
 
-    // load more
-    useEffect(() => {
-        const observer = new IntersectionObserver(entries => {
-
-            if (entries[0].isIntersecting) {
-                setPage(page => page + 1)
-            }
-        }, {
-            threshold: 0.1
-        })
-
-        observer.observe(pageEnd.current)
-    }, [setPage])
-
-    // Get more message
-    useEffect(() => {
-
-        if (message.resultData >= (page - 1) * 9 && page > 1) {
-            dispatch(getMessages({ id, auth, page }))
-        }
-    }, [page, message.resultData, id, auth])
     return (
         <div className="message__right-chat">
             <div className="message__box">
                 <div className="message__box-header">
-                    <img style={{ width: '40px' }} src={user.avatar} alt="user_avatar">
-                    </img>
+                    {
+                        user.avatar && <img style={{ width: '40px' }} src={user.avatar} alt="user_avatar">
+                        </img>
+                    }
                     <div className="search__users-infor">
                         <span style={{ fontSize: '14px', fontWeight: "700" }}>{user.fullname}</span>
-                        <span style={{ fontSize: '14px', fontWeight: "400" }}>@{user.username}</span>
+                        <span style={{ fontSize: '14px', fontWeight: "400" }}>{user.username && `@${user.username}`}</span>
                     </div>
                 </div>
 
-                <div className={images.length > 0 ? "chat__container active" : "chat__container"}>
+                <div style={{ opacity: message.loadingMessages ? 0.5 : 1 }} className={images.length > 0 ? "chat__container active" : "chat__container"}>
+
                     {
                         <div className="chat_display" ref={refChatDisplay}>
-                            <button style={{ marginTop: '-15px', opacity: 0, display: 'flex' }} ref={pageEnd}>
+                            <button style={{ marginTop: '-10px', opacity: 0, display: 'flex' }} ref={pageEnd}>
                                 Load more
                             </button>
                             {
@@ -189,10 +206,7 @@ function RightSide() {
                             }
                         </div>
                     }
-
                 </div>
-
-
 
                 {
                     images.length > 0 && <div className="message__media">

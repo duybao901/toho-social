@@ -15,7 +15,7 @@ function LeftSide() {
     const dispatch = useDispatch();
     const { auth, message } = useSelector(state => state);
     const refMoreUserCard = useRef();
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(0)
 
     function handleChange(e) {
         setSearch(e.target.value.trim().replace(/ /g, ''))
@@ -46,7 +46,6 @@ function LeftSide() {
         dispatch(addUser(user, message));
     }
 
-
     useEffect(() => {
         if (message.firstLoad) return;
         dispatch(getConversation({ auth }))
@@ -65,7 +64,7 @@ function LeftSide() {
         if (message.resultUsers >= (page - 1) * 10 && page > 1) {
             dispatch(getConversation({ auth, page }))
         }
-    }, [message.resultUsers, page, auth])
+    }, [message.resultUsers, page, auth, dispatch])
 
     return (
         <div className="message__left-side">
@@ -113,7 +112,7 @@ function LeftSide() {
                             return <UserCardMessage user={user} key={user._id} />
                         })
                     }
-                    <div style={{ opacity: 0 }} ref={refMoreUserCard}>
+                    <div style={{ opacity: 0, backgroundColor: 'red' }} ref={refMoreUserCard}>
                         loadmore
                     </div>
                 </div>

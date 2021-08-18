@@ -21,7 +21,6 @@ class MessageController {
     async createMessage(req, res) {
         try {
             const { recipient, text, media } = req.body;
-            console.log(recipient, text, media);
 
             if (!recipient || (!text.trim() && media.length === 0)) return;
 

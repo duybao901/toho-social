@@ -46,31 +46,36 @@ export const getConversation = ({ auth, page }) => async (dispatch) => {
     }
 }
 
-export const getMessages = ({ id, auth, page }) => async (dispatch) => {
+export const getMessages = ({ id, auth, page = 1 }) => async (dispatch) => {
     try {
 
-        dispatch({
-            type: MESSAGE_TYPES.LOADING_MESSAGES,
-            payload: true
-        })
+        dispatch({ type: MESSAGE_TYPES.LOADING_MESSAGES, payload: true });
 
         const res = await getDataAPI(`message/${id}?limit=${page * 9}`, auth.token);
+        const newData = { ...res.data, messages: res.data.messages.reverse(), _id: id, page }
 
         dispatch({
             type: MESSAGE_TYPES.GET_MESSAGES,
-            payload: {
-                messages: res.data.messages,
-                result: res.data.result
-            }
+            payload: newData
         })
-
-        dispatch({
-            type: MESSAGE_TYPES.LOADING_MESSAGES,
-            payload: false
-        })
+        dispatch({ type: MESSAGE_TYPES.LOADING_MESSAGES, payload: false });
 
     } catch (error) {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
 
     }
 }
+
+export const updateMessages = ({ id, auth, page = 1 }) => async (dispatch) => {
+    try {
+
+        const res = await getDataAPI(`message/${id}?limit=${page * 9}`, auth.token);
+        const newData = { ...res.data, messages: res.data.messages.reverse(), _id: id, page }
+        dispatch({ type: MESSAGE_TYPES.UPDATE_MESSAGES, payload: newData });
+
+    } catch (error) {
+        dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
+
+    }
+}
+
