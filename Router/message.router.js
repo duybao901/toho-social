@@ -10,6 +10,7 @@ router.get('/conversation', auth, MessageController.getConversation);
 
 router.get('/message/:id', auth, MessageController.getMessage);
 
+router.delete('/message/:id', auth, MessageController.deleteMessage);
 
 
 module.exports = router;

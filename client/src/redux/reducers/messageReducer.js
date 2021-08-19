@@ -50,10 +50,19 @@ const messageReducer = (state = initialState, action) => {
                 data: [...state.data, action.payload]
             }
         }
-        case MESSAGE_TYPES.UPDATE_MESSAGES: {          
+        case MESSAGE_TYPES.UPDATE_MESSAGES: {
             return {
                 ...state,
                 data: EditData(state.data, action.payload._id, action.payload)
+            }
+        }
+        case MESSAGE_TYPES.DELETE_MESSAGE: {
+            return {
+                ...state,
+                data: state.data.map((item) => item._id === action.payload._id ?
+                    { ...item, messages: action.payload.newData } :
+                    item
+                )
             }
         }
         default: {

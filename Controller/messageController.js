@@ -91,6 +91,18 @@ class MessageController {
             return res.stats(500).json({ msg: err.message });
         }
     }
+    async deleteMessage(req, res) {
+        try {
+
+            await Messages.findOneAndDelete({ _id: req.params.id, sender: req.user._id });
+
+            return res.json({
+                msg: "Delete message!"
+            });
+        } catch (err) {
+            return res.stats(500).json({ msg: err.message });
+        }
+    }
 }
 
 module.exports = new MessageController();

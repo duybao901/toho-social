@@ -530,3 +530,29 @@
 .message_card-list::-webkit-scrollbar-thumb:hover {
     background: rgb(201, 201, 201);
 }
+
+/* Delete Message */
+
+.chat__content {
+    position: relative;
+}
+
+.chat__content {
+    position: relative;
+}
+
+.chat__content .chat__delete-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -25px;
+    color: crimson;
+    font-size: 2rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: all .15s linear;
+}
+
+.chat__content:hover .chat__delete-icon {
+    opacity: 1;
+}

@@ -30,7 +30,7 @@ function RightSide() {
             const newUser = message.users.find(user => user._id === id);
             setTimeout(() => {
                 refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-            }, 50)
+            }, 0)
 
             if (newUser) {
                 setUser(newUser);
@@ -47,9 +47,8 @@ function RightSide() {
                 await dispatch(getMessages({ id, auth }))
 
                 setTimeout(() => {
-
                     refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-                }, 50)
+                }, 0)
             }
         }
         getMessagesData();
@@ -79,7 +78,6 @@ function RightSide() {
     useEffect(() => {
         const observer = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
-
                 setIsLoadMore(p => p + 1)
             }
         }, {
@@ -97,7 +95,7 @@ function RightSide() {
                 setIsLoadMore(1)
             }
         }
-    }, [isLoadMore])
+    }, [isLoadMore, dispatch, page, id, auth, result])
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -186,12 +184,12 @@ function RightSide() {
                                     return <div key={index}>
                                         {
                                             msg.sender !== auth.user._id && <div className="chat_row orther_message">
-                                                <MessageDisplay user={user} msg={msg} />
+                                                <MessageDisplay user={user} msg={msg} data={data} />
                                             </div>
                                         }
                                         {
                                             msg.sender === auth.user._id ? <div className="chat_row you_message">
-                                                <MessageDisplay user={auth.user} msg={msg} />
+                                                <MessageDisplay user={auth.user} msg={msg} data={data} />
                                             </div> : ""
                                         }
                                     </div>
