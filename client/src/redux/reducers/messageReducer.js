@@ -17,10 +17,13 @@ const messageReducer = (state = initialState, action) => {
             }
         }
         case MESSAGE_TYPES.ADD_USER: {
-            return {
-                ...state,
-                users: [...state.users, action.payload]
+            if (state.users.every(item => item._id !== action.payload._id)) {
+                return {
+                    ...state,
+                    users: [action.payload, ...state.users]
+                }
             }
+            return state;
         }
         case MESSAGE_TYPES.ADD_MESSAGE: {
             return {
@@ -63,6 +66,13 @@ const messageReducer = (state = initialState, action) => {
                     { ...item, messages: action.payload.newData } :
                     item
                 )
+            }
+        }
+        case MESSAGE_TYPES.DELETE_CONVERSATION: {
+            return {
+                ...state,
+                users: state.users.filter((item) => item._id !== action.payload),
+                data: state.data.filter((item) => item._id !== action.payload)
             }
         }
         default: {

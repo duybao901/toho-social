@@ -12,5 +12,8 @@ router.get('/message/:id', auth, MessageController.getMessage);
 
 router.delete('/message/:id', auth, MessageController.deleteMessage);
 
+router.delete('/conversation/:id', auth, MessageController.deleteConversation);
+
+
 
 module.exports = router;

@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { getDataAPI } from '../../utils/fetchData'
 import { useDispatch, useSelector } from 'react-redux'
 import * as GLOBLETYPES from '../../redux/constants/index'
 import Loading from '../../components/norify/globle_loading.gif'
-import { addUser, getConversation } from '../../redux/actions/messageAction'
+import { getConversation } from '../../redux/actions/messageAction'
+import * as MESSAGE_TYPES from '../../redux/constants/message';
 import UserCardMessage from '../UserCardMessage'
 
 
 function LeftSide() {
+    const history = useHistory();
     const [search, setSearch] = useState('');
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -43,7 +45,8 @@ function LeftSide() {
     function addUserMessage(user) {
         setSearch('');
         setUsers([]);
-        dispatch(addUser(user, message));
+        dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: { ...user, text: '', media: [] } })
+        return history.push(`/message/${user._id}`)
     }
 
     useEffect(() => {
@@ -90,7 +93,7 @@ function LeftSide() {
                         users.length > 0 && users.map((user, index) => {
                             if (user._id !== auth.user._id) {
                                 return <li key={index} onClick={() => addUserMessage(user)}>
-                                    <Link to={`/message/${user._id}`}>
+                                    <Link to={`/ message / ${user._id}`}>
                                         <img src={user.avatar} alt='searchavatar'>
                                         </img>
                                         <div className="search__users-infor">

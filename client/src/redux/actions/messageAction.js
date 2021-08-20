@@ -2,15 +2,10 @@ import * as MESSAGE_TYPES from '../constants/message';
 import * as GLOBLE_TYPES from '../constants/index';
 import { postDataAPI, getDataAPI, deleteDataAPI } from '../../utils/fetchData'
 
-export const addUser = (user, message) => async (dispatch) => {
-    if (message.users.every(item => item._id !== user._id)) {
-        dispatch({ type: MESSAGE_TYPES.ADD_USER, payload: { ...user, text: '', media: [] } })
-    }
-}
-
 export const addMessage = ({ msg, auth, socket }) => async (dispatch) => {
     dispatch({ type: MESSAGE_TYPES.ADD_MESSAGE, payload: msg });
-    socket.emit("addMessage", msg);
+    const { _id, username, fullname, avatar } = auth.user;
+    socket.emit("addMessage", { ...msg, user: { username, fullname, avatar, _id} });
     try {
         await postDataAPI('message', msg, auth.token);
     } catch (error) {
@@ -83,8 +78,18 @@ export const deleteMessages = ({ msg, auth, data }) => async (dispatch) => {
     const newData = data.filter(item => item._id !== msg._id);
     dispatch({ type: MESSAGE_TYPES.DELETE_MESSAGE, payload: { newData, _id: msg.recipient } });
     try {
-        const res = await deleteDataAPI(`message/${msg._id}`, auth.token);
+        await deleteDataAPI(`message/${msg._id}`, auth.token);
+    } catch (error) {
+        dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
 
+    }
+}
+
+export const deleteConversation = ({ id, auth }) => async (dispatch) => {
+    dispatch({ type: MESSAGE_TYPES.DELETE_CONVERSATION, payload: id });
+    try {
+        const res = await deleteDataAPI(`conversation/${id}`, auth.token);
+        console.log(res);
     } catch (error) {
         dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: error.response.data.msg } });
 

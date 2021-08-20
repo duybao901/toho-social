@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import MessageDisplay from './MessageDisplay'
 import * as GLOBLE_TYPES from '../../redux/constants/index'
 import { imagesUpload } from '../../utils/imageUpload';
-import { addMessage, getMessages, updateMessages } from '../../redux/actions/messageAction'
+import { addMessage, getMessages, updateMessages, deleteConversation } from '../../redux/actions/messageAction'
 import LoadingImage from '../../images/globle_loading.gif'
 import Icons from '../../components/Icons'
 function RightSide() {
@@ -28,15 +28,20 @@ function RightSide() {
     useEffect(() => {
         if (id && message.users.length > 0) {
             const newUser = message.users.find(user => user._id === id);
-            setTimeout(() => {
-                refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-            }, 0)
-
+            
             if (newUser) {
                 setUser(newUser);
             } else {
-                history.push('/message');
+                return history.push('/message');
             }
+
+            if (refChatDisplay.current) {
+                setTimeout(() => {
+                    refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+                }, 0)
+            }
+
+            
         }
     }, [message.users, id, history])
 
@@ -46,9 +51,11 @@ function RightSide() {
             if (message.data.every(item => item._id !== id)) {
                 await dispatch(getMessages({ id, auth }))
 
-                setTimeout(() => {
-                    refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-                }, 0)
+                if (refChatDisplay.current) {
+                    setTimeout(() => {
+                        refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+                    }, 0)
+                }
             }
         }
         getMessagesData();
@@ -157,18 +164,27 @@ function RightSide() {
         newArray.splice(index, 1);
         setImages(newArray);
     }
+    function handleDeleteConversation() {
+        dispatch(deleteConversation({ id, auth }));
+        history.push('/message');
+    }
 
     return (
         <div className="message__right-chat">
             <div className="message__box">
                 <div className="message__box-header">
-                    {
-                        user.avatar && <img style={{ width: '40px' }} src={user.avatar} alt="user_avatar">
-                        </img>
-                    }
-                    <div className="search__users-infor">
-                        <span style={{ fontSize: '14px', fontWeight: "700" }}>{user.fullname}</span>
-                        <span style={{ fontSize: '14px', fontWeight: "400" }}>{user.username && `@${user.username}`}</span>
+                    <div className="message__box-header-left">
+                        {
+                            user.avatar && <img style={{ width: '40px' }} src={user.avatar} alt="user_avatar">
+                            </img>
+                        }
+                        <div className="message__users-infor">
+                            <span style={{ fontSize: '14px', fontWeight: "700" }}>{user.fullname}</span>
+                            <span style={{ fontSize: '14px', fontWeight: "400" }}>{user.username && `@${user.username}`}</span>
+                        </div>
+                    </div>
+                    <div className="message__box-header-right">
+                        {user && <i className='bx bxs-trash' onClick={handleDeleteConversation}></i>}
                     </div>
                 </div>
 

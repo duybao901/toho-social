@@ -91,6 +91,7 @@ class MessageController {
             return res.stats(500).json({ msg: err.message });
         }
     }
+
     async deleteMessage(req, res) {
         try {
 
@@ -101,6 +102,24 @@ class MessageController {
             });
         } catch (err) {
             return res.stats(500).json({ msg: err.message });
+        }
+    }
+
+    async deleteConversation(req, res) {
+        try {
+            const newConversation = await Conversations.findOneAndDelete({
+                $or: [
+                    { recipients: [req.user._id, req.params.id] },
+                    { recipients: [req.params.id, req.user._id] }
+                ]
+            })
+
+            await Messages.deleteMany({ conversation: newConversation._id });
+
+            return res.json({ msg: "Delete Success!" });
+
+        } catch (err) {
+            return res.status(500).json({ msg: err.messages })
         }
     }
 }

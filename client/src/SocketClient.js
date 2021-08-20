@@ -199,6 +199,14 @@ function SocketClient() {
                 type: MESSAGE_TYPES.ADD_MESSAGE,
                 payload: msg
             })
+            dispatch({
+                type: MESSAGE_TYPES.ADD_USER,
+                payload: {
+                    ...msg.user,
+                    text: msg.text,
+                    media: msg.media
+                }
+            })
         })
         return () => {
             socket.off("addMessageToClient");
