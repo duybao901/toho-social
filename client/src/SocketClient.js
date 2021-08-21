@@ -4,6 +4,7 @@ import * as POST_TYPES from './redux/constants/post'
 import * as GLOBLE_TYPES from './redux/constants/index'
 import * as NOTIFY_TYPES from './redux/constants/notifycation'
 import * as MESSAGE_TYPES from './redux/constants/message'
+import * as ONLINE_TYPES from './redux/constants/online'
 
 
 import SoundNotification from './audio/sound_notify.mp3'
@@ -26,13 +27,13 @@ function spawnNotification(body, icon, url, title) {
 
 function SocketClient() {
     const dispatch = useDispatch();
-    const { auth, socket, notification } = useSelector(state => state);
+    const { auth, socket, notification, online } = useSelector(state => state);
 
     const audioRef = useRef();
 
     useEffect(() => {
-        socket.emit('joinUser', auth.user._id);
-    }, [socket, auth.user._id])
+        socket.emit('joinUser', auth.user);
+    }, [socket, auth.user])
 
     // Like post
     useEffect(() => {
@@ -212,6 +213,48 @@ function SocketClient() {
             socket.off("addMessageToClient");
         }
     }, [socket, dispatch])
+
+    // Check user online & offline
+    useEffect(() => {
+        socket.emit("checkUserOnline", auth.user);
+    }, [socket, auth.user])
+
+    // Gửi cho mình tín hiệu của những thằng mà mình dang follow nó mà nó đang online
+    useEffect(() => {
+        socket.on('checkUserOnlineToMe', data => {
+            data.forEach(item => {
+                if (!online.data.includes(item.id)) {
+                    dispatch({ type: ONLINE_TYPES.ONLINE, payload: item.id })
+                }
+            })
+        })
+        return () => {
+            socket.off("checkUserOnlineToMe");
+        }
+    }, [socket, auth.user])
+
+    // Gửi đến những thằng mà đang follow mình tín hiệu mình đang online
+    useEffect(() => {
+        socket.on("checkUserOnlineToClient", id => {
+            console.log(!online.data.includes(id))
+            if (!online.data.includes(id)) {
+                dispatch({ type: ONLINE_TYPES.ONLINE, payload: id })
+            }
+        });
+        return () => {
+            socket.off("checkUserOnlineToClient");
+        }
+    }, [socket, auth.user])
+
+    useEffect(() => {
+        socket.on("checkUserOffLine", id => {
+           dispatch({ type: ONLINE_TYPES.OFFLINE, payload: id })
+        });
+        return () => {
+            socket.off("checkUserOffLine");
+        }
+    }, [socket, auth.user])
+
     return <>
         <audio style={{ display: 'none' }} controls ref={audioRef}>
             <source src={SoundNotification} type="audio/mp3"></source>

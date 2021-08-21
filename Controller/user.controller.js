@@ -51,7 +51,7 @@ class UserController {
             const { email, password } = req.body
 
             const user = await Users.findOne({ email })
-                .populate("followers followings", "-password")
+                .populate("followers followings", "username avatar fullname followers followings")
 
             if (!user) return res.status(400).json({ msg: "This email does not exist." })
 
@@ -96,7 +96,7 @@ class UserController {
                 if (err) return res.status(400).json({ msg: "Please login now." })
 
                 const user = await Users.findById(result.id).select("-password")
-                    .populate('followers followings', '-password')
+                    .populate('followers followings', 'username avatar fullname followers followings')
 
                 if (!user) return res.status(400).json({ msg: "This does not exist." })
 
@@ -236,7 +236,7 @@ class UserController {
             return res.status(500).json({ msg: err.message })
         }
     }
-    
+
 }
 
 function createAccessToken(payload) {

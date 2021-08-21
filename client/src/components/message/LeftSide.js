@@ -15,7 +15,7 @@ function LeftSide() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-    const { auth, message } = useSelector(state => state);
+    const { auth, message, online } = useSelector(state => state);
     const refMoreUserCard = useRef();
     const [page, setPage] = useState(0)
 
@@ -68,6 +68,11 @@ function LeftSide() {
             dispatch(getConversation({ auth, page }))
         }
     }, [message.resultUsers, page, auth, dispatch])
+
+    useEffect(() => {
+        if (message.firstLoad) dispatch({ type: MESSAGE_TYPES.CHECK_USER_ONLINE_OFFLINE, payload: online.data });
+    }, [online.data, , message.firstLoad, dispatch])
+
 
     return (
         <div className="message__left-side">

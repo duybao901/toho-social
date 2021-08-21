@@ -13,6 +13,7 @@ import suggestion from './suggestionReducer'
 import socket from './socketReducer'
 import notification from './notificationReducer';
 import message from './messageReducer'
+import online from './onlineReducer'
 
 const myReducer = combineReducers({
     auth,
@@ -27,7 +28,8 @@ const myReducer = combineReducers({
     suggestion,
     socket,
     notification,
-    message
+    message,
+    online
 });
 
 export default myReducer;

@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function UserCardMessage({ user }) {
-
+    const { auth } = useSelector(state => state);
     const { id } = useParams();
     function isActive(user) {
         return (user._id === id) ? "active" : ""
@@ -20,7 +21,7 @@ function UserCardMessage({ user }) {
                             {user.text.length > 20 ? user.text.slice(0, 20) + "..." : user.text}
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 {
-                                    user.media.length > 0 && "+"+user.media.length
+                                    user.media.length > 0 && "+" + user.media.length
                                 }
                                 {
 
@@ -33,7 +34,10 @@ function UserCardMessage({ user }) {
                         <div style={{ fontSize: '14px', fontWeight: "400" }}>{user.fullname}</div>
                 }
             </div>
-            <i className='bx bxs-circle'></i>
+            {
+                user.online ? <i className='bx bxs-circle active' /> :
+                    auth.user.followings.find(item => item._id === user._id) && <i className='bx bxs-circle' />
+            }
         </Link >
     )
 }

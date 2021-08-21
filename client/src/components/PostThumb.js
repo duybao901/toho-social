@@ -5,7 +5,6 @@ function PostThumb({ posts, result, colLg }) {
         return <h2 style={{ marginLeft: "15px", textAlign: "center" }}>No posts</h2>
     }
     return posts.map(post => {
-        console.log(post);
         return <Link key={post._id} to={`/post/${post._id}`} className={`post__thumb col px-md-2 col-12 col-lg-${colLg ? colLg : 6} col-sm-12`}>
             {
 

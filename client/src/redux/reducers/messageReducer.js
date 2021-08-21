@@ -75,6 +75,15 @@ const messageReducer = (state = initialState, action) => {
                 data: state.data.filter((item) => item._id !== action.payload)
             }
         }
+        case MESSAGE_TYPES.CHECK_USER_ONLINE_OFFLINE: {
+            return {
+                ...state,
+                users: state.users.map(user => {
+                    return action.payload.includes(user._id) ? { ...user, online: true } : { ...user, online: false }
+                }),
+
+            }
+        }
         default: {
             return state
         }

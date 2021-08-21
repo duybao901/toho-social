@@ -2,11 +2,27 @@ var users = [];
 
 const socketSever = (socket) => {
 
-    socket.on('joinUser', id => {
-        users.push({ socketId: socket.id, id });
+    socket.on('joinUser', user => {
+        users.push({ socketId: socket.id, id: user._id, followers: user.followers });
     })
 
     socket.on('disconnect', () => {
+        // Nếu user disconnect thì thông báo cho những người mà dang follow user đó 
+
+        const data = users.find(user => user.socketId === socket.id);
+
+        if (data) {    
+   
+            const clients = users.filter(user =>
+                data.followers.find(item => item._id === user.id)
+            )
+            if (clients.length > 0) {
+                clients.forEach(client => {
+                    // Gửi id của mình đến những user đang follow mình  
+                    socket.to(`${client.socketId}`).emit("checkUserOffLine", data.id);
+                })
+            }
+        }
         users = users.filter(user => user.socketId !== socket.id);
     })
 
@@ -114,6 +130,27 @@ const socketSever = (socket) => {
     socket.on("addMessage", msg => {
         const user = users.find(user => user.id === msg.recipient);
         user && socket.to(`${user.socketId}`).emit("addMessageToClient", msg);
+    })
+
+    // Check user online & offline
+    socket.on("checkUserOnline", data => {
+
+        // Gửi cho mình tín hiệu của những thằng mà mình dang follow nó mà nó đang online
+        const following = users.filter(user =>
+            data.followings.find(item => item._id === user.id)
+        );
+        following && socket.emit("checkUserOnlineToMe", following)
+
+        // Gửi đến những thằng mà đang follow mình tín hiệu mình đang online
+        const clients = users.filter(user =>
+            data.followers.find(item => item._id === user.id)
+        )
+
+        if (clients.length > 0) {
+            clients.forEach(client => {
+                socket.to(`${client.socketId}`).emit("checkUserOnlineToClient", data._id);
+            })
+        }
     })
 }
 
