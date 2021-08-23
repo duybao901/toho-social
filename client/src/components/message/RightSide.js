@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import MessageDisplay from './MessageDisplay'
 import * as GLOBLE_TYPES from '../../redux/constants/index'
+import * as CALL_TYPES from '../../redux/constants/call'
 import { imagesUpload } from '../../utils/imageUpload';
 import { addMessage, getMessages, updateMessages, deleteConversation } from '../../redux/actions/messageAction'
 import LoadingImage from '../../images/globle_loading.gif'
@@ -29,7 +30,7 @@ function RightSide() {
     useEffect(() => {
         if (id && message.users.length > 0) {
             const newUser = message.users.find(user => user._id === id);
-            
+
             if (newUser) {
                 setUser(newUser);
             } else {
@@ -42,7 +43,7 @@ function RightSide() {
                 }, 0)
             }
 
-            
+
         }
     }, [message.users, id, history])
 
@@ -165,9 +166,33 @@ function RightSide() {
         newArray.splice(index, 1);
         setImages(newArray);
     }
+
     function handleDeleteConversation() {
-        dispatch(deleteConversation({ id, auth }));
-        history.push('/message');
+        if (window.confirm("Do you want to delete this conversation?")) {
+            dispatch(deleteConversation({ id, auth }));
+            history.push('/message');
+        }
+    }
+
+    function hanldeCall(video) {
+        const { username, fullname, avatar } = user;
+
+        const msg = {
+            recipient: id,
+            sender: auth.user._id,
+            username, fullname, avatar,
+            video
+        }
+
+        dispatch({ type: CALL_TYPES.CALL, payload: msg });
+    }
+
+    function hanldeCallAudio(video) {
+        hanldeCall(video)
+    }
+
+    function hanldeCallVideo(video) {
+        hanldeCall(video)
     }
 
     return (
@@ -184,9 +209,13 @@ function RightSide() {
                             <span style={{ fontSize: '14px', fontWeight: "400" }}>{user.username && `@${user.username}`}</span>
                         </div>
                     </div>
-                    <div className="message__box-header-right">
-                        {user && <i className='bx bxs-trash' onClick={handleDeleteConversation}></i>}
-                    </div>
+                    {
+                        Object.keys(user).length > 0 && <div className="message__box-header-right">
+                            <i className='bx bxs-phone' onClick={() => hanldeCallAudio(false)}></i>
+                            <i className='bx bxs-video' onClick={() => hanldeCallVideo(true)}></i>
+                            <i className='bx bxs-trash' onClick={handleDeleteConversation}></i>
+                        </div>
+                    }
                 </div>
 
                 <div style={{ opacity: message.loadingMessages ? 0.5 : 1 }} className={images.length > 0 ? "chat__container active" : "chat__container"}>

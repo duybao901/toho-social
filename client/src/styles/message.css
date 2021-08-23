@@ -178,7 +178,7 @@
 }
 
 .user_message i.bxs-circle.active {
-    color: var(--color-blue);
+    color: #00cc00;
 }
 
 /* Chat Container */
@@ -214,9 +214,15 @@
     flex-direction: column;
 }
 
-.message__box-header-right i{
+.message__box-header-right i {
     font-size: 2rem;
-    color: var(--color-text-grey);
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.message__box-header-right i.bx.bxs-trash {
+    font-size: 2rem;
+    color: var(--color-heart);
     cursor: pointer;
 }
 
@@ -568,4 +574,62 @@
 
 .chat__content:hover .chat__delete-icon {
     opacity: 1;
+}
+
+/* Call */
+
+.call__body {
+    flex: 1;
+}
+
+.call__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.call__content .call__avatar {
+    width: 30%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.call__username {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.call__time {
+    font-size: 1.4rem;
+}
+
+.call__control {
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.call__control-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-blue);
+    border-radius: 50%;
+    cursor: pointer;
+    color: #fff;
+    font-size: 2rem;
+}
+
+.call__control-icon.off {
+    background-color: var(--color-heart);
+}
+
+.call__control-icon.on {
+    background-color:#00cc00;
 }

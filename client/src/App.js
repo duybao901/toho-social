@@ -11,6 +11,7 @@ import Notify from './components/norify/Notify';
 import WatchImg from './components/watchimg/WatchImg';
 import EditMedia from './components/editmedia/EditMedia';
 import Header from './components/header/Header';
+import CallModal from './components/message/CallModal';
 import * as authActions from './redux/actions/authAction'
 import * as postActions from './redux/actions/postAction'
 import * as suggestionActions from './redux/actions/suggestionAction'
@@ -23,7 +24,7 @@ import SocketClient from './SocketClient';
 
 function App() {
 
-    const { auth, notify } = useSelector(state => state);
+    const { auth, notify, call } = useSelector(state => state);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -68,6 +69,7 @@ function App() {
             <WatchImg />
             <EditMedia />
             {auth.token && <SocketClient />}
+            {call && <CallModal />}
             <div className='main'>
                 <div className="main__container">
                     {auth.token && <Header />}

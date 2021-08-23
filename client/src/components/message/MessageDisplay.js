@@ -7,7 +7,9 @@ function MessageDisplay({ user, msg, data }) {
     const { auth } = useSelector(state => state);
 
     function handleDeleteMessages() {
-        dispatch(deleteMessages({ msg, auth, data }));
+        if (window.confirm("Do you want to remove this message?")) {
+            dispatch(deleteMessages({ msg, auth, data }));
+        }
     }
 
     return (

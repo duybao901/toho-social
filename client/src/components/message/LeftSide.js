@@ -71,7 +71,7 @@ function LeftSide() {
 
     useEffect(() => {
         if (message.firstLoad) dispatch({ type: MESSAGE_TYPES.CHECK_USER_ONLINE_OFFLINE, payload: online.data });
-    }, [online.data, , message.firstLoad, dispatch])
+    }, [online.data, message.firstLoad, dispatch])
 
 
     return (

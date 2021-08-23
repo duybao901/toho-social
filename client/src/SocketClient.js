@@ -231,12 +231,11 @@ function SocketClient() {
         return () => {
             socket.off("checkUserOnlineToMe");
         }
-    }, [socket, auth.user])
+    }, [socket, auth.user, online.data, dispatch])
 
     // Gửi đến những thằng mà đang follow mình tín hiệu mình đang online
     useEffect(() => {
         socket.on("checkUserOnlineToClient", id => {
-            console.log(!online.data.includes(id))
             if (!online.data.includes(id)) {
                 dispatch({ type: ONLINE_TYPES.ONLINE, payload: id })
             }
@@ -244,16 +243,16 @@ function SocketClient() {
         return () => {
             socket.off("checkUserOnlineToClient");
         }
-    }, [socket, auth.user])
+    }, [socket, auth.user, online.data, dispatch])
 
     useEffect(() => {
         socket.on("checkUserOffLine", id => {
-           dispatch({ type: ONLINE_TYPES.OFFLINE, payload: id })
+            dispatch({ type: ONLINE_TYPES.OFFLINE, payload: id })
         });
         return () => {
             socket.off("checkUserOffLine");
         }
-    }, [socket, auth.user])
+    }, [socket, auth.user, dispatch])
 
     return <>
         <audio style={{ display: 'none' }} controls ref={audioRef}>

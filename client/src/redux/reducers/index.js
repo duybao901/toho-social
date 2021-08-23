@@ -14,6 +14,8 @@ import socket from './socketReducer'
 import notification from './notificationReducer';
 import message from './messageReducer'
 import online from './onlineReducer'
+import call from './callReducer'
+
 
 const myReducer = combineReducers({
     auth,
@@ -29,7 +31,8 @@ const myReducer = combineReducers({
     socket,
     notification,
     message,
-    online
+    online,
+    call
 });
 
 export default myReducer;
