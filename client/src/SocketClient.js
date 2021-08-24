@@ -5,7 +5,7 @@ import * as GLOBLE_TYPES from './redux/constants/index'
 import * as NOTIFY_TYPES from './redux/constants/notifycation'
 import * as MESSAGE_TYPES from './redux/constants/message'
 import * as ONLINE_TYPES from './redux/constants/online'
-
+import * as CALL_TYPES from './redux/constants/call'
 
 import SoundNotification from './audio/sound_notify.mp3'
 
@@ -27,7 +27,7 @@ function spawnNotification(body, icon, url, title) {
 
 function SocketClient() {
     const dispatch = useDispatch();
-    const { auth, socket, notification, online } = useSelector(state => state);
+    const { auth, socket, notification, online, call } = useSelector(state => state);
 
     const audioRef = useRef();
 
@@ -245,6 +245,7 @@ function SocketClient() {
         }
     }, [socket, auth.user, online.data, dispatch])
 
+    // User Offline
     useEffect(() => {
         socket.on("checkUserOffLine", id => {
             dispatch({ type: ONLINE_TYPES.OFFLINE, payload: id })
@@ -253,6 +254,38 @@ function SocketClient() {
             socket.off("checkUserOffLine");
         }
     }, [socket, auth.user, dispatch])
+
+
+    // Call
+    useEffect(() => {
+        socket.on("callUserToClient", data => {
+            dispatch({ type: CALL_TYPES.CALL, payload: data })
+        });
+        return () => {
+            socket.off("callUserToClient");
+        }
+    }, [socket, dispatch])
+
+    // End Call
+    useEffect(() => {
+        socket.on("endCallToClient", data => {
+
+            dispatch({ type: CALL_TYPES.CALL, payload: null })
+        });
+        return () => {
+            socket.off("endCallToClient");
+        }
+    }, [socket, dispatch])
+
+    // Call Busy
+    useEffect(() => {
+        socket.on("userBusy", data => {
+            dispatch({ type: GLOBLE_TYPES.NOTIFY, payload: { err: `${call.username} is busy!` } })
+        });
+        return () => {
+            socket.off("userBusy");
+        }
+    }, [socket, dispatch, call])
 
     return <>
         <audio style={{ display: 'none' }} controls ref={audioRef}>

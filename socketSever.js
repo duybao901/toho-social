@@ -1,5 +1,12 @@
 var users = [];
 
+const EditData = (data, id, edit) => {
+    const newData = data.map(item =>
+        item.id === id ? { ...item, call: edit } : item
+    )
+    return newData;
+}
+
 const socketSever = (socket) => {
 
     socket.on('joinUser', user => {
@@ -11,8 +18,8 @@ const socketSever = (socket) => {
 
         const data = users.find(user => user.socketId === socket.id);
 
-        if (data) {    
-   
+        if (data) {
+
             const clients = users.filter(user =>
                 data.followers.find(item => item._id === user.id)
             )
@@ -151,6 +158,49 @@ const socketSever = (socket) => {
                 socket.to(`${client.socketId}`).emit("checkUserOnlineToClient", data._id);
             })
         }
+    })
+
+    // Call User
+    socket.on("callUser", data => {
+        // console.log('old users', users)
+
+        users = EditData(users, data.sender, data.recipient);
+
+        // Tìm user nhận cuộc gọi
+        const client = users.find(user => user.id === data.recipient);
+        if (client) {
+            // Nếu người gọi đang có call
+            if (client.call) {
+                users = EditData(users, data.sender, null);
+                socket.emit("userBusy", data);
+            } else {
+                // Nếu người gọi không có call
+                users = EditData(users, data.recipient, data.sender);
+                socket.to(`${client.socketId}`).emit("callUserToClient", data);
+            }
+        }
+        // console.log('new users', users)
+    })
+
+    // End call
+    socket.on("endCall", data => {
+
+
+        // client -> me
+        const client = users.find(user => user.id === data.sender)
+        if (client) {
+            // Trường hợp bên nhận ngắt kết nối
+            socket.to(`${client.socketId}`).emit('endCallToClient', data);
+            users = EditData(users, data.sender, null)
+            if (client.call) {
+                // clientAll -> you
+                const clientAll = users.find(user => user.id === client.call);
+                clientAll && socket.to(`${clientAll.socketId}`).emit('endCallToClient', data);
+                users = EditData(users, data.recipient, null)
+            }
+        }
+
+
     })
 }
 

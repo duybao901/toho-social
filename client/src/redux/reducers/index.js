@@ -15,6 +15,8 @@ import notification from './notificationReducer';
 import message from './messageReducer'
 import online from './onlineReducer'
 import call from './callReducer'
+import peer from './peerReducer'
+
 
 
 const myReducer = combineReducers({
@@ -32,7 +34,8 @@ const myReducer = combineReducers({
     notification,
     message,
     online,
-    call
+    call,
+    peer
 });
 
 export default myReducer;

@@ -12,7 +12,7 @@ import Icons from '../../components/Icons'
 function RightSide() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { auth, message, socket } = useSelector(state => state);
+    const { auth, message, socket, peer } = useSelector(state => state);
     const { id } = useParams();
     const [user, setUser] = useState({});
     const [text, setText] = useState('');
@@ -175,10 +175,10 @@ function RightSide() {
     }
 
     function hanldeCall(video) {
-        const { username, fullname, avatar } = user;
+        const { _id, username, fullname, avatar } = user;
 
         const msg = {
-            recipient: id,
+            recipient: _id,
             sender: auth.user._id,
             username, fullname, avatar,
             video
@@ -187,12 +187,30 @@ function RightSide() {
         dispatch({ type: CALL_TYPES.CALL, payload: msg });
     }
 
+    function hanldeCallUser(video) {
+        const { _id, username, fullname, avatar } = auth.user;
+
+        const msg = {
+            recipient: user._id,
+            sender: _id,
+            username, fullname, avatar,
+            video
+        }
+
+        if (peer.open) msg.peer_id = peer._id;
+
+        socket.emit("callUser", msg);
+
+    }
+
     function hanldeCallAudio(video) {
         hanldeCall(video)
+        hanldeCallUser(video)
     }
 
     function hanldeCallVideo(video) {
         hanldeCall(video)
+        hanldeCallUser(video)
     }
 
     return (

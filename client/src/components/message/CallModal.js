@@ -31,17 +31,13 @@ const useStyles = makeStyles((theme) => ({
 function CallModal() {
 
     const dispatch = useDispatch();
-    const { call } = useSelector(state => state);
+    const { call, auth, socket } = useSelector(state => state);
     const classes = useStyles();
-
-    const handleClose = () => {
-        dispatch({ type: CALL_TYPES.CALL, payload: null })
-        setTotal(0)
-    };
 
     const [mins, setMins] = useState(0);
     const [second, setSecond] = useState(0);
     const [total, setTotal] = useState(0);
+    const [answer, setAnswer] = useState(false);
 
     // set time
     useEffect(() => {
@@ -58,14 +54,34 @@ function CallModal() {
         setSecond(parseInt(total / 60));
     }, [total])
 
+    // Tự động ngắt kết nối nếu sau 15s không phản hồi answer
+    useEffect(() => {
+        if (answer) {
+            setTotal(0)
+        } else {
+            var timeout = setTimeout(() => {
+                dispatch({ type: CALL_TYPES.CALL, payload: null })
+                setTotal(0)
+                socket.emit("endCall", call);
+            }, 15000)
+        }
+        return () => clearTimeout(timeout)
+    }, [dispatch, answer])
+
+
+    const handleClose = () => {
+        dispatch({ type: CALL_TYPES.CALL, payload: null })
+        setTotal(0)
+        socket.emit("endCall", call);
+    };
+
     return (
         <div>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={call !== null ? true : false}
-                onClose={handleClose}
+                open={call !== null ? true : false}             
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{
@@ -91,25 +107,43 @@ function CallModal() {
                                 <span className="call__username">
                                     {call.username}
                                 </span>
-                                <span style={{ fontSize: "1.4rem", marginBottom: "10px" }}>call {call.video ? "video..." : "audio..."}</span>
-                                <div className="call__time">
-                                    <span>
-                                        {second.toString().length < 2 ? '0' + second : second}
-                                    </span>:
-                                    <span>
-                                        {mins.toString().length < 2 ? '0' + mins : mins}
-                                    </span>
-                                </div>
-                                <div className="call__control">
+
+                                {
+                                    answer ? <div className="call__time">
+                                        <span>
+                                            {second.toString().length < 2 ? '0' + second : second}
+                                        </span>:
+                                        <span>
+                                            {mins.toString().length < 2 ? '0' + mins : mins}
+                                        </span>
+                                    </div> :
+                                        <span style={{ fontSize: "1.4rem", marginBottom: "10px" }}>call {call.video ? "video..." : "audio..."}</span>
+                                }
+                                {
+                                    !answer && <div className="call__time">
+                                        <span>
+                                            {second.toString().length < 2 ? '0' + second : second}
+                                        </span>:
+                                        <span>
+                                            {mins.toString().length < 2 ? '0' + mins : mins}
+                                        </span>
+                                    </div>
+                                }
+                                <div className="call__control" style={{ justifyContent: !(call.recipient === auth.user._id && !answer) ? "center" : "space-between" }}>
                                     <div className="call__control-icon off" onClick={handleClose}>
                                         <i className='bx bxs-phone-off'></i>
                                     </div>
                                     {
-                                        !call.video ? <div className="call__control-icon on">
-                                            <i className='bx bxs-phone'></i>
-                                        </div> : <div className="call__control-icon on">
-                                            <i className='bx bxs-video'></i>
-                                        </div>
+                                        (call.recipient === auth.user._id && !answer) &&
+                                        <>
+                                            {
+                                                !call.video ? <div className="call__control-icon answer" onClick={() => setAnswer(true)}>
+                                                    <i className='bx bxs-phone' ></i>
+                                                </div> : <div className="call__control-icon answer" onClick={() => setAnswer(true)}>
+                                                    <i className='bx bxs-video'></i>
+                                                </div>
+                                            }
+                                        </>
                                     }
                                 </div>
                             </div>

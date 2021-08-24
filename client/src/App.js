@@ -16,11 +16,14 @@ import * as authActions from './redux/actions/authAction'
 import * as postActions from './redux/actions/postAction'
 import * as suggestionActions from './redux/actions/suggestionAction'
 import * as notifyActions from './redux/actions/notifyAction'
-
 import * as GLOBLE_TYPES from './redux/constants/index'
+import * as CALL_TYPES from './redux/constants/call'
+
 // Socket IO
 import { io } from 'socket.io-client'
 import SocketClient from './SocketClient';
+// PeerJS
+import Peer from 'peerjs'
 
 function App() {
 
@@ -57,6 +60,15 @@ function App() {
             });
         }
     }, [])
+
+    useEffect(() => {
+        const peer = new Peer(undefined, {
+            port: '3001',
+            host: '/'
+        })
+        dispatch({ type: CALL_TYPES.PEER, payload: peer })
+    }, [dispatch])
+
 
     return (
         <div className="App"

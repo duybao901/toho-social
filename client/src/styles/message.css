@@ -628,8 +628,18 @@
 
 .call__control-icon.off {
     background-color: var(--color-heart);
+    transition: all .15s linear;
 }
 
-.call__control-icon.on {
-    background-color:#00cc00;
+.call__control-icon.off:hover {
+    background-color: var(--color-heart-hover);
+}
+
+.call__control-icon.answer {
+    background-color: #00cc00;
+    transition: all .15s linear;
+}
+
+.call__control-icon.answer:hover {
+    background-color: #00e100;
 }
