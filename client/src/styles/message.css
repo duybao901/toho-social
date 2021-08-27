@@ -643,3 +643,64 @@
 .call__control-icon.answer:hover {
     background-color: #00e100;
 }
+
+.show_video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    /* background-color: rgba(0, 0, 0, .2); */
+    pointer-events: none;
+    z-index: 1301;
+}
+
+.show_video .orther_video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    height: 90vh;
+    z-index: 10;
+}
+
+.show_video .you_video {
+    position: fixed;
+    top: 5%;
+    right: 0;
+    width: 20%;
+    height: 20%;
+    padding: 0;
+    /* border: 1px var(--color-blue) solid; */
+    border-radius: 5px;
+    z-index: 11;
+}
+
+.call_infor-control {
+    z-index: 1400;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.call_infor-control .call__time {
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.call_infor-control .call__control-icon.off {
+    position: relative;
+    z-index: 1301;
+}
+
+.MuiBackdrop-root:focus-visible {
+    outline: none !important;
+    border: none !important;
+}

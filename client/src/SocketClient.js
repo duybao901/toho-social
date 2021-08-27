@@ -266,17 +266,6 @@ function SocketClient() {
         }
     }, [socket, dispatch])
 
-    // End Call
-    useEffect(() => {
-        socket.on("endCallToClient", data => {
-
-            dispatch({ type: CALL_TYPES.CALL, payload: null })
-        });
-        return () => {
-            socket.off("endCallToClient");
-        }
-    }, [socket, dispatch])
-
     // Call Busy
     useEffect(() => {
         socket.on("userBusy", data => {

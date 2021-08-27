@@ -19,7 +19,6 @@ const socketSever = (socket) => {
         const data = users.find(user => user.socketId === socket.id);
 
         if (data) {
-
             const clients = users.filter(user =>
                 data.followers.find(item => item._id === user.id)
             )
@@ -28,6 +27,15 @@ const socketSever = (socket) => {
                     // Gửi id của mình đến những user đang follow mình  
                     socket.to(`${client.socketId}`).emit("checkUserOffLine", data.id);
                 })
+            }
+
+            // End call
+            if (data.call) {
+                const userCall = users.find(user => user.id === data.call);
+                if (userCall) {
+                    users = EditData(users, userCall.id, null);
+                    socket.to(`${userCall.socketId}`).emit('callerDisconnect', data);
+                }
             }
         }
         users = users.filter(user => user.socketId !== socket.id);
@@ -184,8 +192,6 @@ const socketSever = (socket) => {
 
     // End call
     socket.on("endCall", data => {
-
-
         // client -> me
         const client = users.find(user => user.id === data.sender)
         if (client) {
@@ -195,12 +201,11 @@ const socketSever = (socket) => {
             if (client.call) {
                 // clientAll -> you
                 const clientAll = users.find(user => user.id === client.call);
+                // Trường hợp bên mình ngắt kết nối
                 clientAll && socket.to(`${clientAll.socketId}`).emit('endCallToClient', data);
                 users = EditData(users, data.recipient, null)
             }
         }
-
-
     })
 }
 
