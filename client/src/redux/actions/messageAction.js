@@ -5,7 +5,7 @@ import { postDataAPI, getDataAPI, deleteDataAPI } from '../../utils/fetchData'
 export const addMessage = ({ msg, auth, socket }) => async (dispatch) => {
     dispatch({ type: MESSAGE_TYPES.ADD_MESSAGE, payload: msg });
     const { _id, username, fullname, avatar } = auth.user;
-    socket.emit("addMessage", { ...msg, user: { username, fullname, avatar, _id} });
+    socket.emit("addMessage", { ...msg, user: { username, fullname, avatar, _id } });
     try {
         await postDataAPI('message', msg, auth.token);
     } catch (error) {
@@ -22,10 +22,10 @@ export const getConversation = ({ auth, page }) => async (dispatch) => {
         res.data.conversation.forEach(item => {
             item.recipients.forEach(cv => {
                 if (cv._id !== auth.user._id) {
-                    newArray.push({ ...cv, text: item.text, media: item.media });
+                    newArray.push({ ...cv, text: item.text, media: item.media, call: item.call });
                 }
             })
-        })
+        })  
 
         dispatch({
             type: MESSAGE_TYPES.GET_CONVERSATION,
@@ -72,7 +72,6 @@ export const updateMessages = ({ id, auth, page = 1 }) => async (dispatch) => {
 
     }
 }
-
 
 export const deleteMessages = ({ msg, auth, data }) => async (dispatch) => {
     const newData = data.filter(item => item._id !== msg._id);

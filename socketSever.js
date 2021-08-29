@@ -31,7 +31,7 @@ const socketSever = (socket) => {
 
             // End call
             if (data.call) {
-                const userCall = users.find(user => user.id === data.call);
+                const userCall = users.find(use=r => user.id === data.call);
                 if (userCall) {
                     users = EditData(users, userCall.id, null);
                     socket.to(`${userCall.socketId}`).emit('callerDisconnect', data);

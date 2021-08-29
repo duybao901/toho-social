@@ -180,6 +180,10 @@
     .main__header {
         width: 90%;
     }
+    /* Message */
+    .message__row .message__left-side {
+        width: 250px;
+    }
 }
 
 @media (max-width:767px) {
@@ -235,13 +239,21 @@
     .card__body .carousel-item img {
         height: 360px !important;
     }
+    .message__right {
+        display: none;
+    }
+    .message__row .message__left-side {
+        width: 100%;
+    }
+    .message__right-have-id .message__left-side {
+        display: none;
+    }
+    .chat__container {
+        height: calc(100vh - 170px);
+    }
 }
 
 @media all and (max-width: 480px) {
-    .alert__message {
-        /* display: none;
-        visibility: hidden; */
-    }
     .main .main__container {
         width: 100%;
         display: flex;
@@ -345,7 +357,7 @@
     .notify__user-infor p {
         margin-left: 0px;
     }
-    .notify__user-infor p{
+    .notify__user-infor p {
         margin-left: 5px;
     }
 }

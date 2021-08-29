@@ -30,9 +30,22 @@ function UserCardMessage({ user }) {
                             </div>
                         </div>
 
-                        :
-                        <div style={{ fontSize: '14px', fontWeight: "400" }}>{user.fullname}</div>
+                        : <div style={{ fontSize: '14px', fontWeight: "400" }}>{user.fullname}</div>
                 }
+                {
+                    user.call &&
+                    <span style={{
+                        fontSize: '2rem'
+                    }}>
+                        {
+                            user.call.times === 0 ?
+                                user.call.video ? <i style={{ color: "#f8286a" }} className='bx bxs-video-off'></i> : <i style={{ color: "#f8286a" }} className='bx bxs-phone-off'></i>
+                                :
+                                user.call.video ? <i style={{ color: "#1DA1F2" }}  className='bx bxs-video-recording' ></i> : <i style={{ color: "#1DA1F2" }} className='bx bxs-phone'></i>
+                        }
+                    </span>
+                }
+
             </div>
             {
                 user.online ? <i className='bx bxs-circle active' /> :

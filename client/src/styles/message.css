@@ -704,3 +704,44 @@
     outline: none !important;
     border: none !important;
 }
+
+.chat__call {
+    padding: 6px;
+}
+
+.chat_row.orther_message .chat__call {
+    background-color: #fafafa;
+    border-radius: 5px;
+}
+
+.chat_row.you_message .chat__call {
+    background-color: var(--color-blue);
+    border-radius: 5px;
+    color: #fff;
+}
+
+.chat__call .chat__call-container {
+    display: flex;
+}
+
+.chat__call .chat__call-container i {
+    font-size: 3rem;
+    margin-right: 5px;
+}
+
+.chat_row.orther_message .chat__call .chat__call-container i {
+    color: #555;
+}
+
+.chat_row.orther_message .chat__call .chat__call-container i.orther__call-audio{
+    color: var(--color-blue);
+}
+
+.chat__call .chat__call-container .chat__call-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat__call .chat__call-container .chat__call-text span {
+    font-size: 1.2rem;
+}

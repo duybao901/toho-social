@@ -5,7 +5,7 @@ import MessageImg from '../../images/messenger.png'
 function Message() {
     return (
         <div className="main__container-right">
-            <div className="message__row">
+            <div className="message__row left__meesage">
                 <LeftSide />
                 <div className="message__right">
                     <div className="message__right-container">

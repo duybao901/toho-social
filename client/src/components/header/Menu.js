@@ -41,15 +41,9 @@ function Menu() {
     const dispatch = useDispatch();
 
     function isActive(path) {
-        if (location.pathname === "/" && path === '/') {
-            return "active"
-        } else {
-            if (location.pathname.includes(path) && path !== "/") {
-                return 'active'
-            }
+        if (location.pathname === path) {
+            return 'active'
         }
-
-        return '';
     }
 
     function handleLogout() {

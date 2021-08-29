@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import * as CALL_TYPES from '../../redux/constants/call'
 
@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+
+import { addMessage } from '../../redux/actions/messageAction'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -42,6 +44,7 @@ function CallModal() {
     const [total, setTotal] = useState(0);
     const [answer, setAnswer] = useState(false);
     const [tracks, setTracks] = useState(null);
+    const [newCall, setNewCall] = useState(null)
 
     const youVideo = useRef();
     const ortherVideo = useRef();
@@ -63,32 +66,54 @@ function CallModal() {
 
     }, [total])
 
+    const addCallMessage = useCallback(({ call, times }) => {
+        if (call.recipient !== auth.user._id) {
+            const msg = {
+                sender: call.sender,
+                recipient: call.recipient,
+                text: '',
+                media: [],
+                call: {
+                    video: call.video,
+                    times,
+                },
+                createdAt: new Date().toISOString(),
+            }
+            dispatch(addMessage({ msg, auth, socket }));
+        }
+
+    }, [auth, dispatch, socket])
+
     // Tự động ngắt kết nối nếu sau 15s không phản hồi answer
     useEffect(() => {
         if (answer) {
             setTotal(0)
         } else {
-            var timeout = setTimeout(() => {               
+            var timeout = setTimeout(() => {
                 dispatch({ type: CALL_TYPES.CALL, payload: null })
+                addCallMessage({ call, times: 0 })
+                if (newCall) newCall.close();
+                socket.emit("endCall", { ...call, times: 0 });
                 setTotal(0)
-                socket.emit("endCall", call);
             }, 15000)
         }
         return () => clearTimeout(timeout)
-    }, [dispatch, answer, socket, call, tracks])
+    }, [dispatch, answer, socket, call, tracks, addCallMessage])
+
+
 
     // End Call
     useEffect(() => {
         socket.on("endCallToClient", data => {
-            tracks && tracks.forEach(track => {
-                track.stop();
-            })
+            tracks && tracks.forEach(track => { track.stop(); })
+            if (newCall) newCall.close();
+            addCallMessage({ call, times: data.times })
             dispatch({ type: CALL_TYPES.CALL, payload: null })
         });
         return () => {
             socket.off("endCallToClient");
         }
-    }, [socket, dispatch, tracks])
+    }, [socket, dispatch, tracks, addCallMessage, call, newCall])
 
     // Caller Disconnect
     useEffect(() => {
@@ -96,19 +121,29 @@ function CallModal() {
             tracks && tracks.forEach(track => {
                 track.stop();
             })
+            let times = answer ? total : 0
+            addCallMessage(call, times)
+
             dispatch({ type: CALL_TYPES.CALL, payload: null })
         });
         return () => {
             socket.off("callerDisconnect");
         }
-    }, [socket, dispatch, tracks])
+    }, [socket, dispatch, tracks, addCallMessage, answer, call, total])
 
     // End stream
     const handleClose = () => {
+
+        let times = answer ? total : 0
+        addCallMessage({ call, times })
+
+        if (newCall) newCall.close();
+
         tracks && tracks.forEach(track => { track.stop(); })
         dispatch({ type: CALL_TYPES.CALL, payload: null })
         setTotal(0)
-        socket.emit("endCall", call);
+
+        socket.emit("endCall", { ...call, times });
     };
 
     const openStream = (video) => {
@@ -136,6 +171,7 @@ function CallModal() {
                 playStream(ortherVideo.current, remoteStream)
             });
             setAnswer(true)
+            setNewCall(newCall)
         })
     }
 

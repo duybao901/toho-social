@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const socketSever = require('./socketSever');
-const { PeerServer } = require('peer');
+const { ExpressPeerServer } = require('peer');
 
 // Middleware 
 app.use(cors());
@@ -26,11 +26,11 @@ io.on("connection", (socket) => {
 });
 
 // Create Peer Sever
-PeerServer({
-    port: 3001,
-    path: "/"
-})
+const peerServer = ExpressPeerServer(httpServer, {
+    path: '/'
+});
 
+app.use('/peerjs', peerServer);
 
 // Router
 app.use('/api', require('./Router/user.route'));

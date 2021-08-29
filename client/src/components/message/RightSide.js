@@ -20,6 +20,8 @@ function RightSide() {
     const [loadimages, setLoadImages] = useState(false);
 
     const refChatDisplay = useRef();
+    const refChatContainer = useRef();
+
     const pageEnd = useRef();
     const [data, setData] = useState([]);
     const [result, setResult] = useState(0);
@@ -30,19 +32,15 @@ function RightSide() {
     useEffect(() => {
         if (id && message.users.length > 0) {
             const newUser = message.users.find(user => user._id === id);
-
             if (newUser) {
                 setUser(newUser);
+                setTimeout(() => {
+                    refChatDisplay.current && refChatDisplay.current.scrollIntoView({ block: 'end' })
+                }, 0)
+                setIsLoadMore(1);
             } else {
                 return history.push('/message');
             }
-
-            if (refChatDisplay.current) {
-                setTimeout(() => {
-                    refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-                }, 0)
-            }
-
 
         }
     }, [message.users, id, history])
@@ -52,10 +50,9 @@ function RightSide() {
         const getMessagesData = async () => {
             if (message.data.every(item => item._id !== id)) {
                 await dispatch(getMessages({ id, auth }))
-
                 if (refChatDisplay.current) {
                     setTimeout(() => {
-                        refChatDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+                        refChatDisplay.current && refChatDisplay.current.scrollIntoView({ block: 'end' })
                     }, 0)
                 }
             }
@@ -98,13 +95,17 @@ function RightSide() {
 
     // Get more message
     useEffect(() => {
-        if (isLoadMore > 1) {
-            if (result >= page * 9) {
-                dispatch(updateMessages({ id, auth, page: page + 1 }))
-                setIsLoadMore(1)
+        const updateMessageMore = async () => {
+            if (isLoadMore > 1) {
+                if (result >= page * 9) {
+                    await dispatch(updateMessages({ id, auth, page: page + 1 }))
+                    refChatContainer.current && refChatContainer.current.scrollTo(0, refChatContainer.current.scrollHeight / 2.5)
+                    setIsLoadMore(1)
+                }
             }
         }
-    }, [isLoadMore, dispatch, page, id, auth, result])
+        updateMessageMore();
+    }, [isLoadMore, dispatch, page, id, auth, result, refChatDisplay.current])
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -236,7 +237,7 @@ function RightSide() {
                     }
                 </div>
 
-                <div style={{ opacity: message.loadingMessages ? 0.5 : 1 }} className={images.length > 0 ? "chat__container active" : "chat__container"}>
+                <div ref={refChatContainer} style={{ opacity: message.loadingMessages ? 0.5 : 1 }} className={images.length > 0 ? "chat__container active" : "chat__container"}>
 
                     {
                         <div className="chat_display" ref={refChatDisplay}>

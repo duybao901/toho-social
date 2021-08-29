@@ -205,7 +205,8 @@ function SocketClient() {
                 payload: {
                     ...msg.user,
                     text: msg.text,
-                    media: msg.media
+                    media: msg.media,
+                    call: msg.call
                 }
             })
         })

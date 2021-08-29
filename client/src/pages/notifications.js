@@ -64,7 +64,9 @@ function Notifications() {
                                     </img>
                                 </div>
                                     :
-                                    notification.data.length === 0 ? <h2>No notification.</h2> :
+                                    notification.data.length === 0 ?
+                                        <h2 style={{ padding: "10px" }}>🎉 No notification! </h2>
+                                        :
                                         <ul className="notification__list">
                                             {
                                                 notification.data.map((msg, index) => {

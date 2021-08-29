@@ -63,8 +63,8 @@ function App() {
 
     useEffect(() => {
         const peer = new Peer(undefined, {
-            port: '3001',
-            host: '/'
+            path: '/',
+            secure: true
         })
         dispatch({ type: CALL_TYPES.PEER, payload: peer })
     }, [dispatch])

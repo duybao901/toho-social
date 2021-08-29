@@ -5,7 +5,7 @@ import RightSide from '../../components/message/RightSide'
 const Convertion = () => {
     return (
         <div className="main__container-right">
-            <div className="message__row">
+            <div className="message__row message__right-have-id">
                 <LeftSide />
                 <RightSide />
             </div>
