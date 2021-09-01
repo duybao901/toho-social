@@ -29,4 +29,4 @@ npm run client
 ## Server runs on http://localhost:5000 and client on http://localhost:3000
 User interface
 
-![UserInterface](https://user-images.githubusercontent.com/67371206/104798225-44ef3c80-57f7-11eb-8886-709342666286.PNG)
+![screenshot_1630474599](https://user-images.githubusercontent.com/67371206/131617849-ff47958a-026d-4880-bd93-4e1405272911.png)
