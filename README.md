@@ -17,8 +17,6 @@ cd client ---> npm install
 
 ## Connect to your mongodb and add info in .env
 
-## Add your paypal client id in client/src/components/mainpages/cart/PaypalButton.js
-
 ## Run the client & server with concurrently
 npm run dev
 
