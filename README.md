@@ -18,22 +18,18 @@ cd client ---> npm install
 ## Connect to your mongodb and add info in .env
 *
 1. MONGODB_URL = '...'
-1. Item 2
-1. Item 3
+2. ACCESS_TOKEN_SECRET =  '...'
+3. REFRESH_TOKEN_SECRET =  '...'
+4. CLOUD_NAME =  '...'
+5. API_KEY = '...'
+6. API_SECRET = '...'
 
-ACCESS_TOKEN_SECRET =  '...'
-REFRESH_TOKEN_SECRET =  '...'
+7. MAILING_SERVICE_CLIENT_ID =  '...'
+8. MAILING_SERVICE_CLIENT_SECRET = '...'
+9. MAILING_SERVICE_REFRESH_TOKEN =  '...'
+10. SENDER_EMAIL_ADDRESS = '...'
+11. CLIENT_URL = http://localhost:3000
 
-CLOUD_NAME =  '...'
-API_KEY = '...'
-API_SECRET = '...'
-
-MAILING_SERVICE_CLIENT_ID =  '...'
-MAILING_SERVICE_CLIENT_SECRET = '...'
-MAILING_SERVICE_REFRESH_TOKEN =  '...'
-SENDER_EMAIL_ADDRESS = '...'
-
-CLIENT_URL = http://localhost:3000
 *
 
 ## Run the client & server with concurrently
