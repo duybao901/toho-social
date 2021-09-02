@@ -17,8 +17,10 @@ cd client ---> npm install
 
 ## Connect to your mongodb and add info in .env
 *
+1. MONGODB_URL = '...'
+1. Item 2
+1. Item 3
 
-MONGODB_URL = '...'
 ACCESS_TOKEN_SECRET =  '...'
 REFRESH_TOKEN_SECRET =  '...'
 
