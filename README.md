@@ -18,6 +18,7 @@ cd client ---> npm install
 ## Connect to your mongodb and add info in .env
 MONGODB_URL = '...'
 
+*
 ACCESS_TOKEN_SECRET =  '...'
 REFRESH_TOKEN_SECRET =  '...'
 
@@ -25,13 +26,13 @@ CLOUD_NAME =  '...'
 API_KEY = '...'
 API_SECRET = '...'
 
-# <About sendmail>
 MAILING_SERVICE_CLIENT_ID =  '...'
 MAILING_SERVICE_CLIENT_SECRET = '...'
 MAILING_SERVICE_REFRESH_TOKEN =  '...'
-SENDER_EMAIL_ADDRESS = 1 '...'
+SENDER_EMAIL_ADDRESS = '...'
 
 CLIENT_URL = http://localhost:3000
+*
 
 ## Run the client & server with concurrently
 npm run dev
